@@ -1,0 +1,14 @@
+Xray Mesh
+Fix UI Scaling
+UV Editing
+Go through Spline Data
+Redo .Big Extract and Package
+Make Custom Dropdown menus for file and view disappear on toggle
+Key to Zero zero zero out camera
+Key to deselect object
+Selection to move patch
+
+
+Add and Removing of ImageLibarary
+Redo Saving/Loading So it works on a project based system and pressing import generates a project
+output .map data
