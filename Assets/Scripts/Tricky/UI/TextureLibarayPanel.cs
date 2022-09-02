@@ -57,6 +57,7 @@ public class TextureLibarayPanel : MonoBehaviour
                 {
                     TrickyMapInterface.Instance.ForceUpdateAllTextures();
                     ChangeSelected(SelectedImage);
+                    TrickyMapInterface.Instance.TextureChanged = true;
                 }
                 else
                 {

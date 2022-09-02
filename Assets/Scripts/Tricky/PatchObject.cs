@@ -200,8 +200,7 @@ public class PatchObject : MonoBehaviour
         LowestXYZ = Lowest(LowestXYZ, RawR4C2);
         LowestXYZ = Lowest(LowestXYZ, RawR4C3);
         LowestXYZ = Lowest(LowestXYZ, RawR4C4);
-        Debug.Log(HighestXYZ.X);
-        Debug.Log(LowestXYZ.X);
+
         patch.HighestXYZ = HighestXYZ;
         patch.LowestXYZ = LowestXYZ;
 

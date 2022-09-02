@@ -9,17 +9,27 @@
 - Fix UI Scaling
 - UV Editing
 - Go through Spline Data
-- Redo .Big Extract and Package
-- Make Custom Dropdown menus for file and view disappear on toggle
 - Key to Zero zero zero out camera
+- key to focus on object
 - Key to deselect object
 - Selection to move patch
 - Update Patch Points Code to not regenerate model every time
-- Add and Removing of ImageLibarary
-- Redo Saving/Loading So it works on a project based system and pressing import generates a project
-- output .map data
-- Figure Out Point R3C3
+- Add and Removing of Image Libarary
+- output .map name data
+- Slower Speed Key
+- Scroll wheel to have variable speed
+- Change white point to another colour or give black outline
+- Patch Panel Shading Point
+- Patch Panel Texture Selector
+- Add Patch Size Warning
+- Highlight View Based on Patch Type
+- Notification Bar
 
+## Todo Later
+- Custom File Opener
+- Figure Out Point R3C3
+- Threading or warning about exporting taking a while
+- Redo Saving/Loading So it works on a project based system and pressing import generates a project
 
 ## Special Thanks
 https://github.com/Erickson400/SSXTrickyModelExporter <br>

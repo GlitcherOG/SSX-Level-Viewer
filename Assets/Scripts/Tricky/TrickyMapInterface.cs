@@ -21,7 +21,7 @@ public class TrickyMapInterface : MonoBehaviour
     public static float Scale = 0.1f;
     public GameObject patches;
     public Texture2D ErrorTexture;
-
+    public bool TextureChanged;
 
     public List<Texture2D> textures;
     public List<PatchObject> patchObjects = new List<PatchObject>();
@@ -75,12 +75,23 @@ public class TrickyMapInterface : MonoBehaviour
         };
         if (saveFileDialog.ShowDialog() == DialogResult.OK)
         {
-            SavePBD(saveFileDialog.FileName.Substring(0, saveFileDialog.FileName.Length - 4) + ".pbd");
-            sshHandler.SaveSSH(saveFileDialog.FileName.Substring(0, saveFileDialog.FileName.Length - 4) + ".ssh");
+            SaveFiles(saveFileDialog.FileName);
             MessageBox.Show("Exported Map");
         }
     }
+
+    public void SaveFiles(string path)
+    {
+        SavePBD(path.Substring(0, path.Length - 4) + ".pbd");
+        if (TextureChanged)
+        {
+            sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh");
+        }
+
+    }
+
     string BigPath;
+    bool BigImported;
     public void ExtractBig()
     {
         BigHandler bigHandler = new BigHandler();
@@ -92,11 +103,24 @@ public class TrickyMapInterface : MonoBehaviour
         };
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
-            BigPath = openFileDialog.FileName;
             bigHandler.LoadBig(openFileDialog.FileName);
-            Directory.CreateDirectory(openFileDialog.FileName.Substring(0, openFileDialog.FileName.Length-4));
-            bigHandler.ExtractBig(openFileDialog.FileName.Substring(0, openFileDialog.FileName.Length - 4));
-            Process.Start(openFileDialog.FileName.Substring(0, openFileDialog.FileName.Length - 4));
+            if(Directory.Exists(UnityEngine.Application.persistentDataPath + "\\TempExtracted"))
+            {
+                Directory.Delete(UnityEngine.Application.persistentDataPath + "\\TempExtracted", true);
+            }
+            Directory.CreateDirectory(UnityEngine.Application.persistentDataPath +"\\TempExtracted");
+            bigHandler.ExtractBig(UnityEngine.Application.persistentDataPath + "\\TempExtracted");
+            string[] Paths = Directory.GetFiles(UnityEngine.Application.persistentDataPath + "\\TempExtracted", "*.map", SearchOption.AllDirectories);
+            for (int i = 0; i < Paths.Length; i++)
+            {
+                if (Paths[i].Contains(".map"))
+                {
+                    BigImported = true;
+                    BigPath = Paths[i];
+                    LoadMapFiles(Paths[i]);
+                    break;
+                }
+            }
         }
     }
 
@@ -124,12 +148,22 @@ public class TrickyMapInterface : MonoBehaviour
 
     public void MakeBig()
     {
-        BigHandler bigHandler = new BigHandler();
-        if (BigPath!=""||BigPath==null)
+        if (BigImported)
         {
-            bigHandler.LoadFolderC0FB(BigPath.Substring(0, BigPath.Length - 4));
-            bigHandler.bigType = BigType.C0FB;
-            bigHandler.BuildBig(BigPath);
+            BigHandler bigHandler = new BigHandler();
+            SaveFileDialog openFileDialog = new SaveFileDialog()
+            {
+                Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
+                FilterIndex = 1,
+                RestoreDirectory = false
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                SaveFiles(BigPath);
+                bigHandler.LoadFolder(UnityEngine.Application.persistentDataPath + "\\TempExtracted");
+                bigHandler.bigType = BigType.C0FB;
+                bigHandler.BuildBig(openFileDialog.FileName);
+            }
         }
     }
 
