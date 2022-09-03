@@ -39,6 +39,7 @@
 - Selection to move patch outside relative mode
 - Alpha Textures Desplay as such in editor
 - Black Background button in texture library
+- Make Patch a Prefab
 
 ## Todo BugFixes
 - Fix Bug Where XYZ Gimzo Doesnt Disappear

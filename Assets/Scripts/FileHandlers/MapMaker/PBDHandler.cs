@@ -130,25 +130,11 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 for (int i = 0; i < NumSplineSegments; i++)
                 {
                     SplinesSegments splinesSegment = new SplinesSegments();
-                    splinesSegment.Unknown1 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown2 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown3 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown4 = StreamUtil.ReadFloat(stream);
 
-                    splinesSegment.Unknown5 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown6 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown7 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown8 = StreamUtil.ReadFloat(stream);
-
-                    splinesSegment.Unknown9 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown10 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown11 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown12 = StreamUtil.ReadFloat(stream);
-
-                    splinesSegment.Unknown13 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown14 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown15 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown16 = StreamUtil.ReadFloat(stream);
+                    splinesSegment.Point4 = ReadVertices(stream, true);
+                    splinesSegment.Point3 = ReadVertices(stream, true);
+                    splinesSegment.Point2 = ReadVertices(stream, true);
+                    splinesSegment.ControlPoint = ReadVertices(stream, true);
 
                     splinesSegment.Unknown17 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown18 = StreamUtil.ReadFloat(stream);
@@ -593,22 +579,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
     public struct SplinesSegments
     {
-        public float Unknown1;
-        public float Unknown2;
-        public float Unknown3;
-        public float Unknown4;
-        public float Unknown5;
-        public float Unknown6;
-        public float Unknown7;
-        public float Unknown8;
-        public float Unknown9;
-        public float Unknown10;
-        public float Unknown11;
-        public float Unknown12;
-        public float Unknown13;
-        public float Unknown14;
-        public float Unknown15;
-        public float Unknown16;
+        public Vertex3 Point4;
+        public Vertex3 Point3;
+        public Vertex3 Point2;
+        public Vertex3 ControlPoint;
         public float Unknown17;
         public float Unknown18;
         public float Unknown19;
