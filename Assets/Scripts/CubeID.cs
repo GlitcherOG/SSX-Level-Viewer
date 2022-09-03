@@ -9,7 +9,9 @@ public class CubeID : MonoBehaviour
     {
         if (Vector3.Distance(this.transform.position, Camera.current.transform.position) < 10000f)
         {
-            //Handles.Label(transform.position, gameObject.name);
+#if UNITY_EDITOR
+            Handles.Label(transform.position, gameObject.name);
+#endif
         }
     }
 

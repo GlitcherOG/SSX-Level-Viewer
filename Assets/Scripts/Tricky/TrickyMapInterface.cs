@@ -19,7 +19,9 @@ public class TrickyMapInterface : MonoBehaviour
     public bool NoLightMode;
     public string LoadPath;
     public static float Scale = 0.025f;
-    public GameObject patches;
+    public GameObject patchesParent;
+    public GameObject splineParent;
+
     public Texture2D ErrorTexture;
     public bool TextureChanged;
 
@@ -225,10 +227,11 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadSplines()
     {
-        for (int i = 0; i < PBDHandler.splines.Count; i++)
+        for (int i = 0; i < 1; i++)
         {
             var Temp = PBDHandler.splines[i];
             SpawnPoints(new Vector3(Temp.X1, Temp.Z1, Temp.Y1)*Scale, mMapHandler.Splines[i].Name);
+            SpawnPoints(new Vector3(Temp.X2, Temp.Z2, Temp.Y2) * Scale, mMapHandler.Splines[i].Name);
         }
     }
 
@@ -247,7 +250,7 @@ public class TrickyMapInterface : MonoBehaviour
         for (int i = 0; i < TempData.Count; i++)
         {
             GameObject gameObject = new GameObject();
-            gameObject.transform.parent = patches.transform;
+            gameObject.transform.parent = patchesParent.transform;
             gameObject.transform.tag = "Patch";
             var Patch = TempData[i];
             gameObject.AddComponent<MeshFilter>();

@@ -6,16 +6,13 @@
  
  ## Todo add
 - Xray Mesh
-- Fix UI Scaling
 - UV Editing
 - Go through Spline Data
-- Key to Zero zero zero out camera
 - key to focus on object
-- Key to deselect object
-- Add and Removing of Image Library
-- output .map name data
 - Patch Panel Shading Point
 - Patch Panel Texture Selector
+- Add and Removing of Image Library
+- output .map name data
 - Add Patch Size Warning
 - Highlight View Based on Patch Type
 - Notification Bar
@@ -33,20 +30,20 @@
 - Show Patch List Postion
 - Edge Selector
 - Point Combine
-- Auto Updater
+- Patch Rotation
 
 ## Todo Change
 - Scroll wheel to have variable speed
 - Redo Point Selector to always be there but hidden doing so should allow for multi selection easier
 - Limit Mouse Look so camera doesnt freak out
 - Selection to move patch outside relative mode
-- Update Patch Points Code to not regenerate model every time
 - Alpha Textures Desplay as such in editor
 - Black Background button in texture library
 
 ## Todo BugFixes
 - Fix Bug Where XYZ Gimzo Doesnt Disappear
 - fix Point Colliders, Fix Selection tool it seems to be very broken the further you get from 0,0,0 (While fixed by changing scale want to see if theres a better way)
+- ^ Maybe using world to canvas or something
 - Change white point to another colour or give black outline
 
 ## Todo Later
@@ -55,6 +52,8 @@
 - Threading or warning about exporting taking a while
 - Redo Saving/Loading So it works on a project based system and pressing import generates a project
 - Skybox Emulation
+- Auto Updater
+- Fix UI Scaling
 
 ## Special Thanks
 https://github.com/Erickson400/SSXTrickyModelExporter <br>

@@ -341,7 +341,6 @@ public class PatchObject : MonoBehaviour
     }
 
 
-
     void SpawnPoints(Vector3 vector3, string Name)
     {
         GameObject gameObject = new GameObject();
@@ -538,6 +537,37 @@ public class PatchObject : MonoBehaviour
         GetComponent<Renderer>().material = material;
         UpdateTexture(TextureAssigment);
         ToggleLightingMode();
+    }
+
+    public void UpdateMeshPoints()
+    {
+        var mesh = GetComponent<MeshFilter>().mesh;
+        List<Vector3> vertices = new List<Vector3>();
+        vertices.Add((RawControlPoint - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR1C2 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR1C3 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR1C4 - RawControlPoint) * TrickyMapInterface.Scale);
+
+        vertices.Add((RawR2C1 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR2C2 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR2C3 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR2C4 - RawControlPoint) * TrickyMapInterface.Scale);
+
+        vertices.Add((RawR3C1 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR3C2 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR3C3 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR3C4 - RawControlPoint) * TrickyMapInterface.Scale);
+
+        vertices.Add((RawR4C1 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR4C2 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR4C3 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices.Add((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
+
+        mesh.vertices = vertices.ToArray();
+        GetComponent<MeshFilter>().mesh = mesh;
+        GetComponent<MeshCollider>().enabled = false;
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+        GetComponent<MeshCollider>().enabled = true;
     }
 
     public void ToggleLightingMode()

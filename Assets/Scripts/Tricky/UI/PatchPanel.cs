@@ -305,7 +305,7 @@ public class PatchPanel : MonoBehaviour
                 cubePoints[i].GetComponent<PatchPoint>().DisableUpdate = false;
             }
 
-            patchObject.LoadHighPolyMesh();
+            patchObject.UpdateMeshPoints();
             patchObject.ProccessPoints();
             patchObject.SelectedObject();
             DisallowUpdate = false;
@@ -456,6 +456,14 @@ public class PatchPanel : MonoBehaviour
         if(!DisallowUpdate)
         {
             patchObject.PatchName = Name;
+        }
+    }
+
+    public void Update()
+    {
+        if(patchObject!=null)
+        {
+            Debug.DrawLine(cubePoints[0].transform.position, cubePoints[1].transform.position, Color.black);
         }
     }
 }
