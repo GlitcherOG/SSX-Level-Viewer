@@ -230,8 +230,21 @@ public class TrickyMapInterface : MonoBehaviour
         for (int i = 0; i < 1; i++)
         {
             var Temp = PBDHandler.splines[i];
-            SpawnPoints(new Vector3(Temp.X1, Temp.Z1, Temp.Y1)*Scale, mMapHandler.Splines[i].Name);
-            SpawnPoints(new Vector3(Temp.X2, Temp.Z2, Temp.Y2) * Scale, mMapHandler.Splines[i].Name);
+            SpawnPoints(VertexToVector(Temp.Position1)*Scale, mMapHandler.Splines[i].Name);
+            SpawnPoints(VertexToVector(Temp.Position2) * Scale, mMapHandler.Splines[i].Name);
+            UnityEngine.Debug.Log(mMapHandler.Splines.Count);
+            UnityEngine.Debug.Log(PBDHandler.splinesSegments.Count);
+            UnityEngine.Debug.Log(PBDHandler.splines.Count);
+
+            for (int a = Temp.SplineSegmentPosition; a < Temp.SplineSegmentCount + Temp.SplineSegmentPosition; a++)
+            {
+                var Temp1 = PBDHandler.splinesSegments[a];
+                SpawnPoints(new Vector3(Temp1.Unknown1, Temp1.Unknown3, Temp1.Unknown2) * Scale, mMapHandler.Splines[i].Name + " " + a.ToString());
+                SpawnPoints(new Vector3(Temp1.Unknown5, Temp1.Unknown7, Temp1.Unknown6) * Scale, mMapHandler.Splines[i].Name + " " + a.ToString());
+                SpawnPoints(new Vector3(Temp1.Unknown9, Temp1.Unknown11, Temp1.Unknown10) * Scale, mMapHandler.Splines[i].Name + " " +a.ToString());
+                SpawnPoints(new Vector3(Temp1.Unknown13, Temp1.Unknown15, Temp1.Unknown14) * Scale, mMapHandler.Splines[i].Name + " " +a.ToString());
+                SpawnPoints(new Vector3(Temp1.Unknown17, Temp1.Unknown19, Temp1.Unknown18) * Scale, mMapHandler.Splines[i].Name + " "+ a.ToString());
+            }
         }
     }
 

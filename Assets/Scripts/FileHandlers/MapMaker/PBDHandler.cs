@@ -115,16 +115,12 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 for (int i = 0; i < NumSplines; i++)
                 {
                     Spline spline = new Spline();
-                    spline.X1 = StreamUtil.ReadFloat(stream);
-                    spline.Y1 = StreamUtil.ReadFloat(stream);
-                    spline.Z1 = StreamUtil.ReadFloat(stream);
-                    spline.X2 = StreamUtil.ReadFloat(stream);
-                    spline.Y2 = StreamUtil.ReadFloat(stream);
-                    spline.Z2 = StreamUtil.ReadFloat(stream);
-                    spline.Unknown7 = StreamUtil.ReadInt32(stream);
-                    spline.Unknown8 = StreamUtil.ReadInt32(stream);
-                    spline.Unknown9 = StreamUtil.ReadInt32(stream);
-                    spline.Unknown10 = StreamUtil.ReadInt32(stream);
+                    spline.Position1 = ReadVertices(stream, false);
+                    spline.Position2 = ReadVertices(stream, false);
+                    spline.Unknown1 = StreamUtil.ReadInt32(stream);
+                    spline.SplineSegmentCount = StreamUtil.ReadInt32(stream);
+                    spline.SplineSegmentPosition = StreamUtil.ReadInt32(stream);
+                    spline.Unknown2 = StreamUtil.ReadInt32(stream);
                     splines.Add(spline);
                 }
 
@@ -138,22 +134,27 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     splinesSegment.Unknown2 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown3 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown4 = StreamUtil.ReadFloat(stream);
+
                     splinesSegment.Unknown5 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown6 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown7 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown8 = StreamUtil.ReadFloat(stream);
+
                     splinesSegment.Unknown9 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown10 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown11 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown12 = StreamUtil.ReadFloat(stream);
+
                     splinesSegment.Unknown13 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown14 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown15 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown16 = StreamUtil.ReadFloat(stream);
+
                     splinesSegment.Unknown17 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown18 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown19 = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown20 = StreamUtil.ReadFloat(stream);
+
                     splinesSegment.Unknown21 = StreamUtil.ReadInt32(stream);
                     splinesSegment.Unknown22 = StreamUtil.ReadInt32(stream);
                     splinesSegment.Unknown23 = StreamUtil.ReadInt32(stream);
@@ -557,7 +558,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
             return vertex;
         }
 
-        public void SaveVertices(Stream stream,Vertex3 vertex3, bool w = false)
+        public void SaveVertices(Stream stream, Vertex3 vertex3, bool w = false)
         {
             StreamUtil.WriteFloat32(stream, vertex3.X);
             StreamUtil.WriteFloat32(stream, vertex3.Y);
@@ -582,16 +583,12 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
     public struct Spline
     {
-        public float X1;
-        public float Y1;
-        public float Z1;
-        public float X2;
-        public float Y2;
-        public float Z2;
-        public int Unknown7;
-        public int Unknown8;
-        public int Unknown9;
-        public int Unknown10;
+        public Vertex3 Position1;
+        public Vertex3 Position2;
+        public int Unknown1;
+        public int SplineSegmentCount;
+        public int SplineSegmentPosition;
+        public int Unknown2;
     }
 
     public struct SplinesSegments

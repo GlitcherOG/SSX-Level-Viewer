@@ -1437,7 +1437,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoLightMode: 0
   LoadPath: 
-  patches: {fileID: 1076407780}
+  patchesParent: {fileID: 1076407780}
+  splineParent: {fileID: 0}
   ErrorTexture: {fileID: 2800000, guid: c4bba0f5c3b6e6141843002b4e8bdca5, type: 3}
   TextureChanged: 0
   textures: []
