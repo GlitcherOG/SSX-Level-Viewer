@@ -5,9 +5,10 @@ using UnityEngine;
 public class FlyAroundCamera : MonoBehaviour
 {
     public static bool Active = false;
-    public float Speed = 100;
+    public float Speed = 700;
     public float CurrentSpeed = 100;
-    public float SprintSpeed = 300;
+    public float SprintSpeed = 3000;
+    public float SlowSpeed = 300;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,10 @@ public class FlyAroundCamera : MonoBehaviour
             if(Input.GetKey(KeyCode.LeftShift))
             {
                 CurrentSpeed = SprintSpeed;
+            }
+            else if (Input.GetKey(KeyCode.LeftControl))
+            {
+                CurrentSpeed = SlowSpeed;
             }
             else
             {
@@ -45,7 +50,7 @@ public class FlyAroundCamera : MonoBehaviour
                 transform.position += transform.right * (CurrentSpeed * Time.deltaTime);
             }
 
-            if (Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.C))
             {
                 transform.position += transform.up * (-CurrentSpeed * Time.deltaTime);
             }

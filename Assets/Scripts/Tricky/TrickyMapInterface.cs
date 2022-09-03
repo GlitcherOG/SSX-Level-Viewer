@@ -18,7 +18,7 @@ public class TrickyMapInterface : MonoBehaviour
     MapHandler mMapHandler;
     public bool NoLightMode;
     public string LoadPath;
-    public static float Scale = 0.1f;
+    public static float Scale = 0.025f;
     public GameObject patches;
     public Texture2D ErrorTexture;
     public bool TextureChanged;

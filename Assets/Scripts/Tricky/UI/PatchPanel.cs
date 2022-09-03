@@ -231,6 +231,7 @@ public class PatchPanel : MonoBehaviour
     {
         if (!DisallowUpdate)
         {
+            DisallowUpdate = true;
             if (!Local)
             {
                 patchObject.RawControlPoint = RCPreferences[0].GrabXYZ();
@@ -296,12 +297,18 @@ public class PatchPanel : MonoBehaviour
 
             for (int i = 0; i < cubePoints.Count; i++)
             {
+                cubePoints[i].GetComponent<PatchPoint>().OldPosition = cubePoints[i].transform.position;
+            }
+
+            for (int i = 0; i < cubePoints.Count; i++)
+            {
                 cubePoints[i].GetComponent<PatchPoint>().DisableUpdate = false;
             }
 
             patchObject.LoadHighPolyMesh();
             patchObject.ProccessPoints();
             patchObject.SelectedObject();
+            DisallowUpdate = false;
         }
     }
 
@@ -411,7 +418,24 @@ public class PatchPanel : MonoBehaviour
 
     public void UpdatePointUsingCube(int a)
     {
-        RCPreferences[a].SetXYZ(cubePoints[a].transform.position/TrickyMapInterface.Scale);
+        if (!DisallowUpdate)
+        {
+            if (!Local)
+            {
+                RCPreferences[a].SetXYZ(cubePoints[a].transform.position / TrickyMapInterface.Scale);
+            }
+            else
+            {
+                if (a != 0)
+                {
+                    RCPreferences[a].SetXYZ((cubePoints[a].transform.position - cubePoints[0].transform.position) / TrickyMapInterface.Scale);
+                }
+                else
+                {
+                    RCPreferences[a].SetXYZ(cubePoints[a].transform.position / TrickyMapInterface.Scale);
+                }
+            }
+        }
     }
 
     public void ToggleLocalWorld(int Pos)

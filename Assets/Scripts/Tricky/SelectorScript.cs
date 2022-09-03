@@ -38,43 +38,43 @@ public class SelectorScript : MonoBehaviour
 
             //Raycast using the Graphics Raycaster and mouse click position
             m_Raycaster.Raycast(m_PointerEventData, results);
-            if (results.Count==0)
+            if (results.Count == 0)
             {
-
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 int layerMask = 1 << 7;
                 int layerMask2 = 1 << 6;
-                if (Physics.Raycast(ray, out hit,10000 , layerMask))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
                     RaycastSelection(hit);
                 }
-                else if (Physics.Raycast(ray, out hit, 10000, layerMask2))
+                else
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
                 {
+                    RaycastSelection(hit);
+                }
+                else
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Deselect();
                     RaycastSelection(hit);
                 }
                 else
                 {
                     Deselect();
-                    if (Physics.Raycast(ray, out hit))
+                    if (PatchPanel.instance != null)
                     {
-                        RaycastSelection(hit);
-                    }
-                    else
-                    {
-                        if (PatchPanel.instance != null)
-                        {
-                            PatchPanel.instance.DestoyCubes();
-                        }
-                        Deselect();
+                        PatchPanel.instance.DestoyCubes();
                     }
                 }
+
             }
         }
     }
 
     void RaycastSelection(RaycastHit hit)
     {
+        Debug.Log(hit.transform.name);
         XYZMovement.SetActive(false);
         SelectedGameObject = hit.transform.gameObject;
         SelectedObject = true;

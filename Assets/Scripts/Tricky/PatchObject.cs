@@ -209,6 +209,11 @@ public class PatchObject : MonoBehaviour
         patch.Point3 = Vector3ToVertex3(RawR1C4);
         patch.Point4 = Vector3ToVertex3(RawR4C4);
 
+        OldPoint1 = RawControlPoint;
+        OldPoint2 = RawR4C1;
+        OldPoint3 = RawR1C4;
+        OldPoint4 = RawR4C4;
+
         patch.PatchStyle = PatchStyle;
         patch.Unknown2 = Unknown2;
         patch.TextureAssigment = TextureAssigment;
