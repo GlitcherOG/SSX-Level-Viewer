@@ -23,6 +23,7 @@ public class TrickyMapInterface : MonoBehaviour
     public GameObject splineParent;
 
     public GameObject SplinePrefab;
+    public GameObject PatchPrefab;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -198,7 +199,6 @@ public class TrickyMapInterface : MonoBehaviour
         LoadPath = Path.Substring(0, Path.Length-4);
         PBDHandler = new PBDHandler();
         mMapHandler = new MapHandler();
-        //LoadSkyBox();
         //LoadLighting();
         LoadMap();
         if (LoadPBD())
@@ -213,7 +213,7 @@ public class TrickyMapInterface : MonoBehaviour
         }
         catch
         {
-            UnityEngine.Debug.Log("No Skybox");
+            NotifcationBarUI.instance.ShowNotifcation("No Skybox Textures Detected", 5f);
         }
     }
 
@@ -252,7 +252,7 @@ public class TrickyMapInterface : MonoBehaviour
             }
 
             GameObject TempSpline = Instantiate(SplinePrefab, splineParent.transform);
-
+            TempSpline.transform.name = mMapHandler.Splines[i].Name + " (" + i.ToString()+ ")";
             TempSpline.GetComponent<SplineObject>().LoadSpline(Temp, Segments);
         }
     }
@@ -271,15 +271,9 @@ public class TrickyMapInterface : MonoBehaviour
         var TempData = PBDHandler.Patches;
         for (int i = 0; i < TempData.Count; i++)
         {
-            GameObject gameObject = new GameObject();
-            gameObject.transform.parent = patchesParent.transform;
-            gameObject.transform.tag = "Patch";
+            GameObject gameObject = Instantiate(PatchPrefab, patchesParent.transform);
             var Patch = TempData[i];
-            gameObject.AddComponent<MeshFilter>();
-            gameObject.AddComponent<MeshCollider>();
-            var RendererTemp = gameObject.AddComponent<MeshRenderer>();
-            RendererTemp.receiveShadows = false;
-            var PatchHolder = gameObject.AddComponent<PatchObject>();
+            var PatchHolder = gameObject.GetComponent<PatchObject>();
             PatchHolder.LoadPatch(Patch, mMapHandler.Patchs[i].Name.TrimEnd(' '));
             gameObject.transform.name = mMapHandler.Patchs[i].Name.TrimEnd(' ') + " (" + i + ")";
             patchObjects.Add(PatchHolder);

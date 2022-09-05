@@ -119,8 +119,10 @@ public class SelectorScript : MonoBehaviour
             if (selectedTag == "Patch")
             {
                 SelectedGameObject.GetComponent<PatchObject>().UnSelectedObject();
+                PatchPanel.instance.DestoyCubes();
             }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
+            XYZMovement.SetActive(false);
             PatchController.SetActive(false);
             selectedTag = "";
             SelectedObject = false;

@@ -62,8 +62,11 @@ public class PatchObject : MonoBehaviour
     public int Unknown6; 
     public Patch patch;
 
-    public Material material;
+    public Material MainMaterial;
+    public Material NoLightMaterial;
+    public Renderer Renderer;
 
+    [Space(10)]
     public Vector3 ControlPoint;
     public Vector3 R1C2;
     public Vector3 R1C3;
@@ -532,10 +535,7 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshCollider>().enabled = false;
         GetComponent<MeshCollider>().sharedMesh = mesh;
         GetComponent<MeshCollider>().enabled = true;
-        material = new Material(Shader.Find("Standard"));
-        material.SetFloat("_SpecularHighlights",0);
-        material.SetFloat("_GlossyReflections",0);
-        GetComponent<Renderer>().material = material;
+        GetComponent<Renderer>().material = MainMaterial;
         UpdateTexture(TextureAssigment);
         ToggleLightingMode();
     }
@@ -581,68 +581,51 @@ public class PatchObject : MonoBehaviour
         {
             NoLightMode();
         }
+        UpdateTexture(TextureAssigment);
     }
 
     public void SelectedObject()
     {
         if (!TrickyMapInterface.Instance.NoLightMode)
         {
-            material.EnableKeyword("_EMISSION");
+            Renderer.material.EnableKeyword("_EMISSION");
         }
 
-        material.SetColor("_EmissionColor", Color.grey);
-        GetComponent<Renderer>().material = material;
+        Renderer.material.SetColor("_EmissionColor", Color.grey);
     }
 
     public void UnSelectedObject()
     {
         if (!TrickyMapInterface.Instance.NoLightMode)
         {
-            material.DisableKeyword("_EMISSION");
+            Renderer.material.DisableKeyword("_EMISSION");
         }
 
-        material.SetColor("_EmissionColor", Color.white);
-        GetComponent<Renderer>().material = material;
+        Renderer.material.SetColor("_EmissionColor", Color.white);
     }
 
     public void LightMode()
     {
-        material.DisableKeyword("_EMISSION");
-        material.SetColor("_EmissionColor", Color.grey);
-        material.SetFloat("_Glossiness", 0);
-        material.SetFloat("_Metallic", 0);
-        material.SetFloat("_SmoothnessTextureChannel", 0);
-        material.SetFloat("_SpecularHighlights", 0);
-        material.SetFloat("_GlossyReflections", 0);
-        GetComponent<Renderer>().material = material;
+        Renderer.material = MainMaterial;
     }
 
     public void NoLightMode()
     {
-        material.EnableKeyword("_EMISSION");
-        material.SetColor("_EmissionColor", Color.white);
-        material.SetFloat("_Metallic", 1);
-        material.SetFloat("_Glossiness", 1);
-        material.SetFloat("_SmoothnessTextureChannel", 1);
-        material.SetFloat("_SpecularHighlights", 0);
-        material.SetFloat("_GlossyReflections", 0);
-        material.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
-        GetComponent<Renderer>().material = material;
+        NoLightMaterial.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
+        Renderer.material = NoLightMaterial;
     }
 
     public void UpdateTexture(int a)
     {
         try
         {
-            material.mainTexture = TrickyMapInterface.Instance.textures[a];
+            Renderer.material.mainTexture = TrickyMapInterface.Instance.textures[a];
             TextureAssigment = a;
-            material.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
-            GetComponent<Renderer>().material = material;
+            Renderer.material.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
         }
         catch
         {
-            material.mainTexture = TrickyMapInterface.Instance.ErrorTexture;
-            GetComponent<Renderer>().material = material;
+            Renderer.material.mainTexture = TrickyMapInterface.Instance.ErrorTexture;
         }
     }
 
@@ -710,11 +693,7 @@ public class PatchObject : MonoBehaviour
         mesh.RecalculateNormals();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        //Set material
-        material = new Material(Shader.Find("Standard"));
-        material.mainTexture = TrickyMapInterface.Instance.textures[TextureAssigment];
-        material.SetFloat("_Glossiness", 0);
-        GetComponent<Renderer>().material = material;
+        ToggleLightingMode();
     }
 
     Vector3 Vertex3ToVector3(Vertex3 vertex3)

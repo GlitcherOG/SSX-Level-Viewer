@@ -18,6 +18,10 @@ public class PatchPanel : MonoBehaviour
     public TMP_InputField Unknown3;
     public TMP_InputField Unknown4;
     public TMP_InputField Unknown5;
+    public TMP_InputField ShadingPointX;
+    public TMP_InputField ShadingPointY;
+    public TMP_InputField ShadingPointZ;
+    public TMP_InputField ShadingPointW;
 
     public GameObject ScrollView;
     public GameObject RCPrefab;
@@ -97,6 +101,11 @@ public class PatchPanel : MonoBehaviour
         Unknown3.text = patch.Unknown4.ToString();
         Unknown4.text = patch.Unknown5.ToString();
         Unknown5.text = patch.Unknown6.ToString();
+
+        ShadingPointX.text = patch.ScalePoint.x.ToString();
+        ShadingPointY.text = patch.ScalePoint.y.ToString();
+        ShadingPointZ.text = patch.ScalePoint.z.ToString();
+        ShadingPointW.text = patch.ScalePoint.w.ToString();
 
         UpdatePoint(true);
         DisallowUpdate = false;
@@ -404,6 +413,70 @@ public class PatchPanel : MonoBehaviour
             catch
             {
                 Unknown5.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void UpdatShadingPointX(string Unknowm)
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                ShadingPointX.GetComponent<Image>().color = Color.white;
+                patchObject.ScalePoint.x = float.Parse(Unknowm);
+            }
+            catch
+            {
+                ShadingPointX.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void UpdatShadingPointY(string Unknowm)
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                ShadingPointY.GetComponent<Image>().color = Color.white;
+                patchObject.ScalePoint.y = float.Parse(Unknowm);
+            }
+            catch
+            {
+                ShadingPointY.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void UpdatShadingPointZ(string Unknowm)
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                ShadingPointZ.GetComponent<Image>().color = Color.white;
+                patchObject.ScalePoint.z = float.Parse(Unknowm);
+            }
+            catch
+            {
+                ShadingPointZ.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void UpdatShadingPointW(string Unknowm)
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                ShadingPointW.GetComponent<Image>().color = Color.white;
+                patchObject.ScalePoint.w = float.Parse(Unknowm);
+            }
+            catch
+            {
+                ShadingPointW.GetComponent<Image>().color = Color.red;
             }
         }
     }
