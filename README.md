@@ -5,17 +5,18 @@
 - Texture Libaray Editing
 
 ## File Read/Write CheckList
-- [ ] .adl
-- [ ] .api
-- [ ] .ltg
-- [ ] .map
-- [ ] .pbd
-- [ ] .sop
-- [ ] .ssf
-- [x] .ssh
-- [ ] _L.ssh
-- [ ] _sky.ssh
-- [ ] _sky.pbd
+:heavy_check_mark: - Fully Working, :o: - Somewhat Working, :x: - Not Working
+- :x: .adl
+- :x: .api
+- :x: .ltg
+- :x: .map
+- :o: .pbd
+- :x: .sop
+- :x: .ssf
+- :heavy_check_mark: .ssh
+- :x: _L.ssh
+- :o: _sky.ssh
+- :x: _sky.pbd
  
  ## Todo Today
 - About Page
