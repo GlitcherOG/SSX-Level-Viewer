@@ -533,7 +533,8 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshCollider>().sharedMesh = mesh;
         GetComponent<MeshCollider>().enabled = true;
         material = new Material(Shader.Find("Standard"));
-        material.SetFloat("_Glossiness", 0);
+        material.SetFloat("_SpecularHighlights",0);
+        material.SetFloat("_GlossyReflections",0);
         GetComponent<Renderer>().material = material;
         UpdateTexture(TextureAssigment);
         ToggleLightingMode();
@@ -606,19 +607,25 @@ public class PatchObject : MonoBehaviour
 
     public void LightMode()
     {
+        material.DisableKeyword("_EMISSION");
         material.SetColor("_EmissionColor", Color.grey);
+        material.SetFloat("_Glossiness", 0);
         material.SetFloat("_Metallic", 0);
         material.SetFloat("_SmoothnessTextureChannel", 0);
-        material.DisableKeyword("_EMISSION");
+        material.SetFloat("_SpecularHighlights", 0);
+        material.SetFloat("_GlossyReflections", 0);
         GetComponent<Renderer>().material = material;
     }
 
     public void NoLightMode()
     {
+        material.EnableKeyword("_EMISSION");
         material.SetColor("_EmissionColor", Color.white);
         material.SetFloat("_Metallic", 1);
+        material.SetFloat("_Glossiness", 1);
         material.SetFloat("_SmoothnessTextureChannel", 1);
-        material.EnableKeyword("_EMISSION");
+        material.SetFloat("_SpecularHighlights", 0);
+        material.SetFloat("_GlossyReflections", 0);
         material.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
         GetComponent<Renderer>().material = material;
     }

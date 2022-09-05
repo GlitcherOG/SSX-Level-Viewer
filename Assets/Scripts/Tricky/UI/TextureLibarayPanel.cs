@@ -5,6 +5,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 public class TextureLibarayPanel : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class TextureLibarayPanel : MonoBehaviour
     public TMP_Text color;
     public TMP_InputField shortName;
 
+    public List<TextureButton> buttons;
+
     public bool Loaded;
 
     int SelectedImage = -1;
@@ -22,20 +26,38 @@ public class TextureLibarayPanel : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
     }
 
     public void ChangeSelected(int a)
     {
-        image.texture = TrickyMapInterface.Instance.textures[a];
-        color.text = TrickyMapInterface.Instance.sshHandler.sshImages[a].sshTable.colorTable.Count.ToString();
-        shortName.text = TrickyMapInterface.Instance.sshHandler.sshImages[a].shortname;
-        SelectedImage = a;
+        if (a != -1)
+        {
+            SelectedImage = -1;
+            image.texture = TrickyMapInterface.Instance.textures[a];
+            color.text = TrickyMapInterface.Instance.sshHandler.sshImages[a].sshTable.colorTable.Count.ToString();
+            shortName.text = TrickyMapInterface.Instance.sshHandler.sshImages[a].shortname;
+            SelectedImage = a;
+        }
+        else
+        {
+            SelectedImage = a;
+            image.texture = null;
+            color.text = "";
+            shortName.text = "";
+        }
     }
 
     public void UpdateName(string NewName)
     {
-        //TrickyMapInterface.Instance.sshHandler.sshImages[SelectedImage].shortname = NewName;
+        if (SelectedImage != -1)
+        {
+            var Images = TrickyMapInterface.Instance.sshHandler.sshImages;
+            var Image = Images[SelectedImage];
+            Image.shortname = NewName;
+            Images[SelectedImage] = Image;
+            TrickyMapInterface.Instance.sshHandler.sshImages = Images;
+            buttons[SelectedImage].GetComponentInChildren<TMP_Text>().text = NewName;
+        }
     }
 
     public void ReplaceImage()
@@ -89,11 +111,33 @@ public class TextureLibarayPanel : MonoBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    public void AddImage()
     {
-        
+        var Images = TrickyMapInterface.Instance.sshHandler.sshImages;
+        var NewImage = TrickyMapInterface.Instance.sshHandler.sshImages[0];
+        NewImage.bitmap = new Bitmap(512, 512, PixelFormat.Format32bppArgb);
+        Images.Add(NewImage);
+        TrickyMapInterface.Instance.sshHandler.sshImages = Images;
+        TrickyMapInterface.Instance.ForceUpdateAllTextures();
+        ChangeSelected(TrickyMapInterface.Instance.sshHandler.sshImages.Count-1);
+        TrickyMapInterface.Instance.TextureChanged = true;
+        DestroyButtons();
+        LoadButtons();
+    }
+
+    public void RemoveImage()
+    {
+        if(SelectedImage!=-1)
+        {
+            var Images = TrickyMapInterface.Instance.sshHandler.sshImages;
+            Images.RemoveAt(SelectedImage);
+            TrickyMapInterface.Instance.sshHandler.sshImages = Images;
+            TrickyMapInterface.Instance.ForceUpdateAllTextures();
+            ChangeSelected(-1);
+            TrickyMapInterface.Instance.TextureChanged = true;
+            DestroyButtons();
+            LoadButtons();
+        }
     }
 
     // Update is called once per frame
@@ -101,16 +145,33 @@ public class TextureLibarayPanel : MonoBehaviour
     {
         if (!Loaded)
         {
-            for (int i = 0; i < TrickyMapInterface.Instance.textures.Count; i++)
-            {
-                Loaded = true;
-                GameObject TempButton = Instantiate(ImageButtonPrefab, ImageScrollBox.transform);
-                TempButton.GetComponentInChildren<TMPro.TMP_Text>().text = TrickyMapInterface.Instance.sshHandler.sshImages[i].shortname;
-                TempButton.GetComponent<TextureButton>().ID = i;
-                TempButton.GetComponent<TextureButton>().unityEvent = ChangeSelected;
-                TempButton.GetComponent<TextureButton>().image.texture = TrickyMapInterface.Instance.textures[i];
-                TempButton.SetActive(true);
-            }
+            LoadButtons();
+        }
+    }
+
+    void DestroyButtons()
+    {
+        SelectedImage = -1;
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            Destroy(buttons[i].gameObject);
+        }
+        buttons.Clear();
+    }
+
+    void LoadButtons()
+    {
+        buttons = new List<TextureButton>();
+        for (int i = 0; i < TrickyMapInterface.Instance.textures.Count; i++)
+        {
+            Loaded = true;
+            GameObject TempButton = Instantiate(ImageButtonPrefab, ImageScrollBox.transform);
+            TempButton.GetComponentInChildren<TMPro.TMP_Text>().text = TrickyMapInterface.Instance.sshHandler.sshImages[i].shortname;
+            TempButton.GetComponent<TextureButton>().ID = i;
+            TempButton.GetComponent<TextureButton>().unityEvent = ChangeSelected;
+            TempButton.GetComponent<TextureButton>().image.texture = TrickyMapInterface.Instance.textures[i];
+            TempButton.SetActive(true);
+            buttons.Add(TempButton.GetComponent<TextureButton>());
         }
     }
 }

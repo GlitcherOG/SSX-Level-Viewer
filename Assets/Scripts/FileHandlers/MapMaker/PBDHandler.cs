@@ -115,15 +115,14 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 for (int i = 0; i < NumSplines; i++)
                 {
                     Spline spline = new Spline();
-                    spline.Position1 = ReadVertices(stream, false);
-                    spline.Position2 = ReadVertices(stream, false);
+                    spline.LowestXYZ = ReadVertices(stream, false);
+                    spline.HighestXYZ = ReadVertices(stream, false);
                     spline.Unknown1 = StreamUtil.ReadInt32(stream);
                     spline.SplineSegmentCount = StreamUtil.ReadInt32(stream);
                     spline.SplineSegmentPosition = StreamUtil.ReadInt32(stream);
                     spline.Unknown2 = StreamUtil.ReadInt32(stream);
                     splines.Add(spline);
                 }
-
                 //Spline Segments
                 stream.Position = SplineSegmentOffset;
                 splinesSegments = new List<SplinesSegments>();
@@ -136,22 +135,17 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     splinesSegment.Point2 = ReadVertices(stream, true);
                     splinesSegment.ControlPoint = ReadVertices(stream, true);
 
-                    splinesSegment.Unknown17 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown18 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown19 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown20 = StreamUtil.ReadFloat(stream);
+                    splinesSegment.ScalingPoint = ReadVertices(stream, true);
 
-                    splinesSegment.Unknown21 = StreamUtil.ReadInt32(stream);
-                    splinesSegment.Unknown22 = StreamUtil.ReadInt32(stream);
-                    splinesSegment.Unknown23 = StreamUtil.ReadInt32(stream);
-                    splinesSegment.Unknown24 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown25 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown26 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown27 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown28 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown29 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown30 = StreamUtil.ReadFloat(stream);
-                    splinesSegment.Unknown31 = StreamUtil.ReadFloat(stream);
+                    splinesSegment.PreviousSegment = StreamUtil.ReadInt32(stream);
+                    splinesSegment.NextSegment = StreamUtil.ReadInt32(stream);
+                    splinesSegment.SplineParent = StreamUtil.ReadInt32(stream);
+
+                    splinesSegment.LowestXYZ = ReadVertices(stream, false);
+                    splinesSegment.HighestXYZ = ReadVertices(stream, false);
+
+                    splinesSegment.SegmentDisatnce = StreamUtil.ReadFloat(stream);
+                    splinesSegment.PreviousSegmentsDistance = StreamUtil.ReadFloat(stream);
                     splinesSegment.Unknown32 = StreamUtil.ReadInt32(stream);
                     splinesSegments.Add(splinesSegment);
                 }
@@ -208,31 +202,38 @@ namespace SSX_Modder.FileHandlers.MapEditor
             {
                 MagicBytes = StreamUtil.ReadBytes(stream, 4);
                 NumPlayerStarts = StreamUtil.ReadInt32(stream);
-                NumPatches = StreamUtil.ReadInt32(stream); //Done
+
+                StreamUtil.WriteInt32(stream, Patches.Count);
+
                 NumInstances = StreamUtil.ReadInt32(stream);
                 NumParticleInstances = StreamUtil.ReadInt32(stream);
                 NumMaterials = StreamUtil.ReadInt32(stream);
                 NumMaterialBlocks = StreamUtil.ReadInt32(stream);
                 NumLights = StreamUtil.ReadInt32(stream);
-                NumSplines = StreamUtil.ReadInt32(stream); //Done
-                NumSplineSegments = StreamUtil.ReadInt32(stream); //Done
+
+                StreamUtil.WriteInt32(stream, splines.Count);
+                StreamUtil.WriteInt32(stream, splinesSegments.Count);
+
                 NumTextureFlips = StreamUtil.ReadInt32(stream); //Done
+
                 NumModels = StreamUtil.ReadInt32(stream);
                 ParticleModelCount = StreamUtil.ReadInt32(stream);
-                NumTextures = StreamUtil.ReadInt32(stream);
-                NumCameras = StreamUtil.ReadInt32(stream);
-                LightMapSize = StreamUtil.ReadInt32(stream);
+
+                StreamUtil.WriteInt32(stream,NumTextures);
+
+                NumCameras = StreamUtil.ReadInt32(stream); //Used in SSXFE MAP
+                StreamUtil.WriteInt32(stream, 0); //Lightmap size 
 
                 PlayerStartOffset = StreamUtil.ReadInt32(stream);
-                PatchOffset = StreamUtil.ReadInt32(stream); //Done
+                PatchOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
                 InstanceOffset = StreamUtil.ReadInt32(stream);
                 Unknown2 = StreamUtil.ReadInt32(stream);
                 MaterialOffset = StreamUtil.ReadInt32(stream);
                 MaterialBlocksOffset = StreamUtil.ReadInt32(stream);
                 LightsOffset = StreamUtil.ReadInt32(stream);
-                SplineOffset = StreamUtil.ReadInt32(stream); //Done
-                SplineSegmentOffset = StreamUtil.ReadInt32(stream); //Done
-                TextureFlipOffset = StreamUtil.ReadInt32(stream); //Done
+                SplineOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
+                SplineSegmentOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
+                TextureFlipOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
                 ModelPointerOffset = StreamUtil.ReadInt32(stream);
                 ModelsOffset = StreamUtil.ReadInt32(stream);
 
@@ -289,6 +290,55 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown4);
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown5);
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown6);
+                }
+
+                //Texture Flips
+                stream.Position = TextureFlipOffset;
+                for (int i = 0; i < textureFlips.Count; i++)
+                {
+                    StreamUtil.WriteInt32(stream, textureFlips[i].ints.Count);
+                    for (int a = 0; a < textureFlips[i].ints.Count; a++)
+                    {
+                        StreamUtil.WriteInt32(stream, textureFlips[i].ints[a]);
+                    }
+                }
+
+                //Spline
+                stream.Position = SplineOffset;
+                for (int i = 0; i < splines.Count; i++)
+                {
+                    var spline = splines[i];
+                    SaveVertices(stream, spline.LowestXYZ, false);
+                    SaveVertices(stream, spline.HighestXYZ, false);
+                    StreamUtil.WriteInt32(stream, spline.Unknown1);
+                    StreamUtil.WriteInt32(stream, spline.SplineSegmentCount);
+                    StreamUtil.WriteInt32(stream, spline.SplineSegmentPosition);
+                    StreamUtil.WriteInt32(stream, spline.Unknown2);
+                }
+
+                //Spline Segments
+                stream.Position = SplineSegmentOffset;
+                for (int i = 0; i < splinesSegments.Count; i++)
+                {
+                    var SplineSegment = splinesSegments[i];
+                    SaveVertices(stream, SplineSegment.Point4, true);
+                    SaveVertices(stream, SplineSegment.Point3, true);
+                    SaveVertices(stream, SplineSegment.Point2, true);
+                    SplineSegment.ControlPoint.W = 1;
+                    SaveVertices(stream, SplineSegment.ControlPoint, true);
+
+                    SaveVertices(stream, SplineSegment.ScalingPoint, true);
+
+                    StreamUtil.WriteInt32(stream, SplineSegment.PreviousSegment);
+                    StreamUtil.WriteInt32(stream, SplineSegment.NextSegment);
+                    StreamUtil.WriteInt32(stream, SplineSegment.SplineParent);
+
+                    SaveVertices(stream, SplineSegment.LowestXYZ, false);
+                    SaveVertices(stream, SplineSegment.HighestXYZ, false);
+
+                    StreamUtil.WriteFloat32(stream, SplineSegment.SegmentDisatnce);
+                    StreamUtil.WriteFloat32(stream, SplineSegment.PreviousSegmentsDistance);
+                    StreamUtil.WriteInt32(stream, SplineSegment.Unknown32);
                 }
 
 
@@ -569,8 +619,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
     public struct Spline
     {
-        public Vertex3 Position1;
-        public Vertex3 Position2;
+        public Vertex3 LowestXYZ;
+        public Vertex3 HighestXYZ;
         public int Unknown1;
         public int SplineSegmentCount;
         public int SplineSegmentPosition;
@@ -583,21 +633,14 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public Vertex3 Point3;
         public Vertex3 Point2;
         public Vertex3 ControlPoint;
-        public float Unknown17;
-        public float Unknown18;
-        public float Unknown19;
-        public float Unknown20;
-        public int Unknown21;
-        public int Unknown22;
-        public int Unknown23;
-        public float Unknown24;
-        public float Unknown25;
-        public float Unknown26;
-        public float Unknown27;
-        public float Unknown28;
-        public float Unknown29;
-        public float Unknown30;
-        public float Unknown31;
+        public Vertex3 ScalingPoint; //Not really sure about that
+        public int PreviousSegment;
+        public int NextSegment; 
+        public int SplineParent;
+        public Vertex3 LowestXYZ;
+        public Vertex3 HighestXYZ;
+        public float SegmentDisatnce;
+        public float PreviousSegmentsDistance;
         public int Unknown32;
     }
 

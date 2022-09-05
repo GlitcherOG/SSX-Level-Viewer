@@ -89,6 +89,10 @@ public class TrickyMapInterface : MonoBehaviour
         SavePBD(path.Substring(0, path.Length - 4) + ".pbd");
         if (TextureChanged)
         {
+            for (int i = 0; i < sshHandler.sshImages.Count; i++)
+            {
+                sshHandler.DarkenImage(i);
+            }
             sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh");
         }
 
@@ -133,7 +137,6 @@ public class TrickyMapInterface : MonoBehaviour
         textures = new List<Texture2D>();
         for (int i = 0; i < sshHandler.sshImages.Count; i++)
         {
-            //sshHandler.BrightenBitmap(i);
             Texture2D texture2D = new Texture2D(1, 1);
             MemoryStream stream = new MemoryStream();
             sshHandler.sshImages[i].bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
@@ -185,6 +188,7 @@ public class TrickyMapInterface : MonoBehaviour
         }
 
         PBDHandler = new PBDHandler();
+        PBDHandler.NumTextures = sshHandler.sshImages.Count;
         PBDHandler.Patches = patchList;
         PBDHandler.Save(path);
     }
@@ -202,6 +206,14 @@ public class TrickyMapInterface : MonoBehaviour
             LoadTextures();
             LoadPatches();
             LoadSplines();
+        }
+        try
+        {
+            LoadSkyBox();
+        }
+        catch
+        {
+            UnityEngine.Debug.Log("No Skybox");
         }
     }
 
@@ -286,6 +298,7 @@ public class TrickyMapInterface : MonoBehaviour
         textures = new List<Texture2D>();
         for (int i = 0; i < sshHandler.sshImages.Count; i++)
         {
+            sshHandler.BrightenBitmap(i);
             Texture2D texture2D = new Texture2D(1, 1);
             MemoryStream stream = new MemoryStream();
             sshHandler.sshImages[i].bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
@@ -299,7 +312,7 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadSkyBox()
     {
         skyboxHandler = new SSHHandler();
-        sshHandler.LoadSSH(LoadPath + "_sky.ssh");
+        skyboxHandler.LoadSSH(LoadPath + "_sky.ssh");
     }
 
     void LoadLighting()

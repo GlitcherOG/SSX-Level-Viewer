@@ -52,6 +52,16 @@ MonoBehaviour:
   Point2: {x: 0, y: 0, z: 0}
   Point3: {x: 0, y: 0, z: 0}
   Point4: {x: 0, y: 0, z: 0}
+  ScalingPoint: {x: 0, y: 0, z: 0, w: 0}
+  NormalizedScalingPoint: {x: 0, y: 0, z: 0}
+  PreviousSegment: 0
+  NextSegment: 0
+  SplineParent: 0
+  LowestXYZ: {x: 0, y: 0, z: 0}
+  HighestXYZ: {x: 0, y: 0, z: 0}
+  SegmentDisatnce: 0
+  PreviousSegmentsDistance: 0
+  Unknown32: 0
   lineRenderer: {fileID: 189013267970641662}
 --- !u!120 &189013267970641662
 LineRenderer:
@@ -72,7 +82,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f0d38a2ba2938d040b9e6a0d423f8f78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

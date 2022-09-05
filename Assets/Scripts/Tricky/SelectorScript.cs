@@ -74,7 +74,7 @@ public class SelectorScript : MonoBehaviour
 
     void RaycastSelection(RaycastHit hit)
     {
-        Debug.Log(hit.transform.name);
+        //Debug.Log(hit.transform.name);
         XYZMovement.SetActive(false);
         SelectedGameObject = hit.transform.gameObject;
         SelectedObject = true;

@@ -5,8 +5,8 @@ using SSX_Modder.FileHandlers.MapEditor;
 
 public class SplineObject : MonoBehaviour
 {
-    Vector3 Position1;
-    Vector3 Position2;
+    public Vector3 LowestXYZ;
+    public Vector3 HighestXYZ;
 
     public int Unknown1;
     public int SplineSegmentCount;
@@ -18,8 +18,8 @@ public class SplineObject : MonoBehaviour
 
     public void LoadSpline(Spline spline, List<SplinesSegments> splinesSegments)
     {
-        Position1 = VertexToVector(spline.Position1);
-        Position2 = VertexToVector(spline.Position2);
+        LowestXYZ = VertexToVector(spline.LowestXYZ);
+        HighestXYZ = VertexToVector(spline.HighestXYZ);
 
         Unknown1 = spline.Unknown1;
         SplineSegmentCount = splinesSegments.Count;

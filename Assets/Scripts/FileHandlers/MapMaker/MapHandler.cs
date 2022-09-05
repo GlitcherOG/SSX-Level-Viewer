@@ -36,10 +36,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0,82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0,82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Models.Add(LinkerItem);
                 LinePos++;
             }
@@ -53,10 +53,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 particelModels.Add(LinkerItem);
                 LinePos++;
             }
@@ -70,10 +70,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Patchs.Add(LinkerItem);
                 LinePos++;
             }
@@ -87,10 +87,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 InternalInstances.Add(LinkerItem);
                 LinePos++;
             }
@@ -104,10 +104,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 PlayerStarts.Add(LinkerItem);
                 LinePos++;
             }
@@ -121,10 +121,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 ParticleInstances.Add(LinkerItem);
                 LinePos++;
             }
@@ -138,10 +138,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Splines.Add(LinkerItem);
                 LinePos++;
             }
@@ -155,10 +155,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Lights.Add(LinkerItem);
                 LinePos++;
             }
@@ -172,10 +172,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Materials.Add(LinkerItem);
                 LinePos++;
             }
@@ -189,10 +189,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 ContextBlocks.Add(LinkerItem);
                 LinePos++;
             }
@@ -206,10 +206,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Cameras.Add(LinkerItem);
                 LinePos++;
             }
@@ -223,10 +223,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Textures.Add(LinkerItem);
                 LinePos++;
             }
@@ -240,10 +240,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     break;
                 }
                 var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82);
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", ""));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", ""));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10);
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
                 Lightmaps.Add(LinkerItem);
                 LinePos++;
             }
