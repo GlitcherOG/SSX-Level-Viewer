@@ -22,232 +22,73 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public List<LinkerItem> Cameras;
         public List<LinkerItem> Textures;
         public List<LinkerItem> Lightmaps;
+
+        int LinePos = 23;
+
         public void Load(string path)
         {
             string[] Lines = File.ReadAllLines(path);
 
-            int LinePos = 23;
+            LinePos = 23;
 
-            Models=new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0,82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Models.Add(LinkerItem);
-                LinePos++;
-            }
+            Models = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            particelModels = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                particelModels.Add(LinkerItem);
-                LinePos++;
-            }
+            particelModels = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            Patchs = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Patchs.Add(LinkerItem);
-                LinePos++;
-            }
+            Patchs = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            InternalInstances = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                InternalInstances.Add(LinkerItem);
-                LinePos++;
-            }
+            InternalInstances = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            PlayerStarts = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                PlayerStarts.Add(LinkerItem);
-                LinePos++;
-            }
+            PlayerStarts = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            ParticleInstances = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                ParticleInstances.Add(LinkerItem);
-                LinePos++;
-            }
+            ParticleInstances = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            Splines = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Splines.Add(LinkerItem);
-                LinePos++;
-            }
+            Splines = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            Lights = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Lights.Add(LinkerItem);
-                LinePos++;
-            }
+            Lights = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            Materials = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Materials.Add(LinkerItem);
-                LinePos++;
-            }
+            Materials = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            ContextBlocks = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                ContextBlocks.Add(LinkerItem);
-                LinePos++;
-            }
+            ContextBlocks = ReadLinkerItems(Lines);
 
             LinePos += 9;
-            Cameras = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Cameras.Add(LinkerItem);
-                LinePos++;
-            }
+            Cameras = ReadLinkerItems(Lines);
 
             LinePos += 8;
-            Textures = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "" || Lines[LinePos].Length == 0)
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Textures.Add(LinkerItem);
-                LinePos++;
-            }
+            Textures = ReadLinkerItems(Lines);
 
             LinePos += 8;
-            Lightmaps = new List<LinkerItem>();
-            while (true)
-            {
-                if (Lines[LinePos] == "")
-                {
-                    break;
-                }
-                var LinkerItem = new LinkerItem();
-                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
-                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
-                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
-                Lightmaps.Add(LinkerItem);
-                LinePos++;
-            }
+            Lightmaps = ReadLinkerItems(Lines);
         }
+
+        List<LinkerItem> ReadLinkerItems(string[] Lines)
+        {
+            var TempList = new List<LinkerItem>();
+            while (true)
+            {
+                if (Lines[LinePos] == "")
+                {
+                    break;
+                }
+                var LinkerItem = new LinkerItem();
+                LinkerItem.Name = Lines[LinePos].Substring(0, 82).TrimEnd(' ');
+                LinkerItem.UID = Int32.Parse(Lines[LinePos].Substring(82, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Ref = Int32.Parse(Lines[LinePos].Substring(92, 10).Replace(" ", "").TrimEnd(' '));
+                LinkerItem.Hashvalue = Lines[LinePos].Substring(102, 10).TrimEnd(' ');
+                TempList.Add(LinkerItem);
+                LinePos++;
+            }
+            return TempList;
+    }
     }
 
     public struct LinkerItem

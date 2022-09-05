@@ -3,11 +3,25 @@
 ## Current Features
 - Patch Editing
 - Texture Libaray Editing
+
+## File Read/Write CheckList
+- [ ] .adl
+- [ ] .api
+- [ ] .ltg
+- [ ] .map
+- [ ] .pbd
+- [ ] .sop
+- [ ] .ssf
+- [x] .ssh
+- [ ] _L.ssh
+- [ ] _sky.ssh
+- [ ] _sky.pbd
  
  ## Todo Today
-- Clean up reading .map data
+- About Page
 - output .map name data
 - Selectable Splines
+- Hide View Commands 
  
  ## Todo add
 - Xray Mesh
@@ -16,7 +30,6 @@
 - key to focus on object
 - Add Patch Size Warning
 - Highlight View Based on Patch Type
-- Hide View Commands
 - Settings Page
 - Auto Save View Modes
 - Hotkey For toggling No Light Mode
@@ -32,6 +45,8 @@
 - Move points
 
 ## Todo Change
+- Redo Dropdown Menus so it auto adds hide menu
+- Tweak Toggle Object Script
 - Black Background button in texture library make neater
 - Standardise SSXModder XYZ Points and vertice reading
 - Make way to dismiss notifcation

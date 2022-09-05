@@ -81,7 +81,7 @@ public class TrickyMapInterface : MonoBehaviour
         if (saveFileDialog.ShowDialog() == DialogResult.OK)
         {
             SaveFiles(saveFileDialog.FileName);
-            MessageBox.Show("Exported Map");
+            NotifcationBarUI.instance.ShowNotifcation("Exported Map", 5f);
         }
     }
 
@@ -188,7 +188,7 @@ public class TrickyMapInterface : MonoBehaviour
             patchList.Add(patchObjects[i].GeneratePatch());
         }
 
-        PBDHandler = new PBDHandler();
+        //PBDHandler = new PBDHandler();
         PBDHandler.NumTextures = sshHandler.sshImages.Count;
         PBDHandler.Patches = patchList;
         PBDHandler.Save(path);
