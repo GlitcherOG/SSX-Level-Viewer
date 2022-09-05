@@ -9,7 +9,7 @@
 - :x: .adl
 - :x: .api
 - :x: .ltg
-- :x: .map
+- :heavy_check_mark: .map
 - :o: .pbd
 - :x: .sop
 - :x: .ssf

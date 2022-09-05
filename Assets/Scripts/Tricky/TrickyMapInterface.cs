@@ -88,6 +88,8 @@ public class TrickyMapInterface : MonoBehaviour
     public void SaveFiles(string path)
     {
         SavePBD(path.Substring(0, path.Length - 4) + ".pbd");
+
+        mMapHandler.Save(path);
         if (TextureChanged)
         {
             for (int i = 0; i < sshHandler.sshImages.Count; i++)
@@ -182,10 +184,17 @@ public class TrickyMapInterface : MonoBehaviour
 
     void SavePBD(string path)
     {
+        mMapHandler.Patchs.Clear();
         List<Patch> patchList = new List<Patch>();
         for (int i = 0; i < patchObjects.Count; i++)
         {
+            var TempLinker = new LinkerItem();
             patchList.Add(patchObjects[i].GeneratePatch());
+            TempLinker.Name = patchObjects[i].PatchName;
+            TempLinker.UID = i;
+            TempLinker.Ref = 1;
+            TempLinker.Hashvalue = "0";
+            mMapHandler.Patchs.Add(TempLinker);
         }
 
         //PBDHandler = new PBDHandler();
