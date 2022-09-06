@@ -6,21 +6,22 @@
 
 ## File Read/Write CheckList
 :heavy_check_mark: - Fully Working, :o: - Somewhat Working, :x: - Not Working
-- :x: .adl
-- :x: .api
-- :x: .ltg
-- :heavy_check_mark: .map
-- :o: .pbd
-- :x: .sop
-- :x: .ssf
-- :heavy_check_mark: .ssh
-- :x: _L.ssh
-- :o: _sky.ssh
-- :x: _sky.pbd
+| File     	| Reading            	| Loading            	|
+|----------	|--------------------	|--------------------	|
+| .adl     	| :x:                	| :x:                	|
+| .api     	| :x:                	| :x:                	|
+| .ltg     	| :x:                	| :x:                	|
+| .map     	| :heavy_check_mark: 	| :heavy_check_mark: 	|
+| .pbd     	| :o:                	| :o:                	|
+| .sop     	| :x:                	| :x:                	|
+| .ssf     	| :x:                	| :x:                	|
+| .ssh     	| :heavy_check_mark: 	| :heavy_check_mark: 	|
+| _L.ssh   	| :x:                	| :x:                	|
+| _sky.ssh 	| :heavy_check_mark: 	| :x:                	|
+| _sky.pbd 	| :x:                	| :x:                	|
  
  ## Todo Today
 - About Page
-- output .map name data
 - Selectable Splines
 - Hide View Commands 
  

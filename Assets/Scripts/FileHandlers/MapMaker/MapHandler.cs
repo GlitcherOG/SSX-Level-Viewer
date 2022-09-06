@@ -80,7 +80,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
             FileLines.Add("N/A");
             FileLines.Add("N/A");
             FileLines.Add("N/A");
-            FileLines.Add("Compiled (" + DateTime.UtcNow.ToLongDateString() + " :: " + DateTime.UtcNow.ToLongTimeString());
+            FileLines.Add("Compiled (" + DateTime.UtcNow.ToLongDateString() + " :: " + DateTime.UtcNow.ToLongTimeString()+")");
             FileLines.Add("");
             FileLines.Add("##");
             FileLines.Add("");
