@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class TrickyMapInterface : MonoBehaviour
 {
     public static TrickyMapInterface Instance;
+    public LevelEditorSettings settings;
     public SSHHandler sshHandler;
     public SSHHandler skyboxHandler;
     public SSHHandler lightingHandler;
@@ -34,6 +35,43 @@ public class TrickyMapInterface : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        settings = LevelEditorSettings.Load(UnityEngine.Application.dataPath +"/Config.json");
+        if (settings.Version != "0.0.3")
+        {
+            settings = new LevelEditorSettings();
+        }
+        settings.Save(UnityEngine.Application.dataPath + "/Config.json");
+    }
+
+    public void StartEmulator()
+    {
+        if (File.Exists(settings.EmulatorPath))
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = settings.EmulatorPath;
+            string path = settings.LaunchPath;
+
+            if (File.Exists(path))
+            {
+                if (path.ToLower().Contains(".iso"))
+                {
+                    startInfo.Arguments = "\"" + path + "\"";
+                }
+                else if (path.ToLower().Contains(".elf"))
+                {
+                    startInfo.Arguments = "-elf \"" + path + "\"";
+                }
+            }
+            else
+            {
+                NotifcationBarUI.instance.ShowNotifcation("No .Elf or ISO Path set", 5);
+            }
+            Process.Start(startInfo);
+        }
+        else
+        {
+            NotifcationBarUI.instance.ShowNotifcation("No Emulator Path Set", 5);
+        }
     }
 
     // Start is called before the first frame update
@@ -115,13 +153,13 @@ public class TrickyMapInterface : MonoBehaviour
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
             bigHandler.LoadBig(openFileDialog.FileName);
-            if(Directory.Exists(UnityEngine.Application.persistentDataPath + "\\TempExtracted"))
+            if(Directory.Exists(UnityEngine.Application.dataPath + "\\TempExtracted"))
             {
-                Directory.Delete(UnityEngine.Application.persistentDataPath + "\\TempExtracted", true);
+                Directory.Delete(UnityEngine.Application.dataPath + "\\TempExtracted", true);
             }
-            Directory.CreateDirectory(UnityEngine.Application.persistentDataPath +"\\TempExtracted");
-            bigHandler.ExtractBig(UnityEngine.Application.persistentDataPath + "\\TempExtracted");
-            string[] Paths = Directory.GetFiles(UnityEngine.Application.persistentDataPath + "\\TempExtracted", "*.map", SearchOption.AllDirectories);
+            Directory.CreateDirectory(UnityEngine.Application.dataPath + "\\TempExtracted");
+            bigHandler.ExtractBig(UnityEngine.Application.dataPath + "\\TempExtracted");
+            string[] Paths = Directory.GetFiles(UnityEngine.Application.dataPath + "\\TempExtracted", "*.map", SearchOption.AllDirectories);
             for (int i = 0; i < Paths.Length; i++)
             {
                 if (Paths[i].Contains(".map"))
@@ -170,7 +208,7 @@ public class TrickyMapInterface : MonoBehaviour
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 SaveFiles(BigPath);
-                bigHandler.LoadFolder(UnityEngine.Application.persistentDataPath + "\\TempExtracted");
+                bigHandler.LoadFolder(UnityEngine.Application.dataPath + "\\TempExtracted");
                 bigHandler.bigType = BigType.C0FB;
                 bigHandler.BuildBig(openFileDialog.FileName);
             }

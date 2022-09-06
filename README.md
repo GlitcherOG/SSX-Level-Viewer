@@ -23,7 +23,10 @@
  ## Todo Today
 - About Page
 - Selectable Splines
-- Hide View Commands
+- Settings Page for keybindings, workspace path, emu path and game path 
+- Hide Point
+- Hide Gizmo
+- Make way to dismiss notifcation
  
  ## Todo add
 - Xray Mesh
@@ -31,11 +34,10 @@
 - key to focus on object
 - Add Patch Size Warning
 - Highlight View Based on Patch Type
-- Settings Page
 - Auto Save View Modes
 - Hotkey For toggling No Light Mode
-- Start Emulator
-- UV Editing Clicking Points to edit UV
+- UV Editing Clicking Points to edit UV and fix colors
+- Texture Flipbook Support
 
 ## Todo For Spline System
 - Spline Saving System
@@ -49,9 +51,7 @@
 ## Todo Change
 - Redo Dropdown Menus so it auto adds hide menu
 - Tweak Toggle Object Script
-- Black Background button in texture library make neater
 - Standardise SSXModder XYZ Points and vertice reading
-- Make way to dismiss notifcation
 - Scroll wheel to have variable speed
 - Redo Point Selector to always be there but hidden doing so should allow for multi selection easier
 - Limit Mouse Look so camera doesnt freak out
@@ -59,7 +59,6 @@
 
 ## Todo BugFixes
 - Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)
-- ^ Maybe using world to canvas or something
 
 ## Todo in Later Update
 - Custom File Opener To fix issues with current code and allow cross platform support
