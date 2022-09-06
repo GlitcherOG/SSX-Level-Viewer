@@ -14,7 +14,7 @@ public class PatchPanel : MonoBehaviour
     public TMP_InputField TextureNumber;
     public TMP_Dropdown PatchStyle;
     public TMP_InputField Unknown1;
-    public TMP_InputField Unknown2;
+    public TMP_InputField LightmapID;
     public TMP_InputField Unknown3;
     public TMP_InputField Unknown4;
     public TMP_InputField Unknown5;
@@ -22,6 +22,8 @@ public class PatchPanel : MonoBehaviour
     public TMP_InputField ShadingPointY;
     public TMP_InputField ShadingPointZ;
     public TMP_InputField ShadingPointW;
+
+    public UVEditor UVWindow;
 
     public GameObject ScrollView;
     public GameObject RCPrefab;
@@ -59,7 +61,7 @@ public class PatchPanel : MonoBehaviour
         RCPreferences[14].SetName("R4C3");
         RCPreferences[15].SetName("R4C4");
 
-        RCPreferences[0].SetColour(Color.white);
+        RCPreferences[0].SetColour(new Color32(202, 202, 202,255));
         RCPreferences[1].SetColour(Color.red);
         RCPreferences[2].SetColour(Color.green);
         RCPreferences[3].SetColour(Color.blue);
@@ -97,7 +99,7 @@ public class PatchPanel : MonoBehaviour
         TextureNumber.text = patch.TextureAssigment.ToString();
         PatchStyle.value = patch.PatchStyle;
         Unknown1.text = patch.Unknown2.ToString();
-        Unknown2.text = patch.Unknown3.ToString();
+        LightmapID.text = patch.LightmapID.ToString();
         Unknown3.text = patch.Unknown4.ToString();
         Unknown4.text = patch.Unknown5.ToString();
         Unknown5.text = patch.Unknown6.ToString();
@@ -163,7 +165,7 @@ public class PatchPanel : MonoBehaviour
                 Destroy(cubePoints[i]);
             }
             cubePoints = new List<GameObject>();
-            SpawnCube(patchObject.RawControlPoint, Color.white);
+            SpawnCube(patchObject.RawControlPoint, new Color32(202, 202, 202, 255));
             SpawnCube(patchObject.RawR1C2, Color.red);
             SpawnCube(patchObject.RawR1C3, Color.green);
             SpawnCube(patchObject.RawR1C4, Color.blue);
@@ -353,18 +355,18 @@ public class PatchPanel : MonoBehaviour
         }
     }
 
-    public void UpdateUnkown2(string Unknowm)
+    public void UpdateLightmapID(string Unknowm)
     {
         if (!DisallowUpdate)
         {
             try
             {
-                Unknown2.GetComponent<Image>().color = Color.white;
-                patchObject.Unknown3 = Int32.Parse(Unknowm);
+                LightmapID.GetComponent<Image>().color = Color.white;
+                patchObject.LightmapID = Int32.Parse(Unknowm);
             }
             catch
             {
-                Unknown2.GetComponent<Image>().color = Color.red;
+                LightmapID.GetComponent<Image>().color = Color.red;
             }
         }
     }
@@ -534,9 +536,17 @@ public class PatchPanel : MonoBehaviour
 
     public void Update()
     {
-        if(patchObject!=null)
-        {
-            Debug.DrawLine(cubePoints[0].transform.position, cubePoints[1].transform.position, Color.black);
-        }
+    }
+
+    public void HideSelfAndChild()
+    {
+        UVWindow.Deactive();
+        gameObject.SetActive(false);
+    }
+
+    public void SetUVEditorActive()
+    {
+        UVWindow.gameObject.SetActive(true);
+        UVWindow.SetActiveWithPatch(patchObject);
     }
 }

@@ -23,11 +23,10 @@
  ## Todo Today
 - About Page
 - Selectable Splines
-- Hide View Commands 
+- Hide View Commands
  
  ## Todo add
 - Xray Mesh
-- UV Editing
 - Patch Panel Texture Selector
 - key to focus on object
 - Add Patch Size Warning
@@ -36,6 +35,7 @@
 - Auto Save View Modes
 - Hotkey For toggling No Light Mode
 - Start Emulator
+- UV Editing Clicking Points to edit UV
 
 ## Todo For Spline System
 - Spline Saving System
@@ -60,7 +60,6 @@
 ## Todo BugFixes
 - Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)
 - ^ Maybe using world to canvas or something
-- Change white point to another colour or give black outline
 
 ## Todo in Later Update
 - Custom File Opener To fix issues with current code and allow cross platform support

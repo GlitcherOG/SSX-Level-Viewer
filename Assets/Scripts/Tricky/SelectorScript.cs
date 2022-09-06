@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SelectorScript : MonoBehaviour
 {
     public static SelectorScript instance;
+    public bool active = true;
     public bool SelectedObject;
     public GameObject SelectedGameObject;
     public string selectedTag;
@@ -26,48 +27,51 @@ public class SelectorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !FlyAroundCamera.Active)
+        if (active)
         {
-            //Set up the new Pointer Event
-            m_PointerEventData = new PointerEventData(m_EventSystem);
-            //Set the Pointer Event Position to that of the mouse position
-            m_PointerEventData.position = Input.mousePosition;
-
-            //Create a list of Raycast Results
-            List<RaycastResult> results = new List<RaycastResult>();
-
-            //Raycast using the Graphics Raycaster and mouse click position
-            m_Raycaster.Raycast(m_PointerEventData, results);
-            if (results.Count == 0)
+            if (Input.GetMouseButtonDown(0) && !FlyAroundCamera.Active)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                int layerMask = 1 << 7;
-                int layerMask2 = 1 << 6;
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-                {
-                    RaycastSelection(hit);
-                }
-                else
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
-                {
-                    RaycastSelection(hit);
-                }
-                else
-                if (Physics.Raycast(ray, out hit))
-                {
-                    Deselect();
-                    RaycastSelection(hit);
-                }
-                else
-                {
-                    Deselect();
-                    if (PatchPanel.instance != null)
-                    {
-                        PatchPanel.instance.DestoyCubes();
-                    }
-                }
+                //Set up the new Pointer Event
+                m_PointerEventData = new PointerEventData(m_EventSystem);
+                //Set the Pointer Event Position to that of the mouse position
+                m_PointerEventData.position = Input.mousePosition;
 
+                //Create a list of Raycast Results
+                List<RaycastResult> results = new List<RaycastResult>();
+
+                //Raycast using the Graphics Raycaster and mouse click position
+                m_Raycaster.Raycast(m_PointerEventData, results);
+                if (results.Count == 0)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    int layerMask = 1 << 7;
+                    int layerMask2 = 1 << 6;
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                    {
+                        RaycastSelection(hit);
+                    }
+                    else
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
+                    {
+                        RaycastSelection(hit);
+                    }
+                    else
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        Deselect();
+                        RaycastSelection(hit);
+                    }
+                    else
+                    {
+                        Deselect();
+                        if (PatchPanel.instance != null)
+                        {
+                            PatchPanel.instance.DestoyCubes();
+                        }
+                    }
+
+                }
             }
         }
     }
@@ -123,7 +127,7 @@ public class SelectorScript : MonoBehaviour
             }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);
-            PatchController.SetActive(false);
+            PatchController.GetComponent<PatchPanel>().HideSelfAndChild();
             selectedTag = "";
             SelectedObject = false;
             SelectedGameObject = null;

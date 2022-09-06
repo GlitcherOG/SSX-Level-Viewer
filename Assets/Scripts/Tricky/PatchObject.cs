@@ -56,7 +56,7 @@ public class PatchObject : MonoBehaviour
     public int PatchStyle;
     public int Unknown2; //Lighting/Material
     public int TextureAssigment;
-    public int Unknown3;
+    public int LightmapID;
     public int Unknown4; 
     public int Unknown5; 
     public int Unknown6; 
@@ -127,7 +127,7 @@ public class PatchObject : MonoBehaviour
         PatchStyle = import.PatchStyle;
         Unknown2 = import.Unknown2;
         TextureAssigment = import.TextureAssigment;
-        Unknown3 = import.Unknown3;
+        LightmapID = import.LightmapID;
         Unknown4 = import.Unknown4;
         Unknown5 = import.Unknown5;
         Unknown6 = import.Unknown6;
@@ -220,7 +220,7 @@ public class PatchObject : MonoBehaviour
         patch.PatchStyle = PatchStyle;
         patch.Unknown2 = Unknown2;
         patch.TextureAssigment = TextureAssigment;
-        patch.Unknown3 = Unknown3;
+        patch.LightmapID = LightmapID;
         patch.Unknown4 = Unknown4;
         patch.Unknown5 = Unknown5;
         patch.Unknown6 = Unknown6;
@@ -382,6 +382,7 @@ public class PatchObject : MonoBehaviour
         vertices.Add((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
 
         //UV Points
+
         Vector2 Point13Dif = (UVPoint3 - UVPoint1);
         Vector2 Point24Dif = (UVPoint4 - UVPoint2);
         Vector2 Point12Dif = (UVPoint2 - UVPoint1);
@@ -392,26 +393,30 @@ public class PatchObject : MonoBehaviour
         Vector2 Point12 = (UVPoint1 + Point13Dif * (2f / 3f));
         Vector2 Point1232Dif = (UVPoint2 + Point24Dif * (2f / 3f) - (UVPoint1 + Point13Dif * (2f / 3f)));
 
-
-        UV.Add(UVPoint2);
-        UV.Add(UVPoint2 + Point24Dif * (1f / 3f));
-        UV.Add(UVPoint2 + Point24Dif * (2f / 3f));
-        UV.Add(UVPoint4);
-
-        UV.Add(UVPoint1 + Point12Dif * (2f / 3f));
-        UV.Add(Point11 + Point1131Dif * (2f / 3f));
-        UV.Add(Point12 + Point1232Dif * (2f / 3f));
-        UV.Add(UVPoint3 + Point34Dif * (2f / 3f));
+        UV.Add(UVPoint1);
+        UV.Add(UVPoint1 + Point13Dif * (1f / 3f));
+        UV.Add(UVPoint1 + Point13Dif * (2f / 3f));
+        UV.Add(UVPoint3);
 
         UV.Add(UVPoint1 + Point12Dif * (1f / 3f));
         UV.Add(Point11 + Point1131Dif * (1f / 3f));
         UV.Add(Point12 + Point1232Dif * (1f / 3f));
         UV.Add(UVPoint3 + Point34Dif * (1f / 3f));
 
-        UV.Add(UVPoint1);
-        UV.Add(UVPoint1 + Point13Dif * (1f / 3f));
-        UV.Add(UVPoint1 + Point13Dif * (2f / 3f));
-        UV.Add(UVPoint3);
+        UV.Add(UVPoint1 + Point12Dif * (2f / 3f));
+        UV.Add(Point11 + Point1131Dif * (2f / 3f));
+        UV.Add(Point12 + Point1232Dif * (2f / 3f));
+        UV.Add(UVPoint3 + Point34Dif * (2f / 3f));
+
+        UV.Add(UVPoint2);
+        UV.Add(UVPoint2 + Point24Dif * (1f / 3f));
+        UV.Add(UVPoint2 + Point24Dif * (2f / 3f));
+        UV.Add(UVPoint4);
+
+        for (int i = 0; i < UV.Count; i++)
+        {
+            UV[i] = PointCorrection(UV[i]);
+        }
 
         //Faces
         //Working
@@ -540,6 +545,20 @@ public class PatchObject : MonoBehaviour
         ToggleLightingMode();
     }
 
+
+    public Vector2 PointCorrection(Vector2 Newpoint)
+    {
+        if (Newpoint.y < 0)
+        {
+            Newpoint.y = -Newpoint.y;
+        }
+        if (Newpoint.x < 0)
+        {
+            Newpoint.x = -Newpoint.x;
+        }
+        return Newpoint;
+    }
+
     public void UpdateMeshPoints()
     {
         var mesh = GetComponent<MeshFilter>().mesh;
@@ -569,6 +588,50 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshCollider>().enabled = false;
         GetComponent<MeshCollider>().sharedMesh = mesh;
         GetComponent<MeshCollider>().enabled = true;
+    }
+
+    public void UpdateUVPoints()
+    {
+        var mesh = GetComponent<MeshFilter>().mesh;
+        //UV Points
+        Vector2 Point13Dif = (UVPoint3 - UVPoint1);
+        Vector2 Point24Dif = (UVPoint4 - UVPoint2);
+        Vector2 Point12Dif = (UVPoint2 - UVPoint1);
+        Vector2 Point34Dif = (UVPoint4 - UVPoint3);
+
+        Vector2 Point11 = (UVPoint1 + Point13Dif * (1f / 3f));
+        Vector2 Point1131Dif = (UVPoint2 + Point24Dif * (1f / 3f) - (UVPoint1 + Point13Dif * (1f / 3f)));
+        Vector2 Point12 = (UVPoint1 + Point13Dif * (2f / 3f));
+        Vector2 Point1232Dif = (UVPoint2 + Point24Dif * (2f / 3f) - (UVPoint1 + Point13Dif * (2f / 3f)));
+
+        List<Vector2> NewUV = new List<Vector2>();
+
+        NewUV.Add(UVPoint1);
+        NewUV.Add(UVPoint1 + Point13Dif * (1f / 3f));
+        NewUV.Add(UVPoint1 + Point13Dif * (2f / 3f));
+        NewUV.Add(UVPoint3);
+
+        NewUV.Add(UVPoint1 + Point12Dif * (1f / 3f));
+        NewUV.Add(Point11 + Point1131Dif * (1f / 3f));
+        NewUV.Add(Point12 + Point1232Dif * (1f / 3f));
+        NewUV.Add(UVPoint3 + Point34Dif * (1f / 3f));
+
+        NewUV.Add(UVPoint1 + Point12Dif * (2f / 3f));
+        NewUV.Add(Point11 + Point1131Dif * (2f / 3f));
+        NewUV.Add(Point12 + Point1232Dif * (2f / 3f));
+        NewUV.Add(UVPoint3 + Point34Dif * (2f / 3f));
+
+        NewUV.Add(UVPoint2);
+        NewUV.Add(UVPoint2 + Point24Dif * (1f / 3f));
+        NewUV.Add(UVPoint2 + Point24Dif * (2f / 3f));
+        NewUV.Add(UVPoint4);
+
+        for (int i = 0; i < NewUV.Count; i++)
+        {
+            NewUV[i] = PointCorrection(NewUV[i]);
+        }
+        mesh.uv = NewUV.ToArray();
+        GetComponent<MeshFilter>().mesh = mesh;
     }
 
     public void ToggleLightingMode()

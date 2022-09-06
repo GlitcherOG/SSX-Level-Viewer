@@ -20,7 +20,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public int NumLights;
         public int NumSplines;
         public int NumSplineSegments;
-        public int NumTextureFlips;
+        public int NumTextureFlipbooks;
         public int NumModels;
         public int ParticleModelCount;
         public int NumTextures;
@@ -37,7 +37,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public int LightsOffset;
         public int SplineOffset;
         public int SplineSegmentOffset;
-        public int TextureFlipOffset;
+        public int TextureFlipbookOffset;
         public int ModelPointerOffset;
         public int ModelsOffset;
 
@@ -55,7 +55,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public List<Model> models;
         public List<Spline> splines;
         public List<SplinesSegments> splinesSegments;
-        public List<TextureFlip> textureFlips;
+        public List<TextureFlipbook> textureFlipbooks;
 
         public void loadandsave(string path)
         {
@@ -71,7 +71,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 NumLights = StreamUtil.ReadInt32(stream);
                 NumSplines = StreamUtil.ReadInt32(stream); //Done
                 NumSplineSegments = StreamUtil.ReadInt32(stream); //Done
-                NumTextureFlips = StreamUtil.ReadInt32(stream); //Done
+                NumTextureFlipbooks = StreamUtil.ReadInt32(stream); //Done
                 NumModels = StreamUtil.ReadInt32(stream);
                 ParticleModelCount = StreamUtil.ReadInt32(stream);
                 NumTextures = StreamUtil.ReadInt32(stream);
@@ -87,7 +87,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 LightsOffset = StreamUtil.ReadInt32(stream);
                 SplineOffset = StreamUtil.ReadInt32(stream); //Done
                 SplineSegmentOffset = StreamUtil.ReadInt32(stream); //Done
-                TextureFlipOffset = StreamUtil.ReadInt32(stream); //Done
+                TextureFlipbookOffset = StreamUtil.ReadInt32(stream); //Done
                 ModelPointerOffset = StreamUtil.ReadInt32(stream);
                 ModelsOffset = StreamUtil.ReadInt32(stream);
 
@@ -151,18 +151,18 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 }
 
                 //Texture Flips
-                textureFlips = new List<TextureFlip>();
-                stream.Position = TextureFlipOffset;
-                for (int i = 0; i < NumTextureFlips; i++)
+                textureFlipbooks = new List<TextureFlipbook>();
+                stream.Position = TextureFlipbookOffset;
+                for (int i = 0; i < NumTextureFlipbooks; i++)
                 {
-                    var TempTextureFlip = new TextureFlip();
-                    TempTextureFlip.Count = StreamUtil.ReadInt32(stream);
-                    TempTextureFlip.ints = new List<int>();
-                    for (int a = 0; a < TempTextureFlip.Count; a++)
+                    var TempTextureFlip = new TextureFlipbook();
+                    TempTextureFlip.ImageCount = StreamUtil.ReadInt32(stream);
+                    TempTextureFlip.ImagePositions = new List<int>();
+                    for (int a = 0; a < TempTextureFlip.ImageCount; a++)
                     {
-                        TempTextureFlip.ints.Add(StreamUtil.ReadInt32(stream));
+                        TempTextureFlip.ImagePositions.Add(StreamUtil.ReadInt32(stream));
                     }
-                    textureFlips.Add(TempTextureFlip);
+                    textureFlipbooks.Add(TempTextureFlip);
                 }
 
                 //ModelData
@@ -213,8 +213,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
                 StreamUtil.WriteInt32(stream, splines.Count);
                 StreamUtil.WriteInt32(stream, splinesSegments.Count);
-
-                NumTextureFlips = StreamUtil.ReadInt32(stream); //Done
+                StreamUtil.WriteInt32(stream, textureFlipbooks.Count);
 
                 NumModels = StreamUtil.ReadInt32(stream);
                 ParticleModelCount = StreamUtil.ReadInt32(stream);
@@ -233,7 +232,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 LightsOffset = StreamUtil.ReadInt32(stream);
                 SplineOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
                 SplineSegmentOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
-                TextureFlipOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
+                TextureFlipbookOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
                 ModelPointerOffset = StreamUtil.ReadInt32(stream);
                 ModelsOffset = StreamUtil.ReadInt32(stream);
 
@@ -286,20 +285,20 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     StreamUtil.WriteInt32(stream, TempPatch.PatchStyle);
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown2);
                     StreamUtil.WriteInt16(stream, TempPatch.TextureAssigment);
-                    StreamUtil.WriteInt16(stream, TempPatch.Unknown3);
+                    StreamUtil.WriteInt16(stream, TempPatch.LightmapID);
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown4);
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown5);
                     StreamUtil.WriteInt32(stream, TempPatch.Unknown6);
                 }
 
-                //Texture Flips
-                stream.Position = TextureFlipOffset;
-                for (int i = 0; i < textureFlips.Count; i++)
+                //Texture Flipbooks
+                stream.Position = TextureFlipbookOffset;
+                for (int i = 0; i < textureFlipbooks.Count; i++)
                 {
-                    StreamUtil.WriteInt32(stream, textureFlips[i].ints.Count);
-                    for (int a = 0; a < textureFlips[i].ints.Count; a++)
+                    StreamUtil.WriteInt32(stream, textureFlipbooks[i].ImagePositions.Count);
+                    for (int a = 0; a < textureFlipbooks[i].ImagePositions.Count; a++)
                     {
-                        StreamUtil.WriteInt32(stream, textureFlips[i].ints[a]);
+                        StreamUtil.WriteInt32(stream, textureFlipbooks[i].ImagePositions[a]);
                     }
                 }
 
@@ -573,7 +572,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
             face.PatchStyle = StreamUtil.ReadInt32(stream);
             face.Unknown2 = StreamUtil.ReadInt32(stream); //Material/Lighting
             face.TextureAssigment = StreamUtil.ReadInt16(stream);
-            face.Unknown3 = StreamUtil.ReadInt16(stream);
+            face.LightmapID = StreamUtil.ReadInt16(stream);
 
             //Always the same
             face.Unknown4 = StreamUtil.ReadInt32(stream); //Negitive one
@@ -613,10 +612,10 @@ namespace SSX_Modder.FileHandlers.MapEditor
         }
     }
 
-    public struct TextureFlip
+    public struct TextureFlipbook
     {
-        public int Count;
-        public List<int> ints;
+        public int ImageCount;
+        public List<int> ImagePositions;
     }
 
     public struct Spline
@@ -767,7 +766,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
         public int Unknown2; // Some Kind of material Assignment Or Lighting
         public int TextureAssigment; // Texture Assigment 
-        public int Unknown3;
+        public int LightmapID;
         public int Unknown4; //Negative one
         public int Unknown5; //Same
         public int Unknown6; //Same

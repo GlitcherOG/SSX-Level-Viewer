@@ -215,6 +215,7 @@ public class TrickyMapInterface : MonoBehaviour
             LoadTextures();
             LoadPatches();
             LoadSplines();
+            LoadTextureFlipbooks();
         }
         try
         {
@@ -223,6 +224,23 @@ public class TrickyMapInterface : MonoBehaviour
         catch
         {
             NotifcationBarUI.instance.ShowNotifcation("No Skybox Textures Detected", 5f);
+        }
+    }
+
+    void LoadTextureFlipbooks()
+    {
+
+    }
+
+    public void HideObjects(int a)
+    {
+        if(a==0)
+        {
+            patchesParent.SetActive(!patchesParent.activeSelf);
+        }
+        if (a == 1)
+        {
+            splineParent.SetActive(!splineParent.activeSelf);
         }
     }
 
