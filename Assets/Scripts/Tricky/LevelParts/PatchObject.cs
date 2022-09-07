@@ -657,11 +657,6 @@ public class PatchObject : MonoBehaviour
         }
     }
 
-    public void UpdatePatchStyle(int a)
-    {
-        PatchStyle = a;
-    }
-
     void LoadLowPolyMesh()
     {
         List<int> ints = new List<int>();

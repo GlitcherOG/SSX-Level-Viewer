@@ -58,14 +58,14 @@ public class FlyAroundCamera : MonoBehaviour
             {
                 transform.position += transform.up * (CurrentSpeed * Time.deltaTime);
             }
-
-            if(Input.GetKeyDown(TrickyMapInterface.Instance.settings.ZeroCamera))
-            {
-                transform.position = new Vector3(0, 0, 0);
-            }
         }
 
-        if(Input.GetKeyDown(TrickyMapInterface.Instance.settings.Cameratoggle))
+        if (Input.GetKeyDown(TrickyMapInterface.Instance.settings.ZeroCamera))
+        {
+            transform.position = new Vector3(0, 0, 0);
+        }
+
+        if (Input.GetKeyDown(TrickyMapInterface.Instance.settings.Cameratoggle))
         {
             Active = !Active;
             if(Active)

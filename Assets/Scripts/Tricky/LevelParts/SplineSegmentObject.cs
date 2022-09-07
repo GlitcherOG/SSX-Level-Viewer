@@ -70,12 +70,51 @@ public class SplineSegmentObject : MonoBehaviour
         SetDataLineRender();
         transform.position = ProcessedPoint1 * TrickyMapInterface.Scale;
         DrawCurve();
+        if(SplineParent==12)
+        {
+            Debug.Log(Vector3.Distance(Point4- Point1, new Vector3(0,0,0)));
+        }
+    }
 
+    float GenerateDistance()
+    {
+        float distance = 0;
+        for (int i = 0; i < lineRenderer.positionCount-1; i++)
+        {
+            distance += Vector3.Distance(lineRenderer.GetPosition(i), lineRenderer.GetPosition(i + 1));
+        }
+        return distance;
     }
 
     public SplinesSegments GenerateSplineSegment()
     {
+        SplinesSegments segments = new SplinesSegments();
+        ProcessPoints();
+        segments.ControlPoint = ConversionTools.Vector3ToVertex3(ProcessedPoint1,1);
+        segments.Point2 = ConversionTools.Vector3ToVertex3(ProcessedPoint2, 0);
+        segments.Point3 = ConversionTools.Vector3ToVertex3(ProcessedPoint3, 0);
+        segments.Point4 = ConversionTools.Vector3ToVertex3(ProcessedPoint4, 0);
+        segments.ScalingPoint = ConversionTools.Vector4ToVertex3(ScalingPoint);
 
+        //Parent, Next Segment and Previous Segment Generated in Spline Object
+
+        segments.LowestXYZ = ConversionTools.Vector3ToVertex3(Point1);
+        segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point2);
+        segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point3);
+        segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point4);
+
+        segments.HighestXYZ = ConversionTools.Vector3ToVertex3(Point1);
+        segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point2);
+        segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point3);
+        segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point4);
+
+        segments.SegmentDisatnce = Vector3.Distance(Point4, Point1);
+
+        //Preveous Segment Distance Generated in Spline
+
+        segments.Unknown32 = Unknown32;
+
+        return segments;
     }
 
     void GeneratePoints()
@@ -84,6 +123,14 @@ public class SplineSegmentObject : MonoBehaviour
         Point2 = Point1 + ProcessedPoint2 / 3;
         Point3 = Point2 + (ProcessedPoint2 + ProcessedPoint3) / 3;
         Point4 = ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3 + ProcessedPoint4;
+    }
+
+    void ProcessPoints()
+    {
+        ProcessedPoint1 = Point1;
+        ProcessedPoint2 = (Point2-Point1)*3;
+        ProcessedPoint3 = (Point3 - Point2) * 3 - ProcessedPoint2;
+        ProcessedPoint4 = Point4 - (ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3);
     }
 
     void SetDataLineRender()

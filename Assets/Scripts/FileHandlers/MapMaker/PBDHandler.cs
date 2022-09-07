@@ -394,11 +394,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 for (int i = 0; i < splinesSegments.Count; i++)
                 {
                     var SplineSegment = splinesSegments[i];
-                    SplineSegment.Point4.W = 0;
                     SaveVertices(stream, SplineSegment.Point4, true);
-                    SplineSegment.Point3.W = 0;
                     SaveVertices(stream, SplineSegment.Point3, true);
-                    SplineSegment.Point2.W = 0;
                     SaveVertices(stream, SplineSegment.Point2, true);
                     SaveVertices(stream, SplineSegment.ControlPoint, true);
 

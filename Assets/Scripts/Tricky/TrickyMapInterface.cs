@@ -31,7 +31,10 @@ public class TrickyMapInterface : MonoBehaviour
 
     public List<Texture2D> textures;
     public List<PatchObject> patchObjects = new List<PatchObject>();
+    public List<SplineObject> splineObjects = new List<SplineObject>();
 
+    string BigPath;
+    bool BigImported;
     public string ConfigPath;
     public string Version = "0.0.3";
 
@@ -78,12 +81,6 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     public void ReloadEditor()
     {
         SceneManager.LoadScene("TrickyLevelLoader", LoadSceneMode.Single);
@@ -95,85 +92,6 @@ public class TrickyMapInterface : MonoBehaviour
         for (int i = 0; i < patchObjects.Count; i++)
         {
             patchObjects[i].ToggleLightingMode();
-        }
-    }
-
-    public void OpenFileMap()
-    {
-        OpenFileDialog saveFileDialog = new OpenFileDialog()
-        {
-            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
-            FilterIndex = 1,
-            RestoreDirectory = false
-        };
-        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            LoadMapFiles(saveFileDialog.FileName);
-        }
-    }
-
-    public void SaveFileMap()
-    {
-        SaveFileDialog saveFileDialog = new SaveFileDialog()
-        {
-            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
-            FilterIndex = 1,
-            RestoreDirectory = false
-        };
-        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            SaveFiles(saveFileDialog.FileName);
-            NotifcationBarUI.instance.ShowNotifcation("Exported Map", 5f);
-        }
-    }
-
-    public void SaveFiles(string path)
-    {
-        SavePBD(path.Substring(0, path.Length - 4) + ".pbd");
-
-        mMapHandler.Save(path);
-        if (TextureChanged)
-        {
-            for (int i = 0; i < sshHandler.sshImages.Count; i++)
-            {
-                sshHandler.DarkenImage(i);
-            }
-            sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh");
-        }
-
-    }
-
-    string BigPath;
-    bool BigImported;
-    public void ExtractBig()
-    {
-        BigHandler bigHandler = new BigHandler();
-        OpenFileDialog openFileDialog = new OpenFileDialog()
-        {
-            Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
-            FilterIndex = 1,
-            RestoreDirectory = false
-        };
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            bigHandler.LoadBig(openFileDialog.FileName);
-            if(Directory.Exists(UnityEngine.Application.dataPath + "\\TempExtracted"))
-            {
-                Directory.Delete(UnityEngine.Application.dataPath + "\\TempExtracted", true);
-            }
-            Directory.CreateDirectory(UnityEngine.Application.dataPath + "\\TempExtracted");
-            bigHandler.ExtractBig(UnityEngine.Application.dataPath + "\\TempExtracted");
-            string[] Paths = Directory.GetFiles(UnityEngine.Application.dataPath + "\\TempExtracted", "*.map", SearchOption.AllDirectories);
-            for (int i = 0; i < Paths.Length; i++)
-            {
-                if (Paths[i].Contains(".map"))
-                {
-                    BigImported = true;
-                    BigPath = Paths[i];
-                    LoadMapFiles(Paths[i]);
-                    break;
-                }
-            }
         }
     }
 
@@ -198,56 +116,83 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    public void MakeBig()
-    {
-        if (BigImported)
-        {
-            BigHandler bigHandler = new BigHandler();
-            SaveFileDialog openFileDialog = new SaveFileDialog()
-            {
-                Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
-                FilterIndex = 1,
-                RestoreDirectory = false
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                SaveFiles(BigPath);
-                bigHandler.LoadFolder(UnityEngine.Application.dataPath + "\\TempExtracted");
-                bigHandler.bigType = BigType.C0FB;
-                bigHandler.BuildBig(openFileDialog.FileName);
-            }
-        }
-    }
-
     public void QuitApp()
     {
         UnityEngine.Application.Quit();
     }
 
-    void SavePBD(string path)
+    public void HideObjects(int a)
     {
-        mMapHandler.Patchs.Clear();
-        List<Patch> patchList = new List<Patch>();
-        for (int i = 0; i < patchObjects.Count; i++)
+        if (a == 0)
         {
-            var TempLinker = new LinkerItem();
-            patchList.Add(patchObjects[i].GeneratePatch());
-            TempLinker.Name = patchObjects[i].PatchName;
-            TempLinker.UID = i;
-            TempLinker.Ref = 1;
-            TempLinker.Hashvalue = "0";
-            mMapHandler.Patchs.Add(TempLinker);
+            patchesParent.SetActive(!patchesParent.activeSelf);
         }
+        if (a == 1)
+        {
+            splineParent.SetActive(!splineParent.activeSelf);
+        }
+    }
 
-        //PBDHandler = new PBDHandler();
-        PBDHandler.NumTextures = sshHandler.sshImages.Count;
-        PBDHandler.Patches = patchList;
-        PBDHandler.Save(path);
+
+    void SpawnPoints(Vector3 vector3, string Name)
+    {
+        GameObject gameObject = new GameObject();
+        gameObject.transform.position = vector3;
+        gameObject.transform.parent = this.gameObject.transform;
+        gameObject.name = Name;
+        gameObject.AddComponent<CubeID>();
+    }
+
+    #region Load Stuff
+    public void OpenFileMap()
+    {
+        OpenFileDialog saveFileDialog = new OpenFileDialog()
+        {
+            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
+            FilterIndex = 1,
+            RestoreDirectory = false
+        };
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            LoadMapFiles(saveFileDialog.FileName);
+        }
+    }
+
+    public void ExtractBig()
+    {
+        BigHandler bigHandler = new BigHandler();
+        OpenFileDialog openFileDialog = new OpenFileDialog()
+        {
+            Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
+            FilterIndex = 1,
+            RestoreDirectory = false
+        };
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            bigHandler.LoadBig(openFileDialog.FileName);
+            if (Directory.Exists(UnityEngine.Application.dataPath + "\\TempExtracted"))
+            {
+                Directory.Delete(UnityEngine.Application.dataPath + "\\TempExtracted", true);
+            }
+            Directory.CreateDirectory(UnityEngine.Application.dataPath + "\\TempExtracted");
+            bigHandler.ExtractBig(UnityEngine.Application.dataPath + "\\TempExtracted");
+            string[] Paths = Directory.GetFiles(UnityEngine.Application.dataPath + "\\TempExtracted", "*.map", SearchOption.AllDirectories);
+            for (int i = 0; i < Paths.Length; i++)
+            {
+                if (Paths[i].Contains(".map"))
+                {
+                    BigImported = true;
+                    BigPath = Paths[i];
+                    LoadMapFiles(Paths[i]);
+                    break;
+                }
+            }
+        }
     }
 
     void LoadMapFiles(string Path)
     {
-        LoadPath = Path.Substring(0, Path.Length-4);
+        LoadPath = Path.Substring(0, Path.Length - 4);
         PBDHandler = new PBDHandler();
         mMapHandler = new MapHandler();
         //LoadLighting();
@@ -275,7 +220,7 @@ public class TrickyMapInterface : MonoBehaviour
     {
         for (int i = 0; i < PBDHandler.Instances.Count; i++)
         {
-            SpawnPoints(VertexToVector(PBDHandler.Instances[i].Unknown4)*Scale, mMapHandler.InternalInstances[i].Name);
+            SpawnPoints(ConversionTools.Vertex3ToVector3(PBDHandler.Instances[i].Unknown4) * Scale, mMapHandler.InternalInstances[i].Name);
         }
     }
 
@@ -283,25 +228,13 @@ public class TrickyMapInterface : MonoBehaviour
     {
         for (int i = 0; i < PBDHandler.particleInstances.Count; i++)
         {
-            SpawnPoints(VertexToVector(PBDHandler.particleInstances[i].Unknown4) * Scale, mMapHandler.ParticleInstances[i].Name);
+            SpawnPoints(ConversionTools.Vertex3ToVector3(PBDHandler.particleInstances[i].Unknown4) * Scale, mMapHandler.ParticleInstances[i].Name);
         }
     }
 
     void LoadTextureFlipbooks()
     {
 
-    }
-
-    public void HideObjects(int a)
-    {
-        if(a==0)
-        {
-            patchesParent.SetActive(!patchesParent.activeSelf);
-        }
-        if (a == 1)
-        {
-            splineParent.SetActive(!splineParent.activeSelf);
-        }
     }
 
     bool LoadPBD()
@@ -315,7 +248,7 @@ public class TrickyMapInterface : MonoBehaviour
                 {
 
                 }
-                File.Copy(LoadPath+  " - Copy.pbd", LoadPath + ".pbd");
+                File.Copy(LoadPath + " - Copy.pbd", LoadPath + ".pbd");
             }
             PBDHandler.loadandsave(LoadPath + ".pbd");
             return true;
@@ -328,29 +261,22 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadSplines()
     {
+        splineObjects = new List<SplineObject>();
         for (int i = 0; i < PBDHandler.splines.Count; i++)
         {
             var Temp = PBDHandler.splines[i];
-            List<SplinesSegments> Segments = new List<SplinesSegments>();
 
+            List<SplinesSegments> Segments = new List<SplinesSegments>();
             for (int a = Temp.SplineSegmentPosition; a < Temp.SplineSegmentCount + Temp.SplineSegmentPosition; a++)
             {
                 Segments.Add(PBDHandler.splinesSegments[a]);
             }
 
             GameObject TempSpline = Instantiate(SplinePrefab, splineParent.transform);
-            TempSpline.transform.name = mMapHandler.Splines[i].Name + " (" + i.ToString()+ ")";
+            TempSpline.transform.name = mMapHandler.Splines[i].Name + " (" + i.ToString() + ")";
             TempSpline.GetComponent<SplineObject>().LoadSpline(Temp, Segments);
+            splineObjects.Add(TempSpline.GetComponent<SplineObject>());
         }
-    }
-
-    void SpawnPoints(Vector3 vector3, string Name)
-    {
-        GameObject gameObject = new GameObject();
-        gameObject.transform.position = vector3;
-        gameObject.transform.parent = this.gameObject.transform;
-        gameObject.name = Name;
-        gameObject.AddComponent<CubeID>();
     }
 
     void LoadPatches()
@@ -402,13 +328,93 @@ public class TrickyMapInterface : MonoBehaviour
         sshHandler.LoadSSH(LoadPath + "_L.ssh");
     }
 
-    Vector3 VertexToVector(Vertex3 vertex3)
+    #endregion
+
+    #region Save Stuff
+    void SavePBD(string path)
     {
-        return new Vector3(vertex3.X, vertex3.Z, vertex3.Y);
+        mMapHandler.Patchs.Clear();
+        List<Patch> patchList = new List<Patch>();
+        for (int i = 0; i < patchObjects.Count; i++)
+        {
+            var TempLinker = new LinkerItem();
+            patchList.Add(patchObjects[i].GeneratePatch());
+            TempLinker.Name = patchObjects[i].PatchName;
+            TempLinker.UID = i;
+            TempLinker.Ref = 1;
+            TempLinker.Hashvalue = "0";
+            mMapHandler.Patchs.Add(TempLinker);
+        }
+
+        List<Spline> splineList = new List<Spline>();
+        List<SplinesSegments> splinesSegmentsList = new List<SplinesSegments>();
+        int SegmentPos = 0;
+        for (int i = 0; i < splineObjects.Count; i++)
+        {
+            splineList.Add(splineObjects[i].GenerateSpline(SegmentPos));
+            splinesSegmentsList.InsertRange(splinesSegmentsList.Count, splineObjects[i].GetSegments(SegmentPos, i));
+            SegmentPos += splineObjects[i].splineSegmentObjects.Count;
+        }
+
+        //PBDHandler = new PBDHandler();
+        PBDHandler.NumTextures = sshHandler.sshImages.Count;
+        PBDHandler.Patches = patchList;
+        PBDHandler.splines = splineList;
+        PBDHandler.splinesSegments = splinesSegmentsList;
+        PBDHandler.Save(path);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SaveFileMap()
     {
+        SaveFileDialog saveFileDialog = new SaveFileDialog()
+        {
+            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
+            FilterIndex = 1,
+            RestoreDirectory = false
+        };
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            SaveFiles(saveFileDialog.FileName);
+            NotifcationBarUI.instance.ShowNotifcation("Exported Map", 5f);
+        }
     }
+
+    public void SaveFiles(string path)
+    {
+        SavePBD(path.Substring(0, path.Length - 4) + ".pbd");
+
+        mMapHandler.Save(path);
+        if (TextureChanged)
+        {
+            for (int i = 0; i < sshHandler.sshImages.Count; i++)
+            {
+                sshHandler.DarkenImage(i);
+            }
+            sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh");
+        }
+
+    }
+
+    public void MakeBig()
+    {
+        if (BigImported)
+        {
+            BigHandler bigHandler = new BigHandler();
+            SaveFileDialog openFileDialog = new SaveFileDialog()
+            {
+                Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
+                FilterIndex = 1,
+                RestoreDirectory = false
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                SaveFiles(BigPath);
+                bigHandler.LoadFolder(UnityEngine.Application.dataPath + "\\TempExtracted");
+                bigHandler.bigType = BigType.C0FB;
+                bigHandler.BuildBig(openFileDialog.FileName);
+            }
+        }
+    }
+
+    #endregion
 }

@@ -487,7 +487,7 @@ public class PatchPanel : MonoBehaviour
     {
         if (!DisallowUpdate)
         {
-            patchObject.UpdatePatchStyle(NewStyle);
+            patchObject.PatchStyle = NewStyle;
         }
     }
 

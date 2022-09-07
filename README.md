@@ -40,18 +40,16 @@
 - ImgBurn Support
 
 ## Todo For Spline System
-- Spline Saving System
 - Moveable Points
 - Proper Rendering instead of basic line render
 - Panel
 - Retool Point System so its more modular
 - Movable
-- Move points
 
 ## Todo Change
 - Redo Dropdown Menus so it auto adds hide menu
 - Tweak Toggle Object Script
-- Standardise SSXModder XYZ Points and vertice reading
+- Standardise SSXModder XYZ Points
 - Scroll wheel to have variable speed
 - Redo Point Selector to always be there but hidden doing so should allow for multi selection easier
 - Limit Mouse Look so camera doesnt freak out
@@ -61,6 +59,7 @@
 
 ## Todo BugFixes
 - Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)
+- Fix Distance Generation Spline (Best guess is that they use the bezier curve generation to do it)
 
 ## Todo in Later Update
 - Custom File Opener To fix issues with current code and allow cross platform support
