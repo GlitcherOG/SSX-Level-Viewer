@@ -43,7 +43,6 @@
 - Moveable Points
 - Proper Rendering instead of basic line render
 - Panel
-- Retool Point System so its more modular
 - Movable
 
 ## Todo Change
@@ -51,9 +50,7 @@
 - Tweak Toggle Object Script
 - Standardise SSXModder XYZ Points
 - Scroll wheel to have variable speed
-- Redo Point Selector to always be there but hidden doing so should allow for multi selection easier
 - Limit Mouse Look so camera doesnt freak out
-- Selection to move patch outside relative mode
 - Settings for keybindings, workspace path
 - Open File for Settings Page
 

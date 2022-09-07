@@ -65,10 +65,6 @@ public class SelectorScript : MonoBehaviour
                     else
                     {
                         Deselect();
-                        if (PatchPanel.instance != null)
-                        {
-                            PatchPanel.instance.DestoyCubes();
-                        }
                     }
 
                 }
@@ -78,7 +74,6 @@ public class SelectorScript : MonoBehaviour
 
     void RaycastSelection(RaycastHit hit)
     {
-        //Debug.Log(hit.transform.name);
         XYZMovement.SetActive(false);
         SelectedGameObject = hit.transform.gameObject;
         SelectedObject = true;
@@ -93,6 +88,8 @@ public class SelectorScript : MonoBehaviour
             if (selectedTag == "Patch")
             {
                 PatchController.SetActive(true);
+                XYZMovement.SetActive(true);
+                XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint()*TrickyMapInterface.Scale);
                 PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
             }
             if(selectedTag == "Patch Point")
@@ -123,7 +120,6 @@ public class SelectorScript : MonoBehaviour
             if (selectedTag == "Patch")
             {
                 SelectedGameObject.GetComponent<PatchObject>().UnSelectedObject();
-                PatchPanel.instance.DestoyCubes();
             }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);

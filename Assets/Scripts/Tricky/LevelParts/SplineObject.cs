@@ -33,6 +33,18 @@ public class SplineObject : MonoBehaviour
 
             splineSegmentObjects.Add(TempGameobject.GetComponent<SplineSegmentObject>());
         }
+
+        for (int i = 0; i < splineSegmentObjects.Count-1; i++)
+        {
+            if (Vector3.Distance(splineSegmentObjects[i].Point4, splineSegmentObjects[i + 1].Point1)<0.1f)
+            {
+                Debug.Log("true");
+            }
+            else
+            {
+                Debug.Log("false");
+            }
+        }
     }
 
     public Spline GenerateSpline(int StartPos)

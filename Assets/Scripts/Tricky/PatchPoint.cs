@@ -18,14 +18,19 @@ public class PatchPoint : MonoBehaviour
 
     void Update()
     {
+        transform.localScale = Vector3.one * Vector3.Distance(Camera.main.transform.position, transform.position) / 25;
         if (!DisableUpdate)
         {
-            transform.localScale = Vector3.one * Vector3.Distance(Camera.main.transform.position, transform.position) / 25;
             if (OldPosition != transform.position)
             {
                 OldPosition = transform.position;
                 unityEvent.Invoke(ID);
             }
         }
+    }
+
+    public void ResetOldPosition()
+    {
+        OldPosition = transform.position;
     }
 }

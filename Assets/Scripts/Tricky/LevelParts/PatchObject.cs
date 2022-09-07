@@ -7,8 +7,7 @@ using System.IO;
 public class PatchObject : MonoBehaviour
 {
     public string PatchName;
-    public Vector4 ScalePoint; //Possition?
-    public Vector3 NormalisedScalePoint;
+    public Vector4 ScalePoint; 
     [Space(10)]
     public Vector2 UVPoint1;
     public Vector2 UVPoint2;
@@ -61,35 +60,38 @@ public class PatchObject : MonoBehaviour
     public int Unknown5; 
     public int Unknown6; 
     public Patch patch;
-
+    [Space(10)]
     public Material MainMaterial;
     public Material NoLightMaterial;
     public Renderer Renderer;
+    public GameObject PointPrefab;
+    public List<PatchPoint> PatchPoints;
 
     [Space(10)]
-    public Vector3 ControlPoint;
-    public Vector3 R1C2;
-    public Vector3 R1C3;
-    public Vector3 R1C4;
-    public Vector3 R2C1;
-    public Vector3 R2C2;
-    public Vector3 R2C3;
-    public Vector3 R2C4;
-    public Vector3 R3C1;
-    public Vector3 R3C2;
-    public Vector3 R3C3;
-    public Vector3 R3C4;
-    public Vector3 R4C1;
-    public Vector3 R4C2;
-    public Vector3 R4C3;
-    public Vector3 R4C4;
+    private Vector3 ControlPoint;
+    private Vector3 R1C2;
+    private Vector3 R1C3;
+    private Vector3 R1C4;
+    private Vector3 R2C1;
+    private Vector3 R2C2;
+    private Vector3 R2C3;
+    private Vector3 R2C4;
+    private Vector3 R3C1;
+    private Vector3 R3C2;
+    public  Vector3 R3C3;
+    private Vector3 R3C4;
+    private Vector3 R4C1;
+    private Vector3 R4C2;
+    private Vector3 R4C3;
+    private Vector3 R4C4;
+
+    Vector3 oldPosition;
 
     public void LoadPatch(Patch import, string NewName)
     {
         patch= import;
         PatchName = NewName;
         ScalePoint = new Vector4(import.ScalePoint.X, import.ScalePoint.Y, import.ScalePoint.Z, import.ScalePoint.W);
-        NormalisedScalePoint = new Vector3(import.ScalePoint.X/ import.ScalePoint.W, import.ScalePoint.Y/ import.ScalePoint.W, import.ScalePoint.Z/ import.ScalePoint.W);
         UVPoint1 = new Vector2(import.UVPoint1.X, import.UVPoint1.Y);
         UVPoint2 = new Vector2(import.UVPoint2.X, import.UVPoint2.Y);
         UVPoint3 = new Vector2(import.UVPoint3.X, import.UVPoint3.Y);
@@ -137,10 +139,33 @@ public class PatchObject : MonoBehaviour
         //LoadLowPolyMesh()
         GeneratePoints();
         LoadHighPolyMesh();
+        oldPosition = transform.position;
+    }
+
+    public void GenerateCubePoints()
+    {
+        PatchPoints = new List<PatchPoint>();
+        SpawnCube(RawControlPoint, new Color32(202, 202, 202, 255));
+        SpawnCube(RawR1C2, Color.red);
+        SpawnCube(RawR1C3, Color.green);
+        SpawnCube(RawR1C4, Color.blue);
+        SpawnCube(RawR2C1, Color.yellow);
+        SpawnCube(RawR2C2, Color.grey);
+        SpawnCube(RawR2C3, Color.cyan);
+        SpawnCube(RawR2C4, Color.magenta);
+        SpawnCube(RawR3C1, new Color32(0, 255, 85, 255));
+        SpawnCube(RawR3C2, new Color32(216, 0, 255, 255));
+        SpawnCube(RawR3C3, new Color32(185, 0, 255, 255));
+        SpawnCube(RawR3C4, new Color32(0, 99, 119, 255));
+        SpawnCube(RawR4C1, new Color32(0, 119, 49, 255));
+        SpawnCube(RawR4C2, new Color32(119, 16, 0, 255));
+        SpawnCube(RawR4C3, new Color32(211, 216, 45, 255));
+        SpawnCube(RawR4C4, Color.black);
     }
 
     public Patch GeneratePatch()
     {
+        ProccessPoints();
         Patch patch = new Patch();
 
         patch.ScalePoint = ConversionTools.Vector4ToVertex3(ScalePoint);
@@ -167,10 +192,7 @@ public class PatchObject : MonoBehaviour
         patch.R4C3 = ConversionTools.Vector3ToVertex3(R4C3);
         patch.R4C4 = ConversionTools.Vector3ToVertex3(R4C4);
 
-        Vertex3 HighestXYZ = new Vertex3();
-        Vertex3 LowestXYZ = new Vertex3();
-
-        HighestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
+        Vertex3 HighestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
         HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C2);
         HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C3);
         HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C4);
@@ -187,7 +209,7 @@ public class PatchObject : MonoBehaviour
         HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C3);
         HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C4);
 
-        LowestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
+        Vertex3 LowestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
         LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C2);
         LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C3);
         LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C4);
@@ -282,30 +304,46 @@ public class PatchObject : MonoBehaviour
         R4C4 = RawR4C4 - (ControlPoint + R1C2 + R1C3 + R1C4 + R2C1 + R2C2 + R2C3 + R2C4 + R3C1 + R3C2 + R3C3 + R3C4 + R4C1 + R4C2 + R4C3);
     }
 
-    void SpawnMainPoints()
+    void SpawnCube(Vector3 Point, Color color)
     {
-        SpawnPoints(RawControlPoint, "Point C");
-        SpawnPoints(RawR1C2, "R1C2");
-        SpawnPoints(RawR1C3, "R1C3");
-        SpawnPoints(RawR1C4, "R1C4");
-        SpawnPoints(RawR2C1, "R2C1");
-        SpawnPoints(RawR2C2, "R2C2");
-        SpawnPoints(RawR2C3, "R2C3");
-        SpawnPoints(RawR2C4, "R2C4");
-        SpawnPoints(RawR3C1, "R3C1");
-        SpawnPoints(RawR3C2, "R3C2");
-        //SpawnPoints(NewPoint6, "Guessed R3C3");
-        SpawnPoints(RawR3C4, "R3C4");
-        SpawnPoints(RawR4C1, "R4C1");
-        SpawnPoints(RawR4C2, "R4C2");
-        SpawnPoints(RawR4C3, "R4C3");
-        SpawnPoints(RawR4C4, "R4C4");
+        GameObject gameObject = Instantiate(PointPrefab, Point * TrickyMapInterface.Scale, new Quaternion(0, 0, 0, 0));
+        gameObject.GetComponent<Renderer>().material.color = color;
+        gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
+        gameObject.transform.parent = transform;
+        gameObject.GetComponent<PatchPoint>().ID = PatchPoints.Count;
+        gameObject.GetComponent<PatchPoint>().PatchObject = this;
+        gameObject.GetComponent<PatchPoint>().unityEvent = UpdatePointUsingCube;
+        PatchPoints.Add(gameObject.GetComponent<PatchPoint>());
     }
 
-    public Vector3 ScaleVector(Vector3 vector)
+    void DestroyCube()
     {
-        vector = new Vector3(vector.x/NormalisedScalePoint.x, vector.y / NormalisedScalePoint.y, vector.z / NormalisedScalePoint.z);
-        return vector;
+        for (int i = 0; i < PatchPoints.Count; i++)
+        {
+            Destroy(PatchPoints[i].gameObject);
+        }
+        PatchPoints.Clear();
+    }
+
+    void UpdatePointUsingCube(int a)
+    {
+        RawControlPoint = PatchPoints[0].transform.position / TrickyMapInterface.Scale;
+        RawR1C2 = PatchPoints[1].transform.position / TrickyMapInterface.Scale;
+        RawR1C3 = PatchPoints[2].transform.position / TrickyMapInterface.Scale;
+        RawR1C4 = PatchPoints[3].transform.position / TrickyMapInterface.Scale;
+        RawR2C1 = PatchPoints[4].transform.position / TrickyMapInterface.Scale;
+        RawR2C2 = PatchPoints[5].transform.position / TrickyMapInterface.Scale;
+        RawR2C3 = PatchPoints[6].transform.position / TrickyMapInterface.Scale;
+        RawR2C4 = PatchPoints[7].transform.position / TrickyMapInterface.Scale;
+        RawR3C1 = PatchPoints[8].transform.position / TrickyMapInterface.Scale;
+        RawR3C2 = PatchPoints[9].transform.position / TrickyMapInterface.Scale;
+        RawR3C3 = PatchPoints[10].transform.position / TrickyMapInterface.Scale;
+        RawR3C4 = PatchPoints[11].transform.position / TrickyMapInterface.Scale;
+        RawR4C1 = PatchPoints[12].transform.position / TrickyMapInterface.Scale;
+        RawR4C2 = PatchPoints[13].transform.position / TrickyMapInterface.Scale;
+        RawR4C3 = PatchPoints[14].transform.position / TrickyMapInterface.Scale;
+        RawR4C4 = PatchPoints[15].transform.position / TrickyMapInterface.Scale;
+        UpdateMeshPoints(true);
     }
 
 
@@ -524,7 +562,7 @@ public class PatchObject : MonoBehaviour
         return Newpoint;
     }
 
-    public void UpdateMeshPoints()
+    public void UpdateMeshPoints(bool CubePointUpdate)
     {
         var mesh = GetComponent<MeshFilter>().mesh;
         List<Vector3> vertices = new List<Vector3>();
@@ -549,10 +587,47 @@ public class PatchObject : MonoBehaviour
         vertices.Add((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
 
         mesh.vertices = vertices.ToArray();
+        if(CubePointUpdate)
+        {
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].DisableUpdate = true;
+            }
+            transform.position = RawControlPoint * TrickyMapInterface.Scale;
+            PatchPoints[0].transform.position = RawControlPoint * TrickyMapInterface.Scale;
+            PatchPoints[1].transform.position = RawR1C2 * TrickyMapInterface.Scale;
+            PatchPoints[2].transform.position = RawR1C3 * TrickyMapInterface.Scale;
+            PatchPoints[3].transform.position = RawR1C4 * TrickyMapInterface.Scale;
+            PatchPoints[4].transform.position = RawR2C1 * TrickyMapInterface.Scale;
+            PatchPoints[5].transform.position = RawR2C2 * TrickyMapInterface.Scale;
+            PatchPoints[6].transform.position = RawR2C3 * TrickyMapInterface.Scale;
+            PatchPoints[7].transform.position = RawR2C4 * TrickyMapInterface.Scale;
+            PatchPoints[8].transform.position = RawR3C1 * TrickyMapInterface.Scale;
+            PatchPoints[9].transform.position = RawR3C2 * TrickyMapInterface.Scale;
+            PatchPoints[10].transform.position = RawR3C3 * TrickyMapInterface.Scale;
+            PatchPoints[11].transform.position = RawR3C4 * TrickyMapInterface.Scale;
+            PatchPoints[12].transform.position = RawR4C1 * TrickyMapInterface.Scale;
+            PatchPoints[13].transform.position = RawR4C2 * TrickyMapInterface.Scale;
+            PatchPoints[14].transform.position = RawR4C3 * TrickyMapInterface.Scale;
+            PatchPoints[15].transform.position = RawR4C4 * TrickyMapInterface.Scale;
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].ResetOldPosition();
+            }
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].DisableUpdate = false;
+            }
+        }
+        oldPosition = transform.position;
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().enabled = false;
         GetComponent<MeshCollider>().sharedMesh = mesh;
         GetComponent<MeshCollider>().enabled = true;
+        if(PatchPanel.instance.patchObject==this)
+        {
+            PatchPanel.instance.UpdatePoint(false);
+        }
     }
 
     public void UpdateUVPoints()
@@ -618,7 +693,7 @@ public class PatchObject : MonoBehaviour
         {
             Renderer.material.EnableKeyword("_EMISSION");
         }
-
+        GenerateCubePoints();
         Renderer.material.SetColor("_EmissionColor", Color.grey);
     }
 
@@ -628,7 +703,7 @@ public class PatchObject : MonoBehaviour
         {
             Renderer.material.DisableKeyword("_EMISSION");
         }
-
+        DestroyCube();
         Renderer.material.SetColor("_EmissionColor", Color.white);
     }
 
@@ -717,5 +792,36 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         ToggleLightingMode();
+    }
+
+    void Update()
+    {
+        if (transform.position != oldPosition)
+        {
+            Vector3 Dif = (transform.position - oldPosition) / TrickyMapInterface.Scale;
+            RawControlPoint += Dif;
+            RawR1C2 += Dif;
+            RawR1C3 += Dif;
+            RawR1C4 += Dif;
+            RawR2C1 += Dif;
+            RawR2C2 += Dif;
+            RawR2C3 += Dif;
+            RawR2C4 += Dif;
+            RawR3C1 += Dif;
+            RawR3C2 += Dif;
+            RawR3C3 += Dif;
+            RawR3C4 += Dif;
+            RawR4C1 += Dif;
+            RawR4C2 += Dif;
+            RawR4C3 += Dif;
+            RawR4C4 += Dif;
+            UpdateMeshPoints(true);
+        }
+    }
+
+    public Vector3 GetCentrePoint()
+    {
+        Vector3 vector3 = (RawControlPoint + RawR1C2 + RawR1C3 + RawR1C4 + RawR2C1 + RawR2C2 + RawR2C3 + RawR2C4 + RawR3C1 + RawR3C2 /*+ RawR3C3*/ + RawR3C4 + RawR4C1 + RawR4C2 +RawR4C3+RawR4C4)/15;
+        return vector3;
     }
 }

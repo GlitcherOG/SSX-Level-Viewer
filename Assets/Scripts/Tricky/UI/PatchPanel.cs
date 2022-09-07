@@ -27,10 +27,7 @@ public class PatchPanel : MonoBehaviour
 
     public GameObject ScrollView;
     public GameObject RCPrefab;
-    public GameObject cube;
-    public GameObject CubeParent;
     public List<RowCollumHandler> RCPreferences = new List<RowCollumHandler>();
-    public List<GameObject> cubePoints = new List<GameObject>();
 
     public bool Local = false;
 
@@ -90,7 +87,6 @@ public class PatchPanel : MonoBehaviour
         {
             patchObject.UnSelectedObject();
         }
-
 
         DisallowUpdate = true;
         patchObject = patch;
@@ -158,84 +154,11 @@ public class PatchPanel : MonoBehaviour
             RCPreferences[15].SetXYZ(patchObject.RawR4C4 - patchObject.RawControlPoint);
         }
 
-        if (DisallowUpdateCheck)
-        {
-            for (int i = 0; i < cubePoints.Count; i++)
-            {
-                Destroy(cubePoints[i]);
-            }
-            cubePoints = new List<GameObject>();
-            SpawnCube(patchObject.RawControlPoint, new Color32(202, 202, 202, 255));
-            SpawnCube(patchObject.RawR1C2, Color.red);
-            SpawnCube(patchObject.RawR1C3, Color.green);
-            SpawnCube(patchObject.RawR1C4, Color.blue);
-            SpawnCube(patchObject.RawR2C1, Color.yellow);
-            SpawnCube(patchObject.RawR2C2, Color.grey);
-            SpawnCube(patchObject.RawR2C3, Color.cyan);
-            SpawnCube(patchObject.RawR2C4, Color.magenta);
-            SpawnCube(patchObject.RawR3C1, new Color32(0, 255, 85, 255));
-            SpawnCube(patchObject.RawR3C2, new Color32(216, 0, 255, 255));
-            SpawnCube(patchObject.RawR3C3, new Color32(185, 0, 255, 255));
-            SpawnCube(patchObject.RawR3C4, new Color32(0, 99, 119, 255));
-            SpawnCube(patchObject.RawR4C1, new Color32(0, 119, 49, 255));
-            SpawnCube(patchObject.RawR4C2, new Color32(119, 16, 0, 255));
-            SpawnCube(patchObject.RawR4C3, new Color32(211, 216, 45, 255));
-            SpawnCube(patchObject.RawR4C4, Color.black);
-        }
-        else
-        {
-            for (int i = 0; i < cubePoints.Count; i++)
-            {
-                cubePoints[i].GetComponent<PatchPoint>().DisableUpdate = true;
-            }
-
-            cubePoints[0].transform.position = patchObject.RawControlPoint * TrickyMapInterface.Scale;
-            cubePoints[1].transform.position = patchObject.RawR1C2 * TrickyMapInterface.Scale;
-            cubePoints[2].transform.position = patchObject.RawR1C3 * TrickyMapInterface.Scale;
-            cubePoints[3].transform.position = patchObject.RawR1C4 * TrickyMapInterface.Scale;
-            cubePoints[4].transform.position = patchObject.RawR2C1 * TrickyMapInterface.Scale;
-            cubePoints[5].transform.position = patchObject.RawR2C2 * TrickyMapInterface.Scale;
-            cubePoints[6].transform.position = patchObject.RawR2C3 * TrickyMapInterface.Scale;
-            cubePoints[7].transform.position = patchObject.RawR2C4 * TrickyMapInterface.Scale;
-            cubePoints[8].transform.position = patchObject.RawR3C1 * TrickyMapInterface.Scale;
-            cubePoints[9].transform.position = patchObject.RawR3C2 * TrickyMapInterface.Scale;
-            cubePoints[10].transform.position = patchObject.RawR3C3 * TrickyMapInterface.Scale;
-            cubePoints[11].transform.position = patchObject.RawR3C4 * TrickyMapInterface.Scale;
-            cubePoints[12].transform.position = patchObject.RawR4C1 * TrickyMapInterface.Scale;
-            cubePoints[13].transform.position = patchObject.RawR4C2 * TrickyMapInterface.Scale;
-            cubePoints[14].transform.position = patchObject.RawR4C3 * TrickyMapInterface.Scale;
-            cubePoints[15].transform.position = patchObject.RawR4C4 * TrickyMapInterface.Scale;
-
-            for (int i = 0; i < cubePoints.Count; i++)
-            {
-                cubePoints[i].GetComponent<PatchPoint>().DisableUpdate = false;
-            }
-        }
 
         if (!DisallowUpdateCheck)
         {
             DisallowUpdate = false;
         }
-    }
-
-    public void DestoyCubes()
-    {
-        for (int i = 0; i < cubePoints.Count; i++)
-        {
-            Destroy(cubePoints[i]);
-        }
-    }
-
-    void SpawnCube(Vector3 Point, Color color)
-    {
-        GameObject gameObject = Instantiate(cube, Point*TrickyMapInterface.Scale, new Quaternion(0, 0, 0, 0));
-        gameObject.GetComponent<Renderer>().material.color = color;
-        gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
-        gameObject.transform.parent = CubeParent.transform;
-        gameObject.GetComponent<PatchPoint>().ID = cubePoints.Count;
-        gameObject.GetComponent<PatchPoint>().PatchObject = patchObject;
-        gameObject.GetComponent<PatchPoint>().unityEvent = UpdatePointUsingCube;
-        cubePoints.Add(gameObject);
     }
 
     public void UpdatePatchPoint()
@@ -246,7 +169,6 @@ public class PatchPanel : MonoBehaviour
             if (!Local)
             {
                 patchObject.RawControlPoint = RCPreferences[0].GrabXYZ();
-                patchObject.transform.position = RCPreferences[0].GrabXYZ()*TrickyMapInterface.Scale;
                 patchObject.RawR1C2 = RCPreferences[1].GrabXYZ();
                 patchObject.RawR1C3 = RCPreferences[2].GrabXYZ();
                 patchObject.RawR1C4 = RCPreferences[3].GrabXYZ();
@@ -266,7 +188,6 @@ public class PatchPanel : MonoBehaviour
             else
             {
                 patchObject.RawControlPoint = RCPreferences[0].GrabXYZ();
-                patchObject.transform.position = RCPreferences[0].GrabXYZ() * TrickyMapInterface.Scale;
                 patchObject.RawR1C2 = RCPreferences[1].GrabXYZ()+ patchObject.RawControlPoint;
                 patchObject.RawR1C3 = RCPreferences[2].GrabXYZ()+ patchObject.RawControlPoint;
                 patchObject.RawR1C4 = RCPreferences[3].GrabXYZ()+ patchObject.RawControlPoint;
@@ -284,41 +205,7 @@ public class PatchPanel : MonoBehaviour
                 patchObject.RawR4C4 = RCPreferences[15].GrabXYZ()+ patchObject.RawControlPoint;
             }
 
-            for (int i = 0; i < cubePoints.Count; i++)
-            {
-                cubePoints[i].GetComponent<PatchPoint>().DisableUpdate = true;
-            }
-
-            cubePoints[0].transform.position = patchObject.RawControlPoint * TrickyMapInterface.Scale;
-            cubePoints[1].transform.position = patchObject.RawR1C2 * TrickyMapInterface.Scale;
-            cubePoints[2].transform.position = patchObject.RawR1C3 * TrickyMapInterface.Scale;
-            cubePoints[3].transform.position = patchObject.RawR1C4 * TrickyMapInterface.Scale;
-            cubePoints[4].transform.position = patchObject.RawR2C1 * TrickyMapInterface.Scale;
-            cubePoints[5].transform.position = patchObject.RawR2C2 * TrickyMapInterface.Scale;
-            cubePoints[6].transform.position = patchObject.RawR2C3 * TrickyMapInterface.Scale;
-            cubePoints[7].transform.position = patchObject.RawR2C4 * TrickyMapInterface.Scale;
-            cubePoints[8].transform.position = patchObject.RawR3C1 * TrickyMapInterface.Scale;
-            cubePoints[9].transform.position = patchObject.RawR3C2 * TrickyMapInterface.Scale;
-            cubePoints[10].transform.position = patchObject.RawR3C3 * TrickyMapInterface.Scale;
-            cubePoints[11].transform.position = patchObject.RawR3C4 * TrickyMapInterface.Scale;
-            cubePoints[12].transform.position = patchObject.RawR4C1 * TrickyMapInterface.Scale;
-            cubePoints[13].transform.position = patchObject.RawR4C2 * TrickyMapInterface.Scale;
-            cubePoints[14].transform.position = patchObject.RawR4C3 * TrickyMapInterface.Scale;
-            cubePoints[15].transform.position = patchObject.RawR4C4 * TrickyMapInterface.Scale;
-
-            for (int i = 0; i < cubePoints.Count; i++)
-            {
-                cubePoints[i].GetComponent<PatchPoint>().OldPosition = cubePoints[i].transform.position;
-            }
-
-            for (int i = 0; i < cubePoints.Count; i++)
-            {
-                cubePoints[i].GetComponent<PatchPoint>().DisableUpdate = false;
-            }
-
-            patchObject.UpdateMeshPoints();
-            patchObject.ProccessPoints();
-            patchObject.SelectedObject();
+            patchObject.UpdateMeshPoints(true);
             DisallowUpdate = false;
         }
     }
@@ -488,28 +375,6 @@ public class PatchPanel : MonoBehaviour
         if (!DisallowUpdate)
         {
             patchObject.PatchStyle = NewStyle;
-        }
-    }
-
-    public void UpdatePointUsingCube(int a)
-    {
-        if (!DisallowUpdate)
-        {
-            if (!Local)
-            {
-                RCPreferences[a].SetXYZ(cubePoints[a].transform.position / TrickyMapInterface.Scale);
-            }
-            else
-            {
-                if (a != 0)
-                {
-                    RCPreferences[a].SetXYZ((cubePoints[a].transform.position - cubePoints[0].transform.position) / TrickyMapInterface.Scale);
-                }
-                else
-                {
-                    RCPreferences[a].SetXYZ(cubePoints[a].transform.position / TrickyMapInterface.Scale);
-                }
-            }
         }
     }
 

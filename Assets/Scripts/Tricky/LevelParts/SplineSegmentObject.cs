@@ -70,10 +70,6 @@ public class SplineSegmentObject : MonoBehaviour
         SetDataLineRender();
         transform.position = ProcessedPoint1 * TrickyMapInterface.Scale;
         DrawCurve();
-        if(SplineParent==12)
-        {
-            Debug.Log(Vector3.Distance(Point4- Point1, new Vector3(0,0,0)));
-        }
     }
 
     float GenerateDistance()

@@ -111,7 +111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PatchName: 
   ScalePoint: {x: 0, y: 0, z: 0, w: 0}
-  NormalisedScalePoint: {x: 0, y: 0, z: 0}
   UVPoint1: {x: 0, y: 0}
   UVPoint2: {x: 0, y: 0}
   UVPoint3: {x: 0, y: 0}
@@ -141,26 +140,13 @@ MonoBehaviour:
   PatchStyle: 0
   Unknown2: 0
   TextureAssigment: 0
-  Unknown3: 0
+  LightmapID: 0
   Unknown4: 0
   Unknown5: 0
   Unknown6: 0
   MainMaterial: {fileID: 2100000, guid: ec6b63a856104e243966b95562cc89e6, type: 2}
   NoLightMaterial: {fileID: 2100000, guid: a18bd8ad8080fbe4cb28e038884df268, type: 2}
   Renderer: {fileID: 5244062748462653824}
-  ControlPoint: {x: 0, y: 0, z: 0}
-  R1C2: {x: 0, y: 0, z: 0}
-  R1C3: {x: 0, y: 0, z: 0}
-  R1C4: {x: 0, y: 0, z: 0}
-  R2C1: {x: 0, y: 0, z: 0}
-  R2C2: {x: 0, y: 0, z: 0}
-  R2C3: {x: 0, y: 0, z: 0}
-  R2C4: {x: 0, y: 0, z: 0}
-  R3C1: {x: 0, y: 0, z: 0}
-  R3C2: {x: 0, y: 0, z: 0}
+  PointPrefab: {fileID: 2226801304746188414, guid: 9530f6efd356716419e78a0107feac7c, type: 3}
+  PatchPoints: []
   R3C3: {x: 0, y: 0, z: 0}
-  R3C4: {x: 0, y: 0, z: 0}
-  R4C1: {x: 0, y: 0, z: 0}
-  R4C2: {x: 0, y: 0, z: 0}
-  R4C3: {x: 0, y: 0, z: 0}
-  R4C4: {x: 0, y: 0, z: 0}
