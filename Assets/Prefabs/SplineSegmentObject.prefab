@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 189013267970641660}
   - component: {fileID: 189013267970641663}
   - component: {fileID: 189013267970641662}
+  - component: {fileID: 201998292545926939}
   m_Layer: 0
   m_Name: SplineSegmentObject
   m_TagString: Spline
@@ -159,3 +160,17 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!64 &201998292545926939
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189013267970641657}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}

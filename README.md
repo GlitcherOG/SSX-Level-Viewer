@@ -22,7 +22,6 @@
  
  ## Todo Today
 - About Page
-- Selectable Splines
 - Hide Point
 - Hide Gizmo
 - Make way to dismiss notifcation
@@ -41,8 +40,8 @@
 
 ## Todo For Spline System
 - Moveable Points
-- Proper Rendering instead of basic line render
-- Panel
+- Set and Save Names
+- Panel Hookup
 - Movable
 
 ## Todo Change

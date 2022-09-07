@@ -70,6 +70,10 @@ public class SplineSegmentObject : MonoBehaviour
         SetDataLineRender();
         transform.position = ProcessedPoint1 * TrickyMapInterface.Scale;
         DrawCurve();
+        lineRenderer.Simplify(0.1f);
+        Mesh mesh = new Mesh();
+        lineRenderer.BakeMesh(mesh);
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     float GenerateDistance()

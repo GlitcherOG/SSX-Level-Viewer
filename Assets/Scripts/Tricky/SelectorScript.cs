@@ -11,7 +11,8 @@ public class SelectorScript : MonoBehaviour
     public bool SelectedObject;
     public GameObject SelectedGameObject;
     public string selectedTag;
-    public GameObject PatchController;
+    public GameObject PatchPanelObject;
+    public GameObject SplinePanelObject;
     public GameObject XYZMovement;
 
     public GraphicRaycaster m_Raycaster;
@@ -87,20 +88,25 @@ public class SelectorScript : MonoBehaviour
         {
             if (selectedTag == "Patch")
             {
-                PatchController.SetActive(true);
+                PatchPanelObject.SetActive(true);
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint()*TrickyMapInterface.Scale);
                 PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
             }
+            if(selectedTag=="Spline")
+            {
+                XYZMovement.SetActive(true);
+                SplinePanelObject.SetActive(true);
+                SplinePanel.instance.LoadSplineAndSegment(SelectedGameObject.GetComponent<SplineSegmentObject>());
+                //XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint() * TrickyMapInterface.Scale);
+            }
             if(selectedTag == "Patch Point")
             {
                 XYZMovement.SetActive(true);
-                PatchController.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
             }
             if(selectedTag == "XYZMovement")
             {
-                PatchController.SetActive(true);
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetOldParent();
                 SelectedGameObject.GetComponent<XYZPoint>().SetActive();
@@ -108,8 +114,9 @@ public class SelectorScript : MonoBehaviour
         }
         else
         {
-            PatchController.SetActive(false);
+            PatchPanelObject.SetActive(false);
             XYZMovement.SetActive(false);
+            SplinePanelObject.SetActive(false);
         }
     }
 
@@ -123,7 +130,8 @@ public class SelectorScript : MonoBehaviour
             }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);
-            PatchController.GetComponent<PatchPanel>().HideSelfAndChild();
+            SplinePanelObject.SetActive(false);
+            PatchPanelObject.GetComponent<PatchPanel>().HideSelfAndChild();
             selectedTag = "";
             SelectedObject = false;
             SelectedGameObject = null;
