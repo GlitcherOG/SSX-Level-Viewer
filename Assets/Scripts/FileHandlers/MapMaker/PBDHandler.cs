@@ -67,7 +67,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 NumPlayerStarts = StreamUtil.ReadInt32(stream); //NA
                 NumPatches = StreamUtil.ReadInt32(stream); //Done
                 NumInstances = StreamUtil.ReadInt32(stream); //Done
-                NumParticleInstances = StreamUtil.ReadInt32(stream);
+                NumParticleInstances = StreamUtil.ReadInt32(stream); //Done
                 NumMaterials = StreamUtil.ReadInt32(stream);
                 NumMaterialBlocks = StreamUtil.ReadInt32(stream);
                 NumLights = StreamUtil.ReadInt32(stream);
@@ -82,8 +82,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
                 PlayerStartOffset = StreamUtil.ReadInt32(stream);
                 PatchOffset = StreamUtil.ReadInt32(stream); //Done
-                InstanceOffset = StreamUtil.ReadInt32(stream);
-                ParticleInstancesOffset = StreamUtil.ReadInt32(stream);
+                InstanceOffset = StreamUtil.ReadInt32(stream); //Done
+                ParticleInstancesOffset = StreamUtil.ReadInt32(stream); //Done
                 MaterialOffset = StreamUtil.ReadInt32(stream);
                 MaterialBlocksOffset = StreamUtil.ReadInt32(stream);
                 LightsOffset = StreamUtil.ReadInt32(stream);
@@ -197,6 +197,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     spline.Unknown2 = StreamUtil.ReadInt32(stream);
                     splines.Add(spline);
                 }
+
                 //Spline Segments
                 stream.Position = SplineSegmentOffset;
                 splinesSegments = new List<SplinesSegments>();
@@ -489,9 +490,9 @@ namespace SSX_Modder.FileHandlers.MapEditor
             {
                 Vertex3 vertex = new Vertex3();
                 //Float 16's
-                vertex.X = (float)StreamUtil.ReadInt16(stream) / 4096f;
-                vertex.Y = (float)StreamUtil.ReadInt16(stream) / 4096f;
-                vertex.Z = (float)StreamUtil.ReadInt16(stream) / 4096f;
+                vertex.X = StreamUtil.ReadInt16(stream);
+                vertex.Y = StreamUtil.ReadInt16(stream);
+                vertex.Z = StreamUtil.ReadInt16(stream);
                 vertices.Add(vertex);
             }
             StreamUtil.AlignBy16(stream);

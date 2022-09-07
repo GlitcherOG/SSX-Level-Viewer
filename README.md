@@ -23,7 +23,6 @@
  ## Todo Today
 - About Page
 - Selectable Splines
-- Settings Page for keybindings, workspace path, emu path and game path 
 - Hide Point
 - Hide Gizmo
 - Make way to dismiss notifcation
@@ -38,6 +37,7 @@
 - Hotkey For toggling No Light Mode
 - UV Editing Clicking Points to edit UV and fix colors
 - Texture Flipbook Support
+- ImgBurn Support
 
 ## Todo For Spline System
 - Spline Saving System
@@ -56,6 +56,8 @@
 - Redo Point Selector to always be there but hidden doing so should allow for multi selection easier
 - Limit Mouse Look so camera doesnt freak out
 - Selection to move patch outside relative mode
+- Settings for keybindings, workspace path
+- Open File for Settings Page
 
 ## Todo BugFixes
 - Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)

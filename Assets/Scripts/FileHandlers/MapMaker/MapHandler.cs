@@ -75,7 +75,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
             //Header
             List<string> FileLines = new List<string>();
             FileLines.Add("");
-            FileLines.Add("Unity SSX Modder V0.0.3");
+            FileLines.Add("Unity SSX Modder V" + TrickyMapInterface.Instance.Version + " By Archy/GlitcherOG");
             FileLines.Add("N/A");
             FileLines.Add("N/A");
             FileLines.Add("N/A");

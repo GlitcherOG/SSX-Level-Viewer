@@ -32,11 +32,15 @@ public class TrickyMapInterface : MonoBehaviour
     public List<Texture2D> textures;
     public List<PatchObject> patchObjects = new List<PatchObject>();
 
+    public string ConfigPath;
+    public string Version = "0.0.3";
+
     private void Awake()
     {
+        ConfigPath = UnityEngine.Application.dataPath + "/Config.json";
         Instance = this;
-        settings = LevelEditorSettings.Load(UnityEngine.Application.dataPath +"/Config.json");
-        if (settings.Version != "0.0.3")
+        settings = LevelEditorSettings.Load(ConfigPath);
+        if (settings.Version != Version)
         {
             settings = new LevelEditorSettings();
         }
@@ -254,6 +258,8 @@ public class TrickyMapInterface : MonoBehaviour
             LoadPatches();
             LoadSplines();
             LoadTextureFlipbooks();
+            //LoadInstances();
+            LoadParticleInstances();
         }
         try
         {
@@ -262,6 +268,22 @@ public class TrickyMapInterface : MonoBehaviour
         catch
         {
             NotifcationBarUI.instance.ShowNotifcation("No Skybox Textures Detected", 5f);
+        }
+    }
+
+    void LoadInstances()
+    {
+        for (int i = 0; i < PBDHandler.Instances.Count; i++)
+        {
+            SpawnPoints(VertexToVector(PBDHandler.Instances[i].Unknown4)*Scale, mMapHandler.InternalInstances[i].Name);
+        }
+    }
+
+    void LoadParticleInstances()
+    {
+        for (int i = 0; i < PBDHandler.particleInstances.Count; i++)
+        {
+            SpawnPoints(VertexToVector(PBDHandler.particleInstances[i].Unknown4) * Scale, mMapHandler.ParticleInstances[i].Name);
         }
     }
 

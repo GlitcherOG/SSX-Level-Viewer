@@ -18,8 +18,8 @@ public class SplineObject : MonoBehaviour
 
     public void LoadSpline(Spline spline, List<SplinesSegments> splinesSegments)
     {
-        LowestXYZ = VertexToVector(spline.LowestXYZ);
-        HighestXYZ = VertexToVector(spline.HighestXYZ);
+        LowestXYZ = ConversionTools.Vertex3ToVector3(spline.LowestXYZ);
+        HighestXYZ = ConversionTools.Vertex3ToVector3(spline.HighestXYZ);
 
         Unknown1 = spline.Unknown1;
         SplineSegmentCount = splinesSegments.Count;
@@ -35,8 +35,11 @@ public class SplineObject : MonoBehaviour
         }
     }
 
-    Vector3 VertexToVector(Vertex3 vertex3)
+    public Spline GenerateSpline()
     {
-        return new Vector3(vertex3.X, vertex3.Z, vertex3.Y);
+        Spline spline = new Spline();
+        spline.
+
+        return spline;
     }
 }

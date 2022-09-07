@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4075908900005425751}
   m_Layer: 0
   m_Name: SplineObject
-  m_TagString: Untagged
+  m_TagString: Spline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73b45b3048c8394ba3509afd61d9f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LowestXYZ: {x: 0, y: 0, z: 0}
+  HighestXYZ: {x: 0, y: 0, z: 0}
   Unknown1: 0
   SplineSegmentCount: 0
   SplineSegmentPosition: 0

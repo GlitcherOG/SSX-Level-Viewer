@@ -95,34 +95,34 @@ public class PatchObject : MonoBehaviour
         UVPoint3 = new Vector2(import.UVPoint3.X, import.UVPoint3.Y);
         UVPoint4 = new Vector2(import.UVPoint4.X, import.UVPoint4.Y);
 
-        R4C4 = Vertex3ToVector3(import.R4C4);
-        R4C3 = Vertex3ToVector3(import.R4C3);
-        R4C2 = Vertex3ToVector3(import.R4C2);
-        R4C1 = Vertex3ToVector3(import.R4C1);
-        R3C4 = Vertex3ToVector3(import.R3C4);
-        R3C3 = Vertex3ToVector3(import.R3C3);
-        R3C2 = Vertex3ToVector3(import.R3C2); 
-        R3C1 = Vertex3ToVector3(import.R3C1);
-        R2C4 = Vertex3ToVector3(import.R2C4);
-        R2C3 = Vertex3ToVector3(import.R2C3);
-        R2C2 = Vertex3ToVector3(import.R2C2);
-        R2C1 = Vertex3ToVector3(import.R2C1);
-        R1C4 = Vertex3ToVector3(import.R1C4);
-        R1C3 = Vertex3ToVector3(import.R1C3);
-        R1C2 = Vertex3ToVector3(import.R1C2);
-        ControlPoint = Vertex3ToVector3(import.R1C1);
+        R4C4 = ConversionTools.Vertex3ToVector3(import.R4C4);
+        R4C3 = ConversionTools.Vertex3ToVector3(import.R4C3);
+        R4C2 = ConversionTools.Vertex3ToVector3(import.R4C2);
+        R4C1 = ConversionTools.Vertex3ToVector3(import.R4C1);
+        R3C4 = ConversionTools.Vertex3ToVector3(import.R3C4);
+        R3C3 = ConversionTools.Vertex3ToVector3(import.R3C3);
+        R3C2 = ConversionTools.Vertex3ToVector3(import.R3C2); 
+        R3C1 = ConversionTools.Vertex3ToVector3(import.R3C1);
+        R2C4 = ConversionTools.Vertex3ToVector3(import.R2C4);
+        R2C3 = ConversionTools.Vertex3ToVector3(import.R2C3);
+        R2C2 = ConversionTools.Vertex3ToVector3(import.R2C2);
+        R2C1 = ConversionTools.Vertex3ToVector3(import.R2C1);
+        R1C4 = ConversionTools.Vertex3ToVector3(import.R1C4);
+        R1C3 = ConversionTools.Vertex3ToVector3(import.R1C3);
+        R1C2 = ConversionTools.Vertex3ToVector3(import.R1C2);
+        ControlPoint = ConversionTools.Vertex3ToVector3(import.R1C1);
 
-        LowestPoints = Vertex3ToVector3(import.LowestXYZ);
-        HighestPoints = Vertex3ToVector3(import.HighestXYZ);
+        LowestPoints = ConversionTools.Vertex3ToVector3(import.LowestXYZ);
+        HighestPoints = ConversionTools.Vertex3ToVector3(import.HighestXYZ);
 
-        Point1 = (Vertex3ToVector3(import.Point1)- ControlPoint);
-        Point2 = (Vertex3ToVector3(import.Point2)- ControlPoint);
-        Point3 = (Vertex3ToVector3(import.Point3)- ControlPoint);
-        Point4 = (Vertex3ToVector3(import.Point4)- ControlPoint);
-        OldPoint1 = Vertex3ToVector3(import.Point1);
-        OldPoint2 = Vertex3ToVector3(import.Point2);
-        OldPoint3 = Vertex3ToVector3(import.Point3);
-        OldPoint4 = Vertex3ToVector3(import.Point4); 
+        Point1 = (ConversionTools.Vertex3ToVector3(import.Point1)- ControlPoint);
+        Point2 = (ConversionTools.Vertex3ToVector3(import.Point2)- ControlPoint);
+        Point3 = (ConversionTools.Vertex3ToVector3(import.Point3)- ControlPoint);
+        Point4 = (ConversionTools.Vertex3ToVector3(import.Point4)- ControlPoint);
+        OldPoint1 = ConversionTools.Vertex3ToVector3(import.Point1);
+        OldPoint2 = ConversionTools.Vertex3ToVector3(import.Point2);
+        OldPoint3 = ConversionTools.Vertex3ToVector3(import.Point3);
+        OldPoint4 = ConversionTools.Vertex3ToVector3(import.Point4); 
 
         PatchStyle = import.PatchStyle;
         Unknown2 = import.Unknown2;
@@ -143,74 +143,74 @@ public class PatchObject : MonoBehaviour
     {
         Patch patch = new Patch();
 
-        patch.ScalePoint = Vector4ToVertex3(ScalePoint);
+        patch.ScalePoint = ConversionTools.Vector4ToVertex3(ScalePoint);
 
-        patch.UVPoint1 = Vector2ToVertex3(UVPoint1);
-        patch.UVPoint2 = Vector2ToVertex3(UVPoint2);
-        patch.UVPoint3 = Vector2ToVertex3(UVPoint3);
-        patch.UVPoint4 = Vector2ToVertex3(UVPoint4);
+        patch.UVPoint1 = ConversionTools.Vector2ToVertex3(UVPoint1);
+        patch.UVPoint2 = ConversionTools.Vector2ToVertex3(UVPoint2);
+        patch.UVPoint3 = ConversionTools.Vector2ToVertex3(UVPoint3);
+        patch.UVPoint4 = ConversionTools.Vector2ToVertex3(UVPoint4);
 
-        patch.R1C1 = Vector3ToVertex3(ControlPoint);
-        patch.R1C2 = Vector3ToVertex3(R1C2);
-        patch.R1C3 = Vector3ToVertex3(R1C3);
-        patch.R1C4 = Vector3ToVertex3(R1C4);
-        patch.R2C1 = Vector3ToVertex3(R2C1);
-        patch.R2C2 = Vector3ToVertex3(R2C2);
-        patch.R2C3 = Vector3ToVertex3(R2C3);
-        patch.R2C4 = Vector3ToVertex3(R2C4);
-        patch.R3C1 = Vector3ToVertex3(R3C1);
-        patch.R3C2 = Vector3ToVertex3(R3C2);
-        patch.R3C3 = Vector3ToVertex3(R3C3);
-        patch.R3C4 = Vector3ToVertex3(R3C4);
-        patch.R4C1 = Vector3ToVertex3(R4C1);
-        patch.R4C2 = Vector3ToVertex3(R4C2);
-        patch.R4C3 = Vector3ToVertex3(R4C3);
-        patch.R4C4 = Vector3ToVertex3(R4C4);
+        patch.R1C1 = ConversionTools.Vector3ToVertex3(ControlPoint);
+        patch.R1C2 = ConversionTools.Vector3ToVertex3(R1C2);
+        patch.R1C3 = ConversionTools.Vector3ToVertex3(R1C3);
+        patch.R1C4 = ConversionTools.Vector3ToVertex3(R1C4);
+        patch.R2C1 = ConversionTools.Vector3ToVertex3(R2C1);
+        patch.R2C2 = ConversionTools.Vector3ToVertex3(R2C2);
+        patch.R2C3 = ConversionTools.Vector3ToVertex3(R2C3);
+        patch.R2C4 = ConversionTools.Vector3ToVertex3(R2C4);
+        patch.R3C1 = ConversionTools.Vector3ToVertex3(R3C1);
+        patch.R3C2 = ConversionTools.Vector3ToVertex3(R3C2);
+        patch.R3C3 = ConversionTools.Vector3ToVertex3(R3C3);
+        patch.R3C4 = ConversionTools.Vector3ToVertex3(R3C4);
+        patch.R4C1 = ConversionTools.Vector3ToVertex3(R4C1);
+        patch.R4C2 = ConversionTools.Vector3ToVertex3(R4C2);
+        patch.R4C3 = ConversionTools.Vector3ToVertex3(R4C3);
+        patch.R4C4 = ConversionTools.Vector3ToVertex3(R4C4);
 
         Vertex3 HighestXYZ = new Vertex3();
         Vertex3 LowestXYZ = new Vertex3();
 
-        HighestXYZ = Vector3ToVertex3(RawControlPoint);
-        HighestXYZ = Highest(HighestXYZ, RawR1C2);
-        HighestXYZ = Highest(HighestXYZ, RawR1C3);
-        HighestXYZ = Highest(HighestXYZ, RawR1C4);
-        HighestXYZ = Highest(HighestXYZ, RawR2C1);
-        HighestXYZ = Highest(HighestXYZ, RawR2C2);
-        HighestXYZ = Highest(HighestXYZ, RawR2C3);
-        HighestXYZ = Highest(HighestXYZ, RawR2C4);
-        HighestXYZ = Highest(HighestXYZ, RawR3C1);
-        HighestXYZ = Highest(HighestXYZ, RawR3C2);
+        HighestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C2);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C3);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C4);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C1);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C2);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C3);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C4);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR3C1);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR3C2);
         //HighestXYZ = Highest(HighestXYZ, RawR3C3);
-        HighestXYZ = Highest(HighestXYZ, RawR3C4);
-        HighestXYZ = Highest(HighestXYZ, RawR4C1);
-        HighestXYZ = Highest(HighestXYZ, RawR4C2);
-        HighestXYZ = Highest(HighestXYZ, RawR4C3);
-        HighestXYZ = Highest(HighestXYZ, RawR4C4);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR3C4);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C1);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C2);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C3);
+        HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C4);
 
-        LowestXYZ = Vector3ToVertex3(RawControlPoint);
-        LowestXYZ = Lowest(LowestXYZ, RawR1C2);
-        LowestXYZ = Lowest(LowestXYZ, RawR1C3);
-        LowestXYZ = Lowest(LowestXYZ, RawR1C4);
-        LowestXYZ = Lowest(LowestXYZ, RawR2C1);
-        LowestXYZ = Lowest(LowestXYZ, RawR2C2);
-        LowestXYZ = Lowest(LowestXYZ, RawR2C3);
-        LowestXYZ = Lowest(LowestXYZ, RawR2C4);
-        LowestXYZ = Lowest(LowestXYZ, RawR3C1);
-        LowestXYZ = Lowest(LowestXYZ, RawR3C2);
+        LowestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C2);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C3);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C4);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C1);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C2);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C3);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C4);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR3C1);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR3C2);
         //LowestXYZ = Lowest(LowestXYZ, RawR3C3);
-        LowestXYZ = Lowest(LowestXYZ, RawR3C4);
-        LowestXYZ = Lowest(LowestXYZ, RawR4C1);
-        LowestXYZ = Lowest(LowestXYZ, RawR4C2);
-        LowestXYZ = Lowest(LowestXYZ, RawR4C3);
-        LowestXYZ = Lowest(LowestXYZ, RawR4C4);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR3C4);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C1);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C2);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C3);
+        LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C4);
 
         patch.HighestXYZ = HighestXYZ;
         patch.LowestXYZ = LowestXYZ;
 
-        patch.Point1 = Vector3ToVertex3(RawControlPoint);
-        patch.Point2 = Vector3ToVertex3(RawR4C1);
-        patch.Point3 = Vector3ToVertex3(RawR1C4);
-        patch.Point4 = Vector3ToVertex3(RawR4C4);
+        patch.Point1 = ConversionTools.Vector3ToVertex3(RawControlPoint);
+        patch.Point2 = ConversionTools.Vector3ToVertex3(RawR4C1);
+        patch.Point3 = ConversionTools.Vector3ToVertex3(RawR1C4);
+        patch.Point4 = ConversionTools.Vector3ToVertex3(RawR4C4);
 
         OldPoint1 = RawControlPoint;
         OldPoint2 = RawR4C1;
@@ -226,41 +226,6 @@ public class PatchObject : MonoBehaviour
         patch.Unknown6 = Unknown6;
 
         return patch;
-    }
-    Vertex3 Highest(Vertex3 current,Vector3 vector3)
-    {
-        Vertex3 vertex = Vector3ToVertex3(vector3);
-        if(vertex.X > current.X)
-        {
-            current.X = vertex.X;
-        }
-        if (vertex.Y > current.Y)
-        {
-            current.Y = vertex.Y;
-        }
-        if (vertex.Z > current.Z)
-        {
-            current.Z = vertex.Z;
-        }
-        return current;
-    }
-
-    Vertex3 Lowest(Vertex3 current, Vector3 vector3)
-    {
-        Vertex3 vertex = Vector3ToVertex3(vector3);
-        if (vertex.X < current.X)
-        {
-            current.X = vertex.X;
-        }
-        if (vertex.Y < current.Y)
-        {
-            current.Y = vertex.Y;
-        }
-        if (vertex.Z < current.Z)
-        {
-            current.Z = vertex.Z;
-        }
-        return current;
     }
 
     void GeneratePoints()
@@ -757,40 +722,5 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         ToggleLightingMode();
-    }
-
-    Vector3 Vertex3ToVector3(Vertex3 vertex3)
-    {
-        return new Vector3(vertex3.X, vertex3.Z, vertex3.Y);
-    }
-
-    Vertex3 Vector2ToVertex3(Vector2 vector2)
-    {
-        Vertex3 vertex3 = new Vertex3();
-        vertex3.X = vector2.x;
-        vertex3.Y = vector2.y;
-        vertex3.Z = 1f;
-        vertex3.W = 1f;
-        return vertex3;
-    }
-
-    Vertex3 Vector3ToVertex3(Vector3 vector3)
-    {
-        Vertex3 vertex3 = new Vertex3();
-        vertex3.X = vector3.x;
-        vertex3.Y = vector3.z;
-        vertex3.Z = vector3.y;
-        vertex3.W = 1f;
-        return vertex3;
-    }
-
-    Vertex3 Vector4ToVertex3(Vector4 vector4)
-    {
-        Vertex3 vertex3 = new Vertex3();
-        vertex3.X = vector4.x;
-        vertex3.Y = vector4.y;
-        vertex3.Z = vector4.z;
-        vertex3.W = vector4.w;
-        return vertex3;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class LevelEditorSettings
 {
-    public string Version = "0.0.3";
+    public string Version;
     public KeyCode Cameraforward = KeyCode.W;
     public KeyCode Camerabackward = KeyCode.S;
     public KeyCode Cameraleft = KeyCode.A;
@@ -24,6 +24,7 @@ public class LevelEditorSettings
 
     public void Save(string path)
     {
+        Version = TrickyMapInterface.Instance.Version;
         string serializer = JsonUtility.ToJson(this);
         File.WriteAllText(path, serializer);
     }

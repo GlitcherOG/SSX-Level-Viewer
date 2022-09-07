@@ -45,6 +45,56 @@ public class SplineSegmentObject : MonoBehaviour
 
     }
 
+    public void LoadSplineSegment(SplinesSegments segments)
+    {
+        ProcessedPoint1 = ConversionTools.Vertex3ToVector3(segments.ControlPoint);
+        ProcessedPoint2 = ConversionTools.Vertex3ToVector3(segments.Point2);
+        ProcessedPoint3 = ConversionTools.Vertex3ToVector3(segments.Point3);
+        ProcessedPoint4 = ConversionTools.Vertex3ToVector3(segments.Point4);
+
+        ScalingPoint = new Vector4(segments.ScalingPoint.X, segments.ScalingPoint.Y, segments.ScalingPoint.Z,segments.ScalingPoint.W);
+        NormalizedScalingPoint = ScalingPoint/ScalingPoint.w;
+
+        PreviousSegment = segments.PreviousSegment;
+        NextSegment = segments.NextSegment;
+        SplineParent = segments.SplineParent;
+
+        LowestXYZ = ConversionTools.Vertex3ToVector3(segments.LowestXYZ);
+        HighestXYZ = ConversionTools.Vertex3ToVector3(segments.HighestXYZ);
+
+        SegmentDisatnce = segments.SegmentDisatnce;
+        PreviousSegmentsDistance = segments.PreviousSegmentsDistance;
+        Unknown32 = segments.Unknown32;
+
+        GeneratePoints();
+        SetDataLineRender();
+        transform.position = ProcessedPoint1 * TrickyMapInterface.Scale;
+        DrawCurve();
+
+    }
+
+    public SplinesSegments GenerateSplineSegment()
+    {
+
+    }
+
+    void GeneratePoints()
+    {
+        Point1 = ProcessedPoint1;
+        Point2 = Point1 + ProcessedPoint2 / 3;
+        Point3 = Point2 + (ProcessedPoint2 + ProcessedPoint3) / 3;
+        Point4 = ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3 + ProcessedPoint4;
+    }
+
+    void SetDataLineRender()
+    {
+        lineRenderer.positionCount = 4;
+        lineRenderer.SetPosition(0, (Point1 - Point1) *TrickyMapInterface.Scale);
+        lineRenderer.SetPosition(1, (Point2 - Point1) *TrickyMapInterface.Scale);
+        lineRenderer.SetPosition(2, (Point3 - Point1)* TrickyMapInterface.Scale);
+        lineRenderer.SetPosition(3, (Point4 - Point1) * TrickyMapInterface.Scale);
+    }
+
     void DrawCurve()
     {
         curveCount = (int)4 / 3;
@@ -53,7 +103,7 @@ public class SplineSegmentObject : MonoBehaviour
             for (int i = 1; i <= SEGMENT_COUNT; i++)
             {
                 float t = i / (float)SEGMENT_COUNT;
-                Vector3 pixel = CalculateCubicBezierPoint(t, Point1*TrickyMapInterface.Scale, Point2 * TrickyMapInterface.Scale, Point3 * TrickyMapInterface.Scale, Point4 * TrickyMapInterface.Scale);
+                Vector3 pixel = CalculateCubicBezierPoint(t, (Point1 - Point1) * TrickyMapInterface.Scale, (Point2 - Point1) * TrickyMapInterface.Scale, (Point3 - Point1) * TrickyMapInterface.Scale, (Point4 - Point1) * TrickyMapInterface.Scale);
                 lineRenderer.positionCount = ((j * SEGMENT_COUNT) + i);
                 lineRenderer.SetPosition((j * SEGMENT_COUNT) + (i - 1), pixel);
             }
@@ -75,55 +125,5 @@ public class SplineSegmentObject : MonoBehaviour
         p += ttt * p3;
 
         return p;
-    }
-
-    public void LoadSplineSegment(SplinesSegments segments)
-    {
-        ProcessedPoint1 = VertexToVector(segments.ControlPoint);
-        ProcessedPoint2 = VertexToVector(segments.Point2);
-        ProcessedPoint3 = VertexToVector(segments.Point3);
-        ProcessedPoint4 = VertexToVector(segments.Point4);
-
-        ScalingPoint = new Vector4(segments.ScalingPoint.X, segments.ScalingPoint.Y, segments.ScalingPoint.Z,segments.ScalingPoint.W);
-        NormalizedScalingPoint = ScalingPoint/ScalingPoint.w;
-
-        PreviousSegment = segments.PreviousSegment;
-        NextSegment = segments.NextSegment;
-        SplineParent = segments.SplineParent;
-
-        LowestXYZ = VertexToVector(segments.LowestXYZ);
-        HighestXYZ = VertexToVector(segments.HighestXYZ);
-
-        SegmentDisatnce = segments.SegmentDisatnce;
-        PreviousSegmentsDistance = segments.PreviousSegmentsDistance;
-        Unknown32 = segments.Unknown32;
-
-        GeneratePoints();
-        SetDataLineRender();
-        transform.position = ProcessedPoint1 * TrickyMapInterface.Scale;
-        //DrawCurve();
-
-    }
-
-    void GeneratePoints()
-    {
-        Point1 = ProcessedPoint1;
-        Point2 = Point1 + ProcessedPoint2 / 3;
-        Point3 = Point2 + (ProcessedPoint2 + ProcessedPoint3) / 3;
-        Point4 = ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3 + ProcessedPoint4;
-    }
-
-    void SetDataLineRender()
-    {
-        lineRenderer.positionCount = 4;
-        lineRenderer.SetPosition(0, (Point1 - Point1) *TrickyMapInterface.Scale);
-        lineRenderer.SetPosition(1, (Point2 - Point1) *TrickyMapInterface.Scale);
-        lineRenderer.SetPosition(2, (Point3 - Point1)* TrickyMapInterface.Scale);
-        lineRenderer.SetPosition(3, (Point4 - Point1) * TrickyMapInterface.Scale);
-    }
-
-    Vector3 VertexToVector(Vertex3 vertex3)
-    {
-        return new Vector3(vertex3.X, vertex3.Z, vertex3.Y);
     }
 }
