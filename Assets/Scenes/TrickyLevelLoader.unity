@@ -40316,10 +40316,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e894cb3906fa04da5f12f9de3ae5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 400
+  Speed: 200
   CurrentSpeed: 100
-  SprintSpeed: 3000
-  SlowSpeed: 100
+  SprintSpeed: 2000
+  SlowSpeed: 50
 --- !u!1 &1944276805
 GameObject:
   m_ObjectHideFlags: 0

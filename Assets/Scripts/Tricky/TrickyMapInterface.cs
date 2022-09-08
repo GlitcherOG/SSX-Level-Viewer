@@ -19,7 +19,7 @@ public class TrickyMapInterface : MonoBehaviour
     MapHandler mMapHandler;
     public bool NoLightMode;
     public string LoadPath;
-    public static float Scale = 0.025f;
+    public static float Scale = 0.01f;
     public GameObject patchesParent;
     public GameObject splineParent;
 

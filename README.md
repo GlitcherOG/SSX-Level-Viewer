@@ -50,6 +50,7 @@
 ## Todo BugFixes
 - Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)
 - Fix Distance Generation Spline (Best guess is that they use the bezier curve generation to do it)
+- Fix Mesh Generation Spline
 
 ## Todo in Later Update
 - Custom File Opener To fix issues with current code and allow cross platform support

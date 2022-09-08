@@ -138,7 +138,7 @@ public class SplineSegmentObject : MonoBehaviour
         lineRenderer.SetPosition(1, (Point2 - Point1) * TrickyMapInterface.Scale);
         lineRenderer.SetPosition(2, (Point3 - Point1) * TrickyMapInterface.Scale);
         lineRenderer.SetPosition(3, (Point4 - Point1) * TrickyMapInterface.Scale);
-        lineRenderer.Simplify(0.1f);
+        //lineRenderer.Simplify(0.1f);
         if (UpdateCubePoints)
         {
             for (int i = 0; i < PatchPoints.Count; i++)
