@@ -5,6 +5,8 @@ using SSX_Modder.FileHandlers.MapEditor;
 
 public class SplineObject : MonoBehaviour
 {
+    public string SplineName;
+
     public Vector3 LowestXYZ;
     public Vector3 HighestXYZ;
 
@@ -32,18 +34,6 @@ public class SplineObject : MonoBehaviour
             TempGameobject.GetComponent<SplineSegmentObject>().LoadSplineSegment(splinesSegments[i]);
 
             splineSegmentObjects.Add(TempGameobject.GetComponent<SplineSegmentObject>());
-        }
-
-        for (int i = 0; i < splineSegmentObjects.Count-1; i++)
-        {
-            if (Vector3.Distance(splineSegmentObjects[i].Point4, splineSegmentObjects[i + 1].Point1)<0.1f)
-            {
-                Debug.Log("true");
-            }
-            else
-            {
-                Debug.Log("false");
-            }
         }
     }
 
@@ -107,4 +97,5 @@ public class SplineObject : MonoBehaviour
 
         return tempList;
     }
+
 }

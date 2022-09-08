@@ -77,6 +77,7 @@ public class FlyAroundCamera : MonoBehaviour
             }
             else
             {
+                TrickyMapInterface.Instance.RegenerateSplineMesh();
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }

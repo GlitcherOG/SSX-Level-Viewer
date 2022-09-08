@@ -38,12 +38,6 @@
 - Texture Flipbook Support
 - ImgBurn Support
 
-## Todo For Spline System
-- Moveable Points
-- Set and Save Names
-- Panel Hookup
-- Movable
-
 ## Todo Change
 - Redo Dropdown Menus so it auto adds hide menu
 - Tweak Toggle Object Script

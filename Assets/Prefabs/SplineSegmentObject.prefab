@@ -64,6 +64,8 @@ MonoBehaviour:
   PreviousSegmentsDistance: 0
   Unknown32: 0
   lineRenderer: {fileID: 189013267970641662}
+  PointPrefab: {fileID: 2226801304746188414, guid: 9530f6efd356716419e78a0107feac7c, type: 3}
+  PatchPoints: []
 --- !u!120 &189013267970641662
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -172,5 +174,5 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 30
+  m_CookingOptions: 0
   m_Mesh: {fileID: 0}

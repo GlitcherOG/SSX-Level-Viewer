@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SSX_Modder.FileHandlers.MapEditor;
+using System.Linq;
 
 public class SplineSegmentObject : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class SplineSegmentObject : MonoBehaviour
     public int Unknown32;
     
     public LineRenderer lineRenderer;
+    public GameObject PointPrefab;
+    public List<PatchPoint> PatchPoints = new List<PatchPoint>();
 
     private int curveCount = 0;
     private int SEGMENT_COUNT = 50;
@@ -67,13 +70,7 @@ public class SplineSegmentObject : MonoBehaviour
         Unknown32 = segments.Unknown32;
 
         GeneratePoints();
-        SetDataLineRender();
-        transform.position = ProcessedPoint1 * TrickyMapInterface.Scale;
-        DrawCurve();
-        lineRenderer.Simplify(0.1f);
-        Mesh mesh = new Mesh();
-        lineRenderer.BakeMesh(mesh);
-        GetComponent<MeshCollider>().sharedMesh = mesh;
+        SetDataLineRender(false);
     }
 
     float GenerateDistance()
@@ -133,13 +130,92 @@ public class SplineSegmentObject : MonoBehaviour
         ProcessedPoint4 = Point4 - (ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3);
     }
 
-    void SetDataLineRender()
+    public void SetDataLineRender(bool UpdateCubePoints)
     {
+        transform.position = Point1 * TrickyMapInterface.Scale;
         lineRenderer.positionCount = 4;
-        lineRenderer.SetPosition(0, (Point1 - Point1) *TrickyMapInterface.Scale);
-        lineRenderer.SetPosition(1, (Point2 - Point1) *TrickyMapInterface.Scale);
-        lineRenderer.SetPosition(2, (Point3 - Point1)* TrickyMapInterface.Scale);
+        lineRenderer.SetPosition(0, (Point1 - Point1) * TrickyMapInterface.Scale);
+        lineRenderer.SetPosition(1, (Point2 - Point1) * TrickyMapInterface.Scale);
+        lineRenderer.SetPosition(2, (Point3 - Point1) * TrickyMapInterface.Scale);
         lineRenderer.SetPosition(3, (Point4 - Point1) * TrickyMapInterface.Scale);
+        lineRenderer.Simplify(0.1f);
+        if (UpdateCubePoints)
+        {
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].DisableUpdate = true;
+            }
+            PatchPoints[0].transform.position = Point1 * TrickyMapInterface.Scale;
+            PatchPoints[1].transform.position = Point2 * TrickyMapInterface.Scale;
+            PatchPoints[2].transform.position = Point3 * TrickyMapInterface.Scale;
+            PatchPoints[3].transform.position = Point4 * TrickyMapInterface.Scale;
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].ResetOldPosition();
+            }
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].DisableUpdate = false;
+            }
+        }
+        RegenerateModel();
+    }
+
+    public void RegenerateModel()
+    {
+        Mesh mesh = new Mesh();
+        lineRenderer.BakeMesh(mesh, Camera.main);
+        mesh.SetIndices(mesh.GetIndices(0).Concat(mesh.GetIndices(0).Reverse()).ToArray(), MeshTopology.Triangles, 0);
+        GetComponent<MeshCollider>().sharedMesh = mesh;
+    }
+
+    void SpawnCube(Vector3 Point, Color color)
+    {
+        GameObject gameObject = Instantiate(PointPrefab, Point * TrickyMapInterface.Scale, new Quaternion(0, 0, 0, 0));
+        gameObject.GetComponent<Renderer>().material.color = color;
+        gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
+        gameObject.transform.parent = transform;
+        gameObject.GetComponent<PatchPoint>().ID = PatchPoints.Count;
+        gameObject.GetComponent<PatchPoint>().unityEvent = UpdatePointUsingCube;
+        PatchPoints.Add(gameObject.GetComponent<PatchPoint>());
+    }
+
+    public void GenerateCubePoints()
+    {
+        PatchPoints = new List<PatchPoint>();
+        SpawnCube(Point1, new Color32(202, 202, 202, 255));
+        SpawnCube(Point2, Color.red);
+        SpawnCube(Point3, Color.green);
+        SpawnCube(Point4, Color.blue);
+    }
+
+    void DestroyCube()
+    {
+        for (int i = 0; i < PatchPoints.Count; i++)
+        {
+            Destroy(PatchPoints[i].gameObject);
+        }
+        PatchPoints.Clear();
+    }
+
+    void UpdatePointUsingCube(int a)
+    {
+        Point1 = PatchPoints[0].transform.position / TrickyMapInterface.Scale;
+        Point2 = PatchPoints[1].transform.position / TrickyMapInterface.Scale;
+        Point3 = PatchPoints[2].transform.position / TrickyMapInterface.Scale;
+        Point4 = PatchPoints[3].transform.position / TrickyMapInterface.Scale;
+        SplinePanel.instance.LoadSegment(false);
+        SetDataLineRender(true);
+    }
+
+    public void SelectedObject()
+    {
+        GenerateCubePoints();
+    }
+
+    public void UnSelectedObject()
+    {
+        DestroyCube();
     }
 
     void DrawCurve()
@@ -172,5 +248,11 @@ public class SplineSegmentObject : MonoBehaviour
         p += ttt * p3;
 
         return p;
+    }
+
+    public Vector3 GetCentrePoint()
+    {
+        Vector3 vector3 = (Point1+Point2+Point3+Point4) / 4;
+        return vector3;
     }
 }

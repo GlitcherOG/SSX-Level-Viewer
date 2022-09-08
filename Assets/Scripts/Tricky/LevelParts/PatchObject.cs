@@ -311,7 +311,6 @@ public class PatchObject : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.SetColor("_EmissionColor", color);
         gameObject.transform.parent = transform;
         gameObject.GetComponent<PatchPoint>().ID = PatchPoints.Count;
-        gameObject.GetComponent<PatchPoint>().PatchObject = this;
         gameObject.GetComponent<PatchPoint>().unityEvent = UpdatePointUsingCube;
         PatchPoints.Add(gameObject.GetComponent<PatchPoint>());
     }
@@ -344,16 +343,6 @@ public class PatchObject : MonoBehaviour
         RawR4C3 = PatchPoints[14].transform.position / TrickyMapInterface.Scale;
         RawR4C4 = PatchPoints[15].transform.position / TrickyMapInterface.Scale;
         UpdateMeshPoints(true);
-    }
-
-
-    void SpawnPoints(Vector3 vector3, string Name)
-    {
-        GameObject gameObject = new GameObject();
-        gameObject.transform.position = vector3;
-        gameObject.transform.parent = this.gameObject.transform;
-        gameObject.name = Name;
-        gameObject.AddComponent<CubeID>();
     }
 
     public void LoadHighPolyMesh()
@@ -792,31 +781,6 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         ToggleLightingMode();
-    }
-
-    void Update()
-    {
-        if (transform.position != oldPosition)
-        {
-            Vector3 Dif = (transform.position - oldPosition) / TrickyMapInterface.Scale;
-            RawControlPoint += Dif;
-            RawR1C2 += Dif;
-            RawR1C3 += Dif;
-            RawR1C4 += Dif;
-            RawR2C1 += Dif;
-            RawR2C2 += Dif;
-            RawR2C3 += Dif;
-            RawR2C4 += Dif;
-            RawR3C1 += Dif;
-            RawR3C2 += Dif;
-            RawR3C3 += Dif;
-            RawR3C4 += Dif;
-            RawR4C1 += Dif;
-            RawR4C2 += Dif;
-            RawR4C3 += Dif;
-            RawR4C4 += Dif;
-            UpdateMeshPoints(true);
-        }
     }
 
     public Vector3 GetCentrePoint()

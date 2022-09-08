@@ -8,7 +8,6 @@ public class PatchPoint : MonoBehaviour
     public int ID;
     public bool DisableUpdate;
     public Vector3 OldPosition;
-    public PatchObject PatchObject;
     public UnityAction<int> unityEvent;
 
     private void Start()

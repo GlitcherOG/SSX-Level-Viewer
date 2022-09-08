@@ -143,6 +143,17 @@ public class TrickyMapInterface : MonoBehaviour
         gameObject.AddComponent<CubeID>();
     }
 
+    public void RegenerateSplineMesh()
+    {
+        for (int i = 0; i < splineObjects.Count; i++)
+        {
+            for (int a = 0; a < splineObjects[i].splineSegmentObjects.Count; a++)
+            {
+                splineObjects[i].splineSegmentObjects[a].RegenerateModel();
+            }
+        }
+    }
+
     #region Load Stuff
     public void OpenFileMap()
     {
@@ -274,6 +285,7 @@ public class TrickyMapInterface : MonoBehaviour
 
             GameObject TempSpline = Instantiate(SplinePrefab, splineParent.transform);
             TempSpline.transform.name = mMapHandler.Splines[i].Name + " (" + i.ToString() + ")";
+            TempSpline.GetComponent<SplineObject>().SplineName = mMapHandler.Splines[i].Name;
             TempSpline.GetComponent<SplineObject>().LoadSpline(Temp, Segments);
             splineObjects.Add(TempSpline.GetComponent<SplineObject>());
         }
@@ -338,19 +350,28 @@ public class TrickyMapInterface : MonoBehaviour
         for (int i = 0; i < patchObjects.Count; i++)
         {
             var TempLinker = new LinkerItem();
-            patchList.Add(patchObjects[i].GeneratePatch());
             TempLinker.Name = patchObjects[i].PatchName;
             TempLinker.UID = i;
             TempLinker.Ref = 1;
             TempLinker.Hashvalue = "0";
             mMapHandler.Patchs.Add(TempLinker);
+
+            patchList.Add(patchObjects[i].GeneratePatch());
         }
 
+        mMapHandler.Splines.Clear();
         List<Spline> splineList = new List<Spline>();
         List<SplinesSegments> splinesSegmentsList = new List<SplinesSegments>();
         int SegmentPos = 0;
         for (int i = 0; i < splineObjects.Count; i++)
         {
+            var TempLinker = new LinkerItem();
+            TempLinker.Name = splineObjects[i].SplineName;
+            TempLinker.UID = i;
+            TempLinker.Ref = 1;
+            TempLinker.Hashvalue = "0";
+            mMapHandler.Splines.Add(TempLinker);
+
             splineList.Add(splineObjects[i].GenerateSpline(SegmentPos));
             splinesSegmentsList.InsertRange(splinesSegmentsList.Count, splineObjects[i].GetSegments(SegmentPos, i));
             SegmentPos += splineObjects[i].splineSegmentObjects.Count;

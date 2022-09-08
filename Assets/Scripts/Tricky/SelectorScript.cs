@@ -90,22 +90,22 @@ public class SelectorScript : MonoBehaviour
             {
                 PatchPanelObject.SetActive(true);
                 XYZMovement.SetActive(true);
-                XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint()*TrickyMapInterface.Scale);
+                XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint() * TrickyMapInterface.Scale);
                 PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
             }
-            if(selectedTag=="Spline")
+            if (selectedTag == "Spline")
             {
                 XYZMovement.SetActive(true);
                 SplinePanelObject.SetActive(true);
                 SplinePanel.instance.LoadSplineAndSegment(SelectedGameObject.GetComponent<SplineSegmentObject>());
-                //XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint() * TrickyMapInterface.Scale);
+                XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<SplineSegmentObject>().GetCentrePoint() * TrickyMapInterface.Scale);
             }
-            if(selectedTag == "Patch Point")
+            if (selectedTag == "Patch Point")
             {
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
             }
-            if(selectedTag == "XYZMovement")
+            if (selectedTag == "XYZMovement")
             {
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetOldParent();
@@ -120,17 +120,34 @@ public class SelectorScript : MonoBehaviour
         }
     }
 
+    public void ManualSelection(GameObject NewgameObject, bool DoSelectionCheck = true)
+    {
+        Deselect();
+        XYZMovement.SetActive(false);
+        SelectedGameObject = NewgameObject;
+        SelectedObject = true;
+        selectedTag = SelectedGameObject.transform.tag;
+        if (DoSelectionCheck)
+        {
+            SelectionCheck();
+        }
+    }
+
     public void Deselect()
     {
-        if(SelectedObject)
+        if (SelectedObject)
         {
             if (selectedTag == "Patch")
             {
                 SelectedGameObject.GetComponent<PatchObject>().UnSelectedObject();
             }
+            if(selectedTag=="Spline")
+            {
+                SelectedGameObject.GetComponent<SplineSegmentObject>().UnSelectedObject();
+            }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);
-            SplinePanelObject.SetActive(false);
+            SplinePanelObject.GetComponent<SplinePanel>().HideSelfAndChild();
             PatchPanelObject.GetComponent<PatchPanel>().HideSelfAndChild();
             selectedTag = "";
             SelectedObject = false;
