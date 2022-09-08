@@ -6,7 +6,7 @@
 
 ## File Read/Write CheckList
 :heavy_check_mark: - Fully Working, :o: - Somewhat Working, :x: - Not Working
-| File     	| Reading            	| Loading            	|
+| File     	| Reading            	| Saving            	|
 |----------	|--------------------	|--------------------	|
 | .adl     	| :x:                	| :x:                	|
 | .api     	| :x:                	| :x:                	|
