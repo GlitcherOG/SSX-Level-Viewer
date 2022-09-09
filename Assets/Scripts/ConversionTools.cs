@@ -11,6 +11,11 @@ public static class ConversionTools
         return new Vector3(vertex3.X, vertex3.Z, vertex3.Y);
     }
 
+    public static Vector4 Vertex3ToVector4(Vertex3 vertex3)
+    {
+        return new Vector4(vertex3.X, vertex3.Z, vertex3.Y, vertex3.W);
+    }
+
     //From Unity To SSX
     public static Vertex3 Vector3ToVertex3(Vector3 vector3, float w = 1f)
     {

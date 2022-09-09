@@ -22,9 +22,11 @@ public class TrickyMapInterface : MonoBehaviour
     public static float Scale = 0.01f;
     public GameObject patchesParent;
     public GameObject splineParent;
+    public GameObject instanceParent;
 
     public GameObject SplinePrefab;
     public GameObject PatchPrefab;
+    public GameObject InstancePrefab;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -32,6 +34,7 @@ public class TrickyMapInterface : MonoBehaviour
     public List<Texture2D> textures;
     public List<PatchObject> patchObjects = new List<PatchObject>();
     public List<SplineObject> splineObjects = new List<SplineObject>();
+    public List<InstanceObject> instanceObjects = new List<InstanceObject>();
 
     string BigPath;
     bool BigImported;
@@ -214,8 +217,8 @@ public class TrickyMapInterface : MonoBehaviour
             LoadPatches();
             LoadSplines();
             LoadTextureFlipbooks();
-            //LoadInstances();
-            LoadParticleInstances();
+            LoadInstances();
+            //LoadParticleInstances();
         }
         try
         {
@@ -229,9 +232,13 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadInstances()
     {
+        instanceObjects = new List<InstanceObject>();
         for (int i = 0; i < PBDHandler.Instances.Count; i++)
         {
-            SpawnPoints(ConversionTools.Vertex3ToVector3(PBDHandler.Instances[i].Unknown4) * Scale, mMapHandler.InternalInstances[i].Name);
+            var TempGameObject = Instantiate(InstancePrefab, instanceParent.transform);
+            TempGameObject.transform.name = mMapHandler.InternalInstances[i].Name + " ("+i.ToString()+")";
+            TempGameObject.GetComponent<InstanceObject>().LoadInstance(PBDHandler.Instances[i]);
+            instanceObjects.Add(TempGameObject.GetComponent<InstanceObject>());
         }
     }
 
@@ -377,11 +384,18 @@ public class TrickyMapInterface : MonoBehaviour
             SegmentPos += splineObjects[i].splineSegmentObjects.Count;
         }
 
+        List<Instance> instanceList = new List<Instance>();
+        for (int i = 0; i < instanceObjects.Count; i++)
+        {
+            instanceList.Add(instanceObjects[i].GenerateInstance());
+        }
+
         //PBDHandler = new PBDHandler();
         PBDHandler.NumTextures = sshHandler.sshImages.Count;
         PBDHandler.Patches = patchList;
         PBDHandler.splines = splineList;
         PBDHandler.splinesSegments = splinesSegmentsList;
+        PBDHandler.Instances = instanceList;
         PBDHandler.Save(path);
     }
 

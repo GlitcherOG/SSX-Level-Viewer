@@ -20,13 +20,16 @@
 | _sky.ssh 	| :heavy_check_mark: 	| :x:                	|
 | _sky.pbd 	| :x:                	| :x:                	|
  
+## Next Big Update
+-Instances, Both Particle and Model 
+ 
  ## Todo Today
 - About Page
 - Hide Point
 - Hide Gizmo
 - Make way to dismiss notifcation
  
- ## Todo add
+## Todo add
 - Xray Mesh
 - Patch Panel Texture Selector
 - key to focus on object
@@ -37,6 +40,8 @@
 - UV Editing Clicking Points to edit UV and fix colors
 - Texture Flipbook Support
 - ImgBurn Support
+- Buttons to make spline ends connect
+- Instance Objects Spawning
 
 ## Todo Change
 - Redo Dropdown Menus so it auto adds hide menu
@@ -63,12 +68,12 @@
 - Controller Camera Movement
 - Allow Control Of Patch Possition In Tree
 - Attempt Auto Sort Of Patches
-- Double Sided Model Option
 - Show Patch List Postion
 - Edge Selector
 - Point Combine
-- Patch Rotation
+- Rotation Tool
 - fix Point Colliders, Fix Selection tool it seems to be very broken the further you get from 0,0,0 (While fixed by changing scale want to see if theres a better way)
+- mathf half to float
 
 ## Special Thanks
 https://github.com/Erickson400/SSXTrickyModelExporter <br>

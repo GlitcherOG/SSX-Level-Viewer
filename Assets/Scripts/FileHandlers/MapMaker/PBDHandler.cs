@@ -116,39 +116,28 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 for (int i = 0; i < NumInstances; i++)
                 {
                     var TempInstance = new Instance();
-                    TempInstance.Unknown1 = ReadVertices(stream, true);
-                    TempInstance.Unknown2 = ReadVertices(stream, true);
-                    TempInstance.Unknown3 = ReadVertices(stream, true);
-                    TempInstance.Unknown4 = ReadVertices(stream, true);
+                    TempInstance.MatrixCol1 = ReadVertices(stream, true);
+                    TempInstance.MatrixCol2 = ReadVertices(stream, true);
+                    TempInstance.MatrixCol3 = ReadVertices(stream, true);
+                    TempInstance.InstancePosition = ReadVertices(stream, true);
                     TempInstance.Unknown5 = ReadVertices(stream, true);
                     TempInstance.Unknown6 = ReadVertices(stream, true);
                     TempInstance.Unknown7 = ReadVertices(stream, true);
                     TempInstance.Unknown8 = ReadVertices(stream, true);
-                    TempInstance.UnknownInt1 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt2 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt3 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt4 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt5 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt6 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt7 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt8 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt9 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt10 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt11 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt12 = StreamUtil.ReadInt32(stream);
+                    TempInstance.Unknown9 = ReadVertices(stream, true);
+                    TempInstance.Unknown10 = ReadVertices(stream, true);
+                    TempInstance.Unknown11 = ReadVertices(stream, true);
                     TempInstance.UnknownInt13 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt14 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt15 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt16 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt17 = StreamUtil.ReadInt32(stream);
+                    TempInstance.ModelID = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt18 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt19 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt20 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt21 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt22 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt23 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt24 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt25 = StreamUtil.ReadInt32(stream);
+
+                    TempInstance.LowestXYZ = ReadVertices(stream, false);
+                    TempInstance.HighestXYZ = ReadVertices(stream, false);
+
                     TempInstance.UnknownInt26 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt27 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt28 = StreamUtil.ReadInt32(stream);
@@ -413,7 +402,41 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     StreamUtil.WriteInt32(stream, SplineSegment.Unknown32);
                 }
 
+                stream.Position = InstanceOffset;
+                for (int i = 0; i < Instances.Count; i++)
+                {
+                    var TempInstance = Instances[i];
+                    SaveVertices(stream, TempInstance.MatrixCol1, true);
+                    SaveVertices(stream, TempInstance.MatrixCol2, true);
+                    SaveVertices(stream, TempInstance.MatrixCol3, true);
+                    SaveVertices(stream, TempInstance.InstancePosition, true);
+                    SaveVertices(stream, TempInstance.Unknown5, true);
+                    SaveVertices(stream, TempInstance.Unknown6, true);
+                    SaveVertices(stream, TempInstance.Unknown7, true);
+                    SaveVertices(stream, TempInstance.Unknown8, true);
+                    SaveVertices(stream, TempInstance.Unknown9, true);
+                    SaveVertices(stream, TempInstance.Unknown10, true);
+                    SaveVertices(stream, TempInstance.Unknown11, true);
 
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt13);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt14);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt15);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt16);
+                    StreamUtil.WriteInt32(stream, TempInstance.ModelID);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt18);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt19);
+
+                    SaveVertices(stream, TempInstance.LowestXYZ, false);
+                    SaveVertices(stream, TempInstance.HighestXYZ, false);
+
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt26);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt27);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt28);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt29);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt30);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt31);
+                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt32);
+                }
             }
         }
         #region Standard Mesh Stuff
@@ -718,39 +741,28 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
     public struct Instance
     {
-        public Vertex3 Unknown1;
-        public Vertex3 Unknown2;
-        public Vertex3 Unknown3;
-        public Vertex3 Unknown4;
+        public Vertex3 MatrixCol1;
+        public Vertex3 MatrixCol2;
+        public Vertex3 MatrixCol3;
+        public Vertex3 InstancePosition;
         public Vertex3 Unknown5;
         public Vertex3 Unknown6;
         public Vertex3 Unknown7;
         public Vertex3 Unknown8;
-        public int UnknownInt1;
-        public int UnknownInt2;
-        public int UnknownInt3;
-        public int UnknownInt4;
-        public int UnknownInt5;
-        public int UnknownInt6;
-        public int UnknownInt7;
-        public int UnknownInt8;
-        public int UnknownInt9;
-        public int UnknownInt10;
-        public int UnknownInt11;
-        public int UnknownInt12;
+        public Vertex3 Unknown9;
+        public Vertex3 Unknown10;
+        public Vertex3 Unknown11;
         public int UnknownInt13;
         public int UnknownInt14;
         public int UnknownInt15;
         public int UnknownInt16;
-        public int UnknownInt17;
+        public int ModelID;
         public int UnknownInt18;
         public int UnknownInt19;
-        public int UnknownInt20;
-        public int UnknownInt21;
-        public int UnknownInt22;
-        public int UnknownInt23;
-        public int UnknownInt24;
-        public int UnknownInt25;
+
+        public Vertex3 LowestXYZ;
+        public Vertex3 HighestXYZ;
+
         public int UnknownInt26;
         public int UnknownInt27;
         public int UnknownInt28;
