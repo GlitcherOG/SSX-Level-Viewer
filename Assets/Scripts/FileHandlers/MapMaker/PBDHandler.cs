@@ -127,10 +127,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     TempInstance.Unknown9 = ReadVertices(stream, true);
                     TempInstance.Unknown10 = ReadVertices(stream, true);
                     TempInstance.Unknown11 = ReadVertices(stream, true);
-                    TempInstance.UnknownInt13 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt14 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt15 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt16 = StreamUtil.ReadInt32(stream);
+                    TempInstance.RGBA = ReadVertices(stream, true);
                     TempInstance.ModelID = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt18 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt19 = StreamUtil.ReadInt32(stream);
@@ -417,11 +414,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     SaveVertices(stream, TempInstance.Unknown9, true);
                     SaveVertices(stream, TempInstance.Unknown10, true);
                     SaveVertices(stream, TempInstance.Unknown11, true);
+                    SaveVertices(stream, TempInstance.RGBA, true);
 
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt13);
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt14);
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt15);
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt16);
                     StreamUtil.WriteInt32(stream, TempInstance.ModelID);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt18);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt19);
@@ -752,10 +746,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public Vertex3 Unknown9;
         public Vertex3 Unknown10;
         public Vertex3 Unknown11;
-        public int UnknownInt13;
-        public int UnknownInt14;
-        public int UnknownInt15;
-        public int UnknownInt16;
+        public Vertex3 RGBA;
         public int ModelID;
         public int UnknownInt18;
         public int UnknownInt19;

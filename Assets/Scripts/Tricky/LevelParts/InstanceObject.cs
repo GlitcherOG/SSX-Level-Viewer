@@ -18,6 +18,7 @@ public class InstanceObject : MonoBehaviour
     public Vector3 Unknown9; //Some Lighting Thing
     public Vector3 Unknown10;
     public Vector3 Unknown11;
+    public Vector4 RGBA;
 
     public int UnknownInt13;
     public int UnknownInt14;
@@ -61,11 +62,10 @@ public class InstanceObject : MonoBehaviour
         Unknown9 = ConversionTools.Vertex3ToVector3(instance.Unknown9);
         Unknown10 = ConversionTools.Vertex3ToVector3(instance.Unknown10);
         Unknown11 = ConversionTools.Vertex3ToVector3(instance.Unknown11);
+        Unknown11 = ConversionTools.Vertex3ToVector3(instance.Unknown11);
+        RGBA = ConversionTools.Vertex3ToVector4(instance.RGBA);
 
-        UnknownInt13 = instance.UnknownInt13;
-        UnknownInt14 = instance.UnknownInt14;
-        UnknownInt15 = instance.UnknownInt15;
-        UnknownInt16 = instance.UnknownInt16;
+
         ModelID = instance.ModelID;
         UnknownInt18 = instance.UnknownInt18;
         UnknownInt19 = instance.UnknownInt19;
@@ -113,11 +113,8 @@ public class InstanceObject : MonoBehaviour
         TempInstance.Unknown9 = ConversionTools.Vector3ToVertex3(Unknown9, 0f);
         TempInstance.Unknown10 = ConversionTools.Vector3ToVertex3(Unknown10, 0f);
         TempInstance.Unknown11 = ConversionTools.Vector3ToVertex3(Unknown11, 0f);
+        TempInstance.RGBA = ConversionTools.Vector4ToVertex3(RGBA);
 
-        TempInstance.UnknownInt13 = UnknownInt13;
-        TempInstance.UnknownInt14 = UnknownInt14;
-        TempInstance.UnknownInt15 = UnknownInt15;
-        TempInstance.UnknownInt16 = UnknownInt16;
         TempInstance.ModelID = ModelID;
         TempInstance.UnknownInt18 = UnknownInt18;
         TempInstance.UnknownInt19 = UnknownInt19;
