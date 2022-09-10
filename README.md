@@ -21,13 +21,8 @@
 | _sky.pbd 	| :x:                	| :x:                	|
  
 ## Next Big Update
--Instances, Both Particle and Model 
- 
- ## Todo Today
-- About Page
-- Hide Point
-- Hide Gizmo
-- Make way to dismiss notifcation
+- Loading and Saving the Entire PBD File
+- Figure Out Point R3C3
  
 ## Todo add
 - Xray Mesh
@@ -42,6 +37,10 @@
 - ImgBurn Support
 - Buttons to make spline ends connect
 - Instance Objects Spawning
+- About Page
+- Hide Point
+- Hide Gizmo
+- Make way to dismiss notifcation/Nofication Sounds
 
 ## Todo Change
 - Redo Dropdown Menus so it auto adds hide menu
@@ -59,7 +58,6 @@
 
 ## Todo in Later Update
 - Custom File Opener To fix issues with current code and allow cross platform support
-- Figure Out Point R3C3
 - Threading or warning about exporting taking a while
 - Redo Saving/Loading So it works on a project based system and pressing import generates a project
 - Skybox Emulation

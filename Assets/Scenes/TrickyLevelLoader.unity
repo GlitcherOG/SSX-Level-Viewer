@@ -3029,15 +3029,18 @@ MonoBehaviour:
   patchesParent: {fileID: 1076407780}
   splineParent: {fileID: 1469728004}
   instanceParent: {fileID: 468659999}
+  particleInstanceParent: {fileID: 1967259523}
   SplinePrefab: {fileID: 4075908900005425750, guid: 6baabac4302d7504c84ad6efdd97d83a, type: 3}
   PatchPrefab: {fileID: 540857759448903441, guid: aea0537a2aad50040afbab9bacae87b4, type: 3}
   InstancePrefab: {fileID: 8575919627083122261, guid: eb30f6e16b240d24399cc1a138af8927, type: 3}
+  particleInstancePrefab: {fileID: 562163599249992696, guid: a25f5f16a8c8d204fbdcfb4dac16d6f4, type: 3}
   ErrorTexture: {fileID: 2800000, guid: c4bba0f5c3b6e6141843002b4e8bdca5, type: 3}
   TextureChanged: 0
   textures: []
   patchObjects: []
   splineObjects: []
   instanceObjects: []
+  particleInstancesObjects: []
   ConfigPath: 
   Version: 0.0.3
 --- !u!4 &149250897
@@ -40934,6 +40937,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962831885}
   m_CullTransparentMesh: 1
+--- !u!1 &1967259523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1967259524}
+  m_Layer: 0
+  m_Name: ParticleInstanceParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1967259524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967259523}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.422606, y: -6.4621572, z: -78.46262}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1968451327
 GameObject:
   m_ObjectHideFlags: 0

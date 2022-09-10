@@ -20,21 +20,26 @@ public class TrickyMapInterface : MonoBehaviour
     public bool NoLightMode;
     public string LoadPath;
     public static float Scale = 0.01f;
+    [Header("Parent Objects")]
     public GameObject patchesParent;
     public GameObject splineParent;
     public GameObject instanceParent;
-
+    public GameObject particleInstanceParent;
+    [Header("Object Prefabs")]
     public GameObject SplinePrefab;
     public GameObject PatchPrefab;
     public GameObject InstancePrefab;
+    public GameObject particleInstancePrefab;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
 
+    [Header("Lists")]
     public List<Texture2D> textures;
     public List<PatchObject> patchObjects = new List<PatchObject>();
     public List<SplineObject> splineObjects = new List<SplineObject>();
     public List<InstanceObject> instanceObjects = new List<InstanceObject>();
+    public List<ParticleInstanceObject> particleInstancesObjects = new List<ParticleInstanceObject>();
 
     string BigPath;
     bool BigImported;
@@ -218,7 +223,7 @@ public class TrickyMapInterface : MonoBehaviour
             LoadSplines();
             LoadTextureFlipbooks();
             LoadInstances();
-            //LoadParticleInstances();
+            LoadParticleInstances();
         }
         try
         {
@@ -244,9 +249,13 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadParticleInstances()
     {
+        particleInstancesObjects = new List<ParticleInstanceObject>();
         for (int i = 0; i < PBDHandler.particleInstances.Count; i++)
         {
-            SpawnPoints(ConversionTools.Vertex3ToVector3(PBDHandler.particleInstances[i].Unknown4) * Scale, mMapHandler.ParticleInstances[i].Name);
+            var TempGameObject = Instantiate(particleInstancePrefab, particleInstanceParent.transform);
+            TempGameObject.transform.name = mMapHandler.ParticleInstances[i].Name + " (" + i.ToString() + ")";
+            TempGameObject.GetComponent<ParticleInstanceObject>().LoadParticleInstance(PBDHandler.particleInstances[i]);
+            particleInstancesObjects.Add(TempGameObject.GetComponent<ParticleInstanceObject>());
         }
     }
 
@@ -390,12 +399,19 @@ public class TrickyMapInterface : MonoBehaviour
             instanceList.Add(instanceObjects[i].GenerateInstance());
         }
 
+        List<ParticleInstance> particleInstances = new List<ParticleInstance>();
+        for (int i = 0; i < particleInstances.Count; i++)
+        {
+            particleInstances.Add(particleInstancesObjects[i].GenerateParticleInstance());
+        }
+
         //PBDHandler = new PBDHandler();
         PBDHandler.NumTextures = sshHandler.sshImages.Count;
         PBDHandler.Patches = patchList;
         PBDHandler.splines = splineList;
         PBDHandler.splinesSegments = splinesSegmentsList;
         PBDHandler.Instances = instanceList;
+        PBDHandler.particleInstances = particleInstances;
         PBDHandler.Save(path);
     }
 

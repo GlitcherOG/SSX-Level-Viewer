@@ -58,6 +58,9 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public List<TextureFlipbook> textureFlipbooks;
         public List<Instance> Instances;
         public List<ParticleInstance> particleInstances;
+        public List<Material> materials;
+        public List<MaterialBlock> materialBlocks;
+        public List<Light> lights;
 
         public void loadandsave(string path)
         {
@@ -68,25 +71,25 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 NumPatches = StreamUtil.ReadInt32(stream); //Done
                 NumInstances = StreamUtil.ReadInt32(stream); //Done
                 NumParticleInstances = StreamUtil.ReadInt32(stream); //Done
-                NumMaterials = StreamUtil.ReadInt32(stream);
-                NumMaterialBlocks = StreamUtil.ReadInt32(stream);
-                NumLights = StreamUtil.ReadInt32(stream);
+                NumMaterials = StreamUtil.ReadInt32(stream); //Done
+                NumMaterialBlocks = StreamUtil.ReadInt32(stream); //Done
+                NumLights = StreamUtil.ReadInt32(stream); //Done
                 NumSplines = StreamUtil.ReadInt32(stream); //Done
                 NumSplineSegments = StreamUtil.ReadInt32(stream); //Done
                 NumTextureFlipbooks = StreamUtil.ReadInt32(stream); //Done
-                NumModels = StreamUtil.ReadInt32(stream);
-                ParticleModelCount = StreamUtil.ReadInt32(stream);
+                NumModels = StreamUtil.ReadInt32(stream); 
+                ParticleModelCount = StreamUtil.ReadInt32(stream); 
                 NumTextures = StreamUtil.ReadInt32(stream);
                 NumCameras = StreamUtil.ReadInt32(stream); //Used in SSXFE MAP
                 LightMapSize = StreamUtil.ReadInt32(stream);
 
-                PlayerStartOffset = StreamUtil.ReadInt32(stream);
+                PlayerStartOffset = StreamUtil.ReadInt32(stream); //NA
                 PatchOffset = StreamUtil.ReadInt32(stream); //Done
                 InstanceOffset = StreamUtil.ReadInt32(stream); //Done
                 ParticleInstancesOffset = StreamUtil.ReadInt32(stream); //Done
-                MaterialOffset = StreamUtil.ReadInt32(stream);
-                MaterialBlocksOffset = StreamUtil.ReadInt32(stream);
-                LightsOffset = StreamUtil.ReadInt32(stream);
+                MaterialOffset = StreamUtil.ReadInt32(stream); //Done
+                MaterialBlocksOffset = StreamUtil.ReadInt32(stream); //Done
+                LightsOffset = StreamUtil.ReadInt32(stream); //Done 
                 SplineOffset = StreamUtil.ReadInt32(stream); //Done
                 SplineSegmentOffset = StreamUtil.ReadInt32(stream); //Done
                 TextureFlipbookOffset = StreamUtil.ReadInt32(stream); //Done
@@ -111,6 +114,79 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     Patches.Add(patch);
                 }
 
+                stream.Position = LightsOffset;
+                lights = new List<Light>();
+                for (int i = 0; i < NumLights; i++)
+                {
+                    var TempLights = new Light();
+                    TempLights.UnknownInt1 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt2 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt3 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt4 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt5 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt6 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt7 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt8 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt9 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt10 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt11 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt12 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt13 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt14 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt15 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt16 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt17 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt18 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt19 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt20 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt21 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt22 = StreamUtil.ReadInt32(stream);
+                    TempLights.UnknownInt23 = StreamUtil.ReadInt32(stream);
+                    lights.Add(TempLights);
+                }
+
+                stream.Position = MaterialBlocksOffset;
+                materialBlocks = new List<MaterialBlock>();
+                for (int i = 0; i < NumMaterialBlocks; i++)
+                {
+                    var TempMaterialBlock = new MaterialBlock();
+                    TempMaterialBlock.BlockCount = StreamUtil.ReadInt32(stream);
+                    TempMaterialBlock.ints = new List<int>();
+                    for (int a = 0; a < TempMaterialBlock.BlockCount; a++)
+                    {
+                        TempMaterialBlock.ints.Add(StreamUtil.ReadInt32(stream));
+                    }
+                    materialBlocks.Add(TempMaterialBlock);
+                }
+
+                stream.Position = MaterialOffset;
+                materials = new List<Material>();
+                for (int i = 0; i < NumMaterials; i++)
+                {
+                    var TempMaterial = new Material();
+                    TempMaterial.UnknownInt1 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt2 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt3 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt4 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt5 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt6 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt7 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt8 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt9 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt10 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt11 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt12 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt13 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt14 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt15 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt16 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt17 = StreamUtil.ReadInt32(stream);
+                    TempMaterial.UnknownInt18 = StreamUtil.ReadInt32(stream);
+                    materials.Add(TempMaterial);
+                }
+
+
+
                 stream.Position = InstanceOffset;
                 Instances = new List<Instance>();
                 for (int i = 0; i < NumInstances; i++)
@@ -129,8 +205,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     TempInstance.Unknown11 = ReadVertices(stream, true);
                     TempInstance.RGBA = ReadVertices(stream, true);
                     TempInstance.ModelID = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt18 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt19 = StreamUtil.ReadInt32(stream);
+                    TempInstance.PrevInstance = StreamUtil.ReadInt32(stream);
+                    TempInstance.NextInstance = StreamUtil.ReadInt32(stream);
 
                     TempInstance.LowestXYZ = ReadVertices(stream, false);
                     TempInstance.HighestXYZ = ReadVertices(stream, false);
@@ -138,7 +214,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     TempInstance.UnknownInt26 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt27 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt28 = StreamUtil.ReadInt32(stream);
-                    TempInstance.UnknownInt29 = StreamUtil.ReadInt32(stream);
+                    TempInstance.ModelID2 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt30 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt31 = StreamUtil.ReadInt32(stream);
                     TempInstance.UnknownInt32 = StreamUtil.ReadInt32(stream);
@@ -150,17 +226,13 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 for (int i = 0; i < NumParticleInstances; i++)
                 {
                     ParticleInstance TempParticle = new ParticleInstance();
-                    TempParticle.Unknown1 = ReadVertices(stream, true);
-                    TempParticle.Unknown2 = ReadVertices(stream, true);
-                    TempParticle.Unknown3 = ReadVertices(stream, true);
-                    TempParticle.Unknown4 = ReadVertices(stream, true);
+                    TempParticle.MatrixCol1 = ReadVertices(stream, true);
+                    TempParticle.MatrixCol2 = ReadVertices(stream, true);
+                    TempParticle.MatrixCol3 = ReadVertices(stream, true);
+                    TempParticle.ParticleInstancePosition = ReadVertices(stream, true);
                     TempParticle.UnknownInt1 = StreamUtil.ReadInt32(stream);
-                    TempParticle.UnknownInt2 = StreamUtil.ReadInt32(stream);
-                    TempParticle.UnknownInt3 = StreamUtil.ReadInt32(stream);
-                    TempParticle.UnknownInt4 = StreamUtil.ReadInt32(stream);
-                    TempParticle.UnknownInt5 = StreamUtil.ReadInt32(stream);
-                    TempParticle.UnknownInt6 = StreamUtil.ReadInt32(stream);
-                    TempParticle.UnknownInt7 = StreamUtil.ReadInt32(stream);
+                    TempParticle.LowestXYZ = ReadVertices(stream, false);
+                    TempParticle.HighestXYZ = ReadVertices(stream, false);
                     TempParticle.UnknownInt8 = StreamUtil.ReadInt32(stream);
                     TempParticle.UnknownInt9 = StreamUtil.ReadInt32(stream);
                     TempParticle.UnknownInt10 = StreamUtil.ReadInt32(stream);
@@ -265,9 +337,9 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 NumPlayerStarts = StreamUtil.ReadInt32(stream);
 
                 StreamUtil.WriteInt32(stream, Patches.Count);
+                StreamUtil.WriteInt32(stream, Instances.Count);
+                StreamUtil.WriteInt32(stream, particleInstances.Count);
 
-                NumInstances = StreamUtil.ReadInt32(stream);
-                NumParticleInstances = StreamUtil.ReadInt32(stream);
                 NumMaterials = StreamUtil.ReadInt32(stream);
                 NumMaterialBlocks = StreamUtil.ReadInt32(stream);
                 NumLights = StreamUtil.ReadInt32(stream);
@@ -282,12 +354,13 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 StreamUtil.WriteInt32(stream, NumTextures);
 
                 NumCameras = StreamUtil.ReadInt32(stream); //Used in SSXFE MAP
+
                 StreamUtil.WriteInt32(stream, 0); //Lightmap size 
 
                 PlayerStartOffset = StreamUtil.ReadInt32(stream);
                 PatchOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
-                InstanceOffset = StreamUtil.ReadInt32(stream);
-                ParticleInstancesOffset = StreamUtil.ReadInt32(stream);
+                InstanceOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
+                ParticleInstancesOffset = StreamUtil.ReadInt32(stream); //Done Need to make custom write later
                 MaterialOffset = StreamUtil.ReadInt32(stream);
                 MaterialBlocksOffset = StreamUtil.ReadInt32(stream);
                 LightsOffset = StreamUtil.ReadInt32(stream);
@@ -306,6 +379,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 Unknown34 = StreamUtil.ReadInt32(stream);
                 Unknown35 = StreamUtil.ReadInt32(stream);
 
+                //Patches
                 stream.Position = PatchOffset;
                 for (int i = 0; i < Patches.Count; i++)
                 {
@@ -399,6 +473,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     StreamUtil.WriteInt32(stream, SplineSegment.Unknown32);
                 }
 
+                //Instances
                 stream.Position = InstanceOffset;
                 for (int i = 0; i < Instances.Count; i++)
                 {
@@ -417,8 +492,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     SaveVertices(stream, TempInstance.RGBA, true);
 
                     StreamUtil.WriteInt32(stream, TempInstance.ModelID);
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt18);
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt19);
+                    StreamUtil.WriteInt32(stream, TempInstance.PrevInstance);
+                    StreamUtil.WriteInt32(stream, TempInstance.NextInstance);
 
                     SaveVertices(stream, TempInstance.LowestXYZ, false);
                     SaveVertices(stream, TempInstance.HighestXYZ, false);
@@ -426,10 +501,29 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt26);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt27);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt28);
-                    StreamUtil.WriteInt32(stream, TempInstance.UnknownInt29);
+                    StreamUtil.WriteInt32(stream, TempInstance.ModelID2);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt30);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt31);
                     StreamUtil.WriteInt32(stream, TempInstance.UnknownInt32);
+                }
+
+                //Particle Instances
+                stream.Position = ParticleInstancesOffset;
+                for (int i = 0; i < particleInstances.Count; i++)
+                {
+                    var TempParticle = particleInstances[i];
+                    SaveVertices(stream, TempParticle.MatrixCol1, true);
+                    SaveVertices(stream, TempParticle.MatrixCol2, true);
+                    SaveVertices(stream, TempParticle.MatrixCol3, true);
+                    SaveVertices(stream, TempParticle.ParticleInstancePosition, true);
+                    StreamUtil.WriteInt32(stream, TempParticle.UnknownInt1);
+                    SaveVertices(stream, TempParticle.LowestXYZ, false);
+                    SaveVertices(stream, TempParticle.HighestXYZ, false);
+                    StreamUtil.WriteInt32(stream, TempParticle.UnknownInt8);
+                    StreamUtil.WriteInt32(stream, TempParticle.UnknownInt9);
+                    StreamUtil.WriteInt32(stream, TempParticle.UnknownInt10);
+                    StreamUtil.WriteInt32(stream, TempParticle.UnknownInt11);
+                    StreamUtil.WriteInt32(stream, TempParticle.UnknownInt12);
                 }
             }
         }
@@ -748,8 +842,8 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public Vertex3 Unknown11;
         public Vertex3 RGBA;
         public int ModelID;
-        public int UnknownInt18;
-        public int UnknownInt19;
+        public int PrevInstance;
+        public int NextInstance;
 
         public Vertex3 LowestXYZ;
         public Vertex3 HighestXYZ;
@@ -757,7 +851,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public int UnknownInt26;
         public int UnknownInt27;
         public int UnknownInt28;
-        public int UnknownInt29;
+        public int ModelID2;
         public int UnknownInt30;
         public int UnknownInt31;
         public int UnknownInt32;
@@ -765,10 +859,22 @@ namespace SSX_Modder.FileHandlers.MapEditor
 
     public struct ParticleInstance
     {
-        public Vertex3 Unknown1;
-        public Vertex3 Unknown2;
-        public Vertex3 Unknown3;
-        public Vertex3 Unknown4;
+        public Vertex3 MatrixCol1;
+        public Vertex3 MatrixCol2;
+        public Vertex3 MatrixCol3;
+        public Vertex3 ParticleInstancePosition;
+        public int UnknownInt1;
+        public Vertex3 LowestXYZ;
+        public Vertex3 HighestXYZ;
+        public int UnknownInt8;
+        public int UnknownInt9;
+        public int UnknownInt10;
+        public int UnknownInt11;
+        public int UnknownInt12;
+    }
+
+    public struct Material
+    {
         public int UnknownInt1;
         public int UnknownInt2;
         public int UnknownInt3;
@@ -781,6 +887,45 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public int UnknownInt10;
         public int UnknownInt11;
         public int UnknownInt12;
+        public int UnknownInt13;
+        public int UnknownInt14;
+        public int UnknownInt15;
+        public int UnknownInt16;
+        public int UnknownInt17;
+        public int UnknownInt18;
+    }
+
+    public struct Light
+    {
+        public int UnknownInt1;
+        public int UnknownInt2;
+        public int UnknownInt3;
+        public int UnknownInt4;
+        public int UnknownInt5;
+        public int UnknownInt6;
+        public int UnknownInt7;
+        public int UnknownInt8;
+        public int UnknownInt9;
+        public int UnknownInt10;
+        public int UnknownInt11;
+        public int UnknownInt12;
+        public int UnknownInt13;
+        public int UnknownInt14;
+        public int UnknownInt15;
+        public int UnknownInt16;
+        public int UnknownInt17;
+        public int UnknownInt18;
+        public int UnknownInt19;
+        public int UnknownInt20;
+        public int UnknownInt21;
+        public int UnknownInt22;
+        public int UnknownInt23;
+    }
+
+    public struct MaterialBlock
+    {
+        public int BlockCount;
+        public List<int> ints;
     }
 
     public struct Model

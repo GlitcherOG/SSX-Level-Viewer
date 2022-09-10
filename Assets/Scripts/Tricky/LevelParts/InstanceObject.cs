@@ -25,8 +25,8 @@ public class InstanceObject : MonoBehaviour
     public int UnknownInt15;
     public int UnknownInt16;
     public int ModelID;
-    public int UnknownInt18; //Next Connected Model 
-    public int UnknownInt19; //Prev Connected Model
+    public int PrevInstance; //Next Connected Model 
+    public int NextInstance; //Prev Connected Model
 
     public Vector3 LowestXYZ;
     public Vector3 HighestXYZ;
@@ -37,7 +37,7 @@ public class InstanceObject : MonoBehaviour
     public int UnknownInt26;
     public int UnknownInt27;
     public int UnknownInt28;
-    public int UnknownInt29;
+    public int ModelID2;
     public int UnknownInt30;
     public int UnknownInt31;
     public int UnknownInt32;
@@ -67,8 +67,8 @@ public class InstanceObject : MonoBehaviour
 
 
         ModelID = instance.ModelID;
-        UnknownInt18 = instance.UnknownInt18;
-        UnknownInt19 = instance.UnknownInt19;
+        PrevInstance = instance.PrevInstance;
+        NextInstance = instance.NextInstance;
 
         LowestXYZ = ConversionTools.Vertex3ToVector3(instance.LowestXYZ);
         HighestXYZ = ConversionTools.Vertex3ToVector3(instance.HighestXYZ);
@@ -76,7 +76,7 @@ public class InstanceObject : MonoBehaviour
         UnknownInt26 = instance.UnknownInt26;
         UnknownInt27 = instance.UnknownInt27;
         UnknownInt28 = instance.UnknownInt28;
-        UnknownInt29 = instance.UnknownInt29;
+        ModelID2 = instance.ModelID2;
         UnknownInt30 = instance.UnknownInt30;
         UnknownInt31 = instance.UnknownInt31;
         UnknownInt32 = instance.UnknownInt32;
@@ -116,8 +116,8 @@ public class InstanceObject : MonoBehaviour
         TempInstance.RGBA = ConversionTools.Vector4ToVertex3(RGBA);
 
         TempInstance.ModelID = ModelID;
-        TempInstance.UnknownInt18 = UnknownInt18;
-        TempInstance.UnknownInt19 = UnknownInt19;
+        TempInstance.PrevInstance = PrevInstance;
+        TempInstance.NextInstance = NextInstance;
 
         TempInstance.LowestXYZ = ConversionTools.Vector3ToVertex3(LowestXYZ);
         TempInstance.HighestXYZ = ConversionTools.Vector3ToVertex3(HighestXYZ);
@@ -125,7 +125,7 @@ public class InstanceObject : MonoBehaviour
         TempInstance.UnknownInt26 = UnknownInt26;
         TempInstance.UnknownInt27 = UnknownInt27;
         TempInstance.UnknownInt28 = UnknownInt28;
-        TempInstance.UnknownInt29 = UnknownInt29;
+        TempInstance.ModelID2 = ModelID2;
         TempInstance.UnknownInt30 = UnknownInt30;
         TempInstance.UnknownInt31 = UnknownInt31;
         TempInstance.UnknownInt32 = UnknownInt32;
