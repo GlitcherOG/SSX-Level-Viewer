@@ -441,7 +441,8 @@ public class TrickyMapInterface : MonoBehaviour
             {
                 sshHandler.DarkenImage(i);
             }
-            sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh");
+            sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh", false);
+            TextureChanged = false;
         }
 
     }

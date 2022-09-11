@@ -50,6 +50,7 @@
 - Limit Mouse Look so camera doesnt freak out
 - Settings for keybindings, workspace path
 - Open File for Settings Page
+- Fix Darkened Bug
 
 ## Todo BugFixes
 - Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)
@@ -80,3 +81,9 @@ https://github.com/SSXModding/bigfile <br>
 
 ## Donate
 [![Donate](https://www.paypalobjects.com/en_AU/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?business=VT6TG8KKZM98E&no_recurring=0&currency_code=AUD)
+
+
+
+Using Model Offset and model Points you can go to a model data header
+Model Data first 80 bytes Header
+next 4 bytes declares length

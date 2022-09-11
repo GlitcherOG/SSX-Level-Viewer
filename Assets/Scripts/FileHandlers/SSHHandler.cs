@@ -710,21 +710,24 @@ namespace SSX_Modder.FileHandlers
             }
         }
 
-        public void SaveSSH(string path)
+        public void SaveSSH(string path, bool Test)
         {
             bool check = false;
             for (int i = 0; i < sshImages.Count; i++)
             {
-                SSHColorCalculate(i);
-                if (sshImages[i].sshTable.Total>256 && sshImages[i].sshHeader.MatrixFormat == 2)
+                if (Test)
                 {
-                    MessageBox.Show(sshImages[i].longname + " Exceeds 256 Colours");
-                    check = true;
-                }
-                if (sshImages[i].sshTable.Total > 16 && sshImages[i].sshHeader.MatrixFormat == 1)
-                {
-                    MessageBox.Show(sshImages[i].longname + " Exceeds 16 Colours");
-                    check = true;
+                    SSHColorCalculate(i);
+                    if (sshImages[i].sshTable.Total > 256 && sshImages[i].sshHeader.MatrixFormat == 2)
+                    {
+                        MessageBox.Show(sshImages[i].longname + " Exceeds 256 Colours");
+                        check = true;
+                    }
+                    if (sshImages[i].sshTable.Total > 16 && sshImages[i].sshHeader.MatrixFormat == 1)
+                    {
+                        MessageBox.Show(sshImages[i].longname + " Exceeds 16 Colours");
+                        check = true;
+                    }
                 }
                 if(sshImages[i].sshHeader.MatrixFormat == 130)
                 {
