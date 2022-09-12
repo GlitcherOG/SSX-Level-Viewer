@@ -61,8 +61,12 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public List<MaterialBlock> materialBlocks;
         public List<Light> lights;
         public List<int> ModelPointers;
-        public List<ModelHeader> modelHeaders;
-        public List<Model> models;
+        public List<Model> modelHeaders;
+        public List<int> ParticleModelPointers;
+        public List<ParticleModel> particleModels;
+        public List<int> CameraPointers;
+
+        public List<MeshData> models;
 
         public void loadandsave(string path)
         {
@@ -79,11 +83,11 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 NumSplines = StreamUtil.ReadInt32(stream); //Done
                 NumSplineSegments = StreamUtil.ReadInt32(stream); //Done
                 NumTextureFlipbooks = StreamUtil.ReadInt32(stream); //Done
-                NumModels = StreamUtil.ReadInt32(stream);
-                ParticleModelCount = StreamUtil.ReadInt32(stream);
-                NumTextures = StreamUtil.ReadInt32(stream);
+                NumModels = StreamUtil.ReadInt32(stream); //Done
+                ParticleModelCount = StreamUtil.ReadInt32(stream); //Done
+                NumTextures = StreamUtil.ReadInt32(stream); //Done
                 NumCameras = StreamUtil.ReadInt32(stream); //Used in SSXFE MAP
-                LightMapSize = StreamUtil.ReadInt32(stream);
+                LightMapSize = StreamUtil.ReadInt32(stream); //Always blank?
 
                 PlayerStartOffset = StreamUtil.ReadInt32(stream); //NA
                 PatchOffset = StreamUtil.ReadInt32(stream); //Done
@@ -96,15 +100,15 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 SplineSegmentOffset = StreamUtil.ReadInt32(stream); //Done
                 TextureFlipbookOffset = StreamUtil.ReadInt32(stream); //Done
                 ModelPointerOffset = StreamUtil.ReadInt32(stream); //Done
-                ModelsOffset = StreamUtil.ReadInt32(stream);
-                ParticleModelPointerOffset = StreamUtil.ReadInt32(stream);
-                ParticleModelsOffset = StreamUtil.ReadInt32(stream);
-                CameraPointerOffset = StreamUtil.ReadInt32(stream);
-                CamerasOffset = StreamUtil.ReadInt32(stream);
+                ModelsOffset = StreamUtil.ReadInt32(stream); //Sort of Loading
+                ParticleModelPointerOffset = StreamUtil.ReadInt32(stream); //Done
+                ParticleModelsOffset = StreamUtil.ReadInt32(stream); //Sort of Loading
+                CameraPointerOffset = StreamUtil.ReadInt32(stream); //Done
+                CamerasOffset = StreamUtil.ReadInt32(stream); //Unknown
                 HashOffset = StreamUtil.ReadInt32(stream);
-                ModelDataOffset = StreamUtil.ReadInt32(stream);
+                ModelDataOffset = StreamUtil.ReadInt32(stream); //Loading
                 Unknown34 = StreamUtil.ReadInt32(stream); //Possibly Just Blank
-                Unknown35 = StreamUtil.ReadInt32(stream);
+                Unknown35 = StreamUtil.ReadInt32(stream); //Possibly Just Blank
 
                 //Patch Loading
                 stream.Position = PatchOffset;
@@ -308,25 +312,26 @@ namespace SSX_Modder.FileHandlers.MapEditor
                 }
 
                 //ModelHeaders
+                int test = 0;
                 stream.Position = ModelsOffset;
-                modelHeaders = new List<ModelHeader>();
+                modelHeaders = new List<Model>();
                 for (int i = 0; i < ModelPointers.Count; i++)
                 {
                     stream.Position = ModelsOffset + ModelPointers[i];
-                    var TempHeader = new ModelHeader();
+                    var TempHeader = new Model();
                     TempHeader.TotalLength = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown0 = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown1 = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown2 = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown3 = StreamUtil.ReadInt32(stream);
-                    TempHeader.Unknown4 = StreamUtil.ReadInt32(stream);
-                    TempHeader.Unknown5 = StreamUtil.ReadFloat(stream);
-                    TempHeader.Unknown6 = StreamUtil.ReadFloat(stream);
-                    TempHeader.Unknown7 = StreamUtil.ReadFloat(stream);
+                    TempHeader.Unknown4 = StreamUtil.ReadFloat(stream);
+                    TempHeader.ScaleX = StreamUtil.ReadFloat(stream);
+                    TempHeader.ScaleZ = StreamUtil.ReadFloat(stream);
+                    TempHeader.ScaleY = StreamUtil.ReadFloat(stream);
                     TempHeader.Unknown8 = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown9 = StreamUtil.ReadInt32(stream);
-                    TempHeader.Unknown10 = StreamUtil.ReadInt32(stream);
-                    TempHeader.Unknown11 = StreamUtil.ReadInt32(stream);
+                    TempHeader.TriStripCount = StreamUtil.ReadInt32(stream);
+                    TempHeader.VertexCount = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown12 = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown13 = StreamUtil.ReadInt32(stream);
                     TempHeader.Unknown14 = StreamUtil.ReadInt32(stream);
@@ -336,15 +341,66 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     TempHeader.Unknown18 = StreamUtil.ReadInt32(stream);
 
                     TempHeader.UnknownLength = StreamUtil.ReadInt32(stream);
-                    TempHeader.bytes = StreamUtil.ReadBytes(stream, TempHeader.UnknownLength);
+
+                    TempHeader.LowestXYZ = ReadVertices(stream, false);
+                    TempHeader.HighestXYZ = ReadVertices(stream, false);
+
+                    int TempInt = TempHeader.UnknownLength;
+                    if ((TempHeader.UnknownLength - 24) > 0)
+                    {
+                        TempInt = TempHeader.UnknownLength - 24;
+                    }
+
+                    TempHeader.bytes = StreamUtil.ReadBytes(stream, TempInt);
                     modelHeaders.Add(TempHeader);
 
+                    test += TempHeader.Unknown8;
+
+                }
+
+                //Particle Model Pointers
+                stream.Position = ParticleModelPointerOffset;
+                ParticleModelPointers = new List<int>();
+                for (int i = 0; i < NumParticleInstances; i++)
+                {
+                    ParticleModelPointers.Add(StreamUtil.ReadInt32(stream));
+                }
+
+                //Particle Models
+                particleModels = new List<ParticleModel>();
+                for (int i = 0; i < ParticleModelCount; i++)
+                {
+                    stream.Position = ParticleModelsOffset + ParticleModelPointers[i];
+                    ParticleModel TempParticleModel = new ParticleModel();
+                    TempParticleModel.TotalLength = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown0 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown1 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown2 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown3 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown4 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown5 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown6 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown7 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown8 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown9 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.Unknown10 = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.UnknownLenght = StreamUtil.ReadInt32(stream);
+                    TempParticleModel.bytes = StreamUtil.ReadBytes(stream, TempParticleModel.UnknownLenght - 4);
+                    particleModels.Add(TempParticleModel);
+                }
+
+                //Camera Pointers
+                stream.Position = CameraPointerOffset;
+                CameraPointers = new List<int>();
+                for (int i = 0; i < NumCameras; i++)
+                {
+                    CameraPointers.Add(StreamUtil.ReadInt32(stream));
                 }
 
                 //ModelData
                 stream.Position = ModelDataOffset;
-                models = new List<Model>();
-                Model model = new Model();
+                models = new List<MeshData>();
+                MeshData model = new MeshData();
                 model.staticMeshes = new List<StaticMesh>();
                 int count = 0;
                 while (true)
@@ -365,7 +421,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
                     {
                         stream.Position += 48;
                         models.Add(model);
-                        model = new Model();
+                        model = new MeshData();
                         model.staticMeshes = new List<StaticMesh>();
                     }
                 }
@@ -837,21 +893,21 @@ namespace SSX_Modder.FileHandlers.MapEditor
         }
     }
 
-    public struct ModelHeader
+    public struct Model
     {
         public int TotalLength;
         public int Unknown0;
         public int Unknown1;
         public int Unknown2;
-        public int Unknown3;
-        public int Unknown4;
-        public float Unknown5;
-        public float Unknown6;
-        public float Unknown7;
-        public int Unknown8;
+        public int Unknown3; //ID
+        public float Unknown4;
+        public float ScaleX; //Scale X
+        public float ScaleZ; //Scale Z
+        public float ScaleY; //Scale Y
+        public int Unknown8; //Model Data Count?
         public int Unknown9;
-        public int Unknown10;
-        public int Unknown11;
+        public int TriStripCount; //Tristrip Count
+        public int VertexCount; //Vertex Count
         public int Unknown12;
         public int Unknown13;
         public int Unknown14;
@@ -861,6 +917,28 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public int Unknown18;
 
         public int UnknownLength;
+
+        public Vertex3 LowestXYZ;
+        public Vertex3 HighestXYZ;
+
+        public byte[] bytes;
+    }
+
+    public struct ParticleModel
+    {
+        public int TotalLength;
+        public int Unknown0;
+        public int Unknown1;
+        public int Unknown2;
+        public int Unknown3;
+        public int Unknown4;
+        public int Unknown5;
+        public int Unknown6;
+        public int Unknown7;
+        public int Unknown8;
+        public int Unknown9;
+        public int Unknown10;
+        public int UnknownLenght;
         public byte[] bytes;
     }
 
@@ -998,7 +1076,7 @@ namespace SSX_Modder.FileHandlers.MapEditor
         public List<int> ints;
     }
 
-    public struct Model
+    public struct MeshData
     {
         public List<StaticMesh> staticMeshes;
     }
