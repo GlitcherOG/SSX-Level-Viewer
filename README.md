@@ -58,7 +58,7 @@
 - Fix Mesh Generation Spline
 
 ## Todo in Later Update
-- Custom File Opener To fix issues with current code and allow cross platform support
+- Custom File Opener
 - Threading or warning about exporting taking a while
 - Redo Saving/Loading So it works on a project based system and pressing import generates a project
 - Skybox Emulation

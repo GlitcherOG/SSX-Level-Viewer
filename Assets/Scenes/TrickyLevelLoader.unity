@@ -2990,6 +2990,7 @@ GameObject:
   - component: {fileID: 149250897}
   - component: {fileID: 149250896}
   - component: {fileID: 149250898}
+  - component: {fileID: 149250899}
   m_Layer: 0
   m_Name: ScriptHolding
   m_TagString: Untagged
@@ -3078,6 +3079,18 @@ MonoBehaviour:
   XYZMovement: {fileID: 614645437}
   m_Raycaster: {fileID: 1629891913}
   m_EventSystem: {fileID: 358850443}
+--- !u!114 &149250899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149250895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8341338d2e78f0f419e4005fa2308aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &153229593
 GameObject:
   m_ObjectHideFlags: 0

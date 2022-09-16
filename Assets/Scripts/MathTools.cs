@@ -1,42 +1,41 @@
-using SSX_Modder.FileHandlers.MapEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class MathTools
 {
-    public static Vertex3 Highest(Vertex3 current, Vector3 vector3)
+    public static Vector3 Highest(Vector3 current, Vector3 vector3)
     {
-        Vertex3 vertex = ConversionTools.Vector3ToVertex3(vector3);
-        if (vertex.X > current.X)
+        Vector3 vertex = vector3;
+        if (vertex.x > current.x)
         {
-            current.X = vertex.X;
+            current.x = vertex.x;
         }
-        if (vertex.Y > current.Y)
+        if (vertex.y > current.y)
         {
-            current.Y = vertex.Y;
+            current.y = vertex.y;
         }
-        if (vertex.Z > current.Z)
+        if (vertex.z > current.z)
         {
-            current.Z = vertex.Z;
+            current.z = vertex.z;
         }
         return current;
     }
 
-    public static Vertex3 Lowest(Vertex3 current, Vector3 vector3)
+    public static Vector3 Lowest(Vector3 current, Vector3 vector3)
     {
-        Vertex3 vertex = ConversionTools.Vector3ToVertex3(vector3);
-        if (vertex.X < current.X)
+        Vector3 vertex = vector3;
+        if (vertex.x < current.x)
         {
-            current.X = vertex.X;
+            current.x = vertex.x;
         }
-        if (vertex.Y < current.Y)
+        if (vertex.y < current.y)
         {
-            current.Y = vertex.Y;
+            current.y = vertex.y;
         }
-        if (vertex.Z < current.Z)
+        if (vertex.z < current.z)
         {
-            current.Z = vertex.Z;
+            current.z = vertex.z;
         }
         return current;
     }

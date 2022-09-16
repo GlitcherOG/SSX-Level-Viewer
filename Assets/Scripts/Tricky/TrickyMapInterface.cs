@@ -16,7 +16,7 @@ public class TrickyMapInterface : MonoBehaviour
     public SSHHandler skyboxHandler;
     public SSHHandler lightingHandler;
     PBDHandler PBDHandler;
-    MapHandler mMapHandler;
+    public MapHandler mMapHandler;
     public bool NoLightMode;
     public string LoadPath;
     public static float Scale = 0.01f;
@@ -224,6 +224,7 @@ public class TrickyMapInterface : MonoBehaviour
             LoadTextureFlipbooks();
             LoadInstances();
             LoadParticleInstances();
+            GetComponent<ModelLibaray>().LoadModels(PBDHandler.models, PBDHandler.modelHeaders);
         }
         try
         {
