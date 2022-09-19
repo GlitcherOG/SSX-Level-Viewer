@@ -51,7 +51,7 @@ public class PatchPanel : MonoBehaviour
         RCPreferences[7].SetName("R2C4");
         RCPreferences[8].SetName("R3C1");
         RCPreferences[9].SetName("R3C2");
-        RCPreferences[10].SetName("Processed R3C3");
+        RCPreferences[10].SetName("R3C3");
         RCPreferences[11].SetName("R3C4");
         RCPreferences[12].SetName("R4C1");
         RCPreferences[13].SetName("R4C2");
@@ -100,10 +100,10 @@ public class PatchPanel : MonoBehaviour
         Unknown4.text = patch.Unknown5.ToString();
         Unknown5.text = patch.Unknown6.ToString();
 
-        ShadingPointX.text = patch.ScalePoint.x.ToString();
-        ShadingPointY.text = patch.ScalePoint.y.ToString();
-        ShadingPointZ.text = patch.ScalePoint.z.ToString();
-        ShadingPointW.text = patch.ScalePoint.w.ToString();
+        ShadingPointX.text = patch.LightMapPoint.x.ToString();
+        ShadingPointY.text = patch.LightMapPoint.y.ToString();
+        ShadingPointZ.text = patch.LightMapPoint.z.ToString();
+        ShadingPointW.text = patch.LightMapPoint.w.ToString();
 
         UpdatePoint(true);
         DisallowUpdate = false;
@@ -127,7 +127,7 @@ public class PatchPanel : MonoBehaviour
             RCPreferences[7].SetXYZ(patchObject.RawR2C4);
             RCPreferences[8].SetXYZ(patchObject.RawR3C1);
             RCPreferences[9].SetXYZ(patchObject.RawR3C2);
-            RCPreferences[10].SetXYZ(patchObject.R3C3);
+            RCPreferences[10].SetXYZ(patchObject.RawR3C3);
             RCPreferences[11].SetXYZ(patchObject.RawR3C4);
             RCPreferences[12].SetXYZ(patchObject.RawR4C1);
             RCPreferences[13].SetXYZ(patchObject.RawR4C2);
@@ -146,7 +146,7 @@ public class PatchPanel : MonoBehaviour
             RCPreferences[7].SetXYZ(patchObject.RawR2C4 - patchObject.RawControlPoint);
             RCPreferences[8].SetXYZ(patchObject.RawR3C1 - patchObject.RawControlPoint);
             RCPreferences[9].SetXYZ(patchObject.RawR3C2 - patchObject.RawControlPoint);
-            RCPreferences[10].SetXYZ(patchObject.R3C3);
+            RCPreferences[10].SetXYZ(patchObject.RawR3C3 - patchObject.RawControlPoint);
             RCPreferences[11].SetXYZ(patchObject.RawR3C4 - patchObject.RawControlPoint);
             RCPreferences[12].SetXYZ(patchObject.RawR4C1 - patchObject.RawControlPoint);
             RCPreferences[13].SetXYZ(patchObject.RawR4C2 - patchObject.RawControlPoint);
@@ -178,7 +178,7 @@ public class PatchPanel : MonoBehaviour
                 patchObject.RawR2C4 = RCPreferences[7].GrabXYZ();
                 patchObject.RawR3C1 = RCPreferences[8].GrabXYZ();
                 patchObject.RawR3C2 = RCPreferences[9].GrabXYZ();
-                patchObject.R3C3 = RCPreferences[10].GrabXYZ();
+                patchObject.RawR3C3 = RCPreferences[10].GrabXYZ();
                 patchObject.RawR3C4 = RCPreferences[11].GrabXYZ();
                 patchObject.RawR4C1 = RCPreferences[12].GrabXYZ();
                 patchObject.RawR4C2 = RCPreferences[13].GrabXYZ();
@@ -197,7 +197,7 @@ public class PatchPanel : MonoBehaviour
                 patchObject.RawR2C4 = RCPreferences[7].GrabXYZ()+ patchObject.RawControlPoint;
                 patchObject.RawR3C1 = RCPreferences[8].GrabXYZ()+ patchObject.RawControlPoint;
                 patchObject.RawR3C2 = RCPreferences[9].GrabXYZ()+ patchObject.RawControlPoint;
-                patchObject.R3C3 = RCPreferences[10].GrabXYZ();
+                patchObject.RawR3C3 = RCPreferences[10].GrabXYZ() + patchObject.RawControlPoint;
                 patchObject.RawR3C4 = RCPreferences[11].GrabXYZ()+ patchObject.RawControlPoint;
                 patchObject.RawR4C1 = RCPreferences[12].GrabXYZ()+ patchObject.RawControlPoint;
                 patchObject.RawR4C2 = RCPreferences[13].GrabXYZ()+ patchObject.RawControlPoint;
@@ -313,7 +313,7 @@ public class PatchPanel : MonoBehaviour
             try
             {
                 ShadingPointX.GetComponent<Image>().color = Color.white;
-                patchObject.ScalePoint.x = float.Parse(Unknowm);
+                patchObject.LightMapPoint.x = float.Parse(Unknowm);
             }
             catch
             {
@@ -329,7 +329,7 @@ public class PatchPanel : MonoBehaviour
             try
             {
                 ShadingPointY.GetComponent<Image>().color = Color.white;
-                patchObject.ScalePoint.y = float.Parse(Unknowm);
+                patchObject.LightMapPoint.y = float.Parse(Unknowm);
             }
             catch
             {
@@ -345,7 +345,7 @@ public class PatchPanel : MonoBehaviour
             try
             {
                 ShadingPointZ.GetComponent<Image>().color = Color.white;
-                patchObject.ScalePoint.z = float.Parse(Unknowm);
+                patchObject.LightMapPoint.z = float.Parse(Unknowm);
             }
             catch
             {
@@ -361,7 +361,7 @@ public class PatchPanel : MonoBehaviour
             try
             {
                 ShadingPointW.GetComponent<Image>().color = Color.white;
-                patchObject.ScalePoint.w = float.Parse(Unknowm);
+                patchObject.LightMapPoint.w = float.Parse(Unknowm);
             }
             catch
             {

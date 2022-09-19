@@ -2990,7 +2990,6 @@ GameObject:
   - component: {fileID: 149250897}
   - component: {fileID: 149250896}
   - component: {fileID: 149250898}
-  - component: {fileID: 149250899}
   m_Layer: 0
   m_Name: ScriptHolding
   m_TagString: Untagged
@@ -3035,6 +3034,10 @@ MonoBehaviour:
   PatchPrefab: {fileID: 540857759448903441, guid: aea0537a2aad50040afbab9bacae87b4, type: 3}
   InstancePrefab: {fileID: 8575919627083122261, guid: eb30f6e16b240d24399cc1a138af8927, type: 3}
   particleInstancePrefab: {fileID: 562163599249992696, guid: a25f5f16a8c8d204fbdcfb4dac16d6f4, type: 3}
+  PatchJson:
+    patches: []
+  SplineJson:
+    SplineJsons: []
   ErrorTexture: {fileID: 2800000, guid: c4bba0f5c3b6e6141843002b4e8bdca5, type: 3}
   TextureChanged: 0
   textures: []
@@ -3079,18 +3082,6 @@ MonoBehaviour:
   XYZMovement: {fileID: 614645437}
   m_Raycaster: {fileID: 1629891913}
   m_EventSystem: {fileID: 358850443}
---- !u!114 &149250899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149250895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8341338d2e78f0f419e4005fa2308aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &153229593
 GameObject:
   m_ObjectHideFlags: 0
@@ -4336,13 +4327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5875c58bf3b732a4f9aa213dd56d5f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImageButtonPrefab: {fileID: 900944237}
-  ImageScrollBox: {fileID: 278867363}
-  image: {fileID: 872517905}
-  color: {fileID: 731420924}
-  shortName: {fileID: 2051281736}
-  buttons: []
-  Loaded: 0
 --- !u!1 &210135559
 GameObject:
   m_ObjectHideFlags: 0

@@ -92,7 +92,7 @@ MeshCollider:
   m_GameObject: {fileID: 540857759448903441}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PatchName: 
-  ScalePoint: {x: 0, y: 0, z: 0, w: 0}
+  LightMapPoint: {x: 0, y: 0, z: 0, w: 0}
   UVPoint1: {x: 0, y: 0}
   UVPoint2: {x: 0, y: 0}
   UVPoint3: {x: 0, y: 0}
@@ -131,12 +131,6 @@ MonoBehaviour:
   RawR4C2: {x: 0, y: 0, z: 0}
   RawR4C3: {x: 0, y: 0, z: 0}
   RawR4C4: {x: 0, y: 0, z: 0}
-  LowestPoints: {x: 0, y: 0, z: 0}
-  HighestPoints: {x: 0, y: 0, z: 0}
-  OldPoint1: {x: 0, y: 0, z: 0}
-  OldPoint2: {x: 0, y: 0, z: 0}
-  OldPoint3: {x: 0, y: 0, z: 0}
-  OldPoint4: {x: 0, y: 0, z: 0}
   PatchStyle: 0
   Unknown2: 0
   TextureAssigment: 0
@@ -149,4 +143,3 @@ MonoBehaviour:
   Renderer: {fileID: 5244062748462653824}
   PointPrefab: {fileID: 2226801304746188414, guid: 9530f6efd356716419e78a0107feac7c, type: 3}
   PatchPoints: []
-  R3C3: {x: 0, y: 0, z: 0}

@@ -5,8 +5,10 @@
 - Texture Libaray Editing
  
 ## Next Big Update
-- Retooling the Entire Project System
-- Figure Out Point R3C3
+- Fix and Add Refreshing of the texture libaray
+- Save Patches and Splines
+- Fix Patch No light mode Selection
+ 
  
 ## Todo add
 - Xray Mesh

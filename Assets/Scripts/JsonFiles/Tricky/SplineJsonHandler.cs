@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace SSXMultiTool.JsonFiles.Tricky
 {
+    [Serializable]
     public class SplineJsonHandler
     {
         public List<SplineJson> SplineJsons = new List<SplineJson>();
@@ -46,6 +47,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
 
         }
 
+        [Serializable]
         public struct SegmentJson
         {
             public float[] Point4;

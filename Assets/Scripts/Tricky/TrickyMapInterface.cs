@@ -1,22 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SSX_Modder.FileHandlers;
-using SSX_Modder.FileHandlers.MapEditor;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
+using SSXMultiTool.JsonFiles.Tricky;
 
 public class TrickyMapInterface : MonoBehaviour
 {
     public static TrickyMapInterface Instance;
     public LevelEditorSettings settings;
-    public SSHHandler sshHandler;
-    public SSHHandler skyboxHandler;
-    public SSHHandler lightingHandler;
-    PBDHandler PBDHandler;
-    public MapHandler mMapHandler;
     public bool NoLightMode;
     public string LoadPath;
     public static float Scale = 0.01f;
@@ -30,6 +24,9 @@ public class TrickyMapInterface : MonoBehaviour
     public GameObject PatchPrefab;
     public GameObject InstancePrefab;
     public GameObject particleInstancePrefab;
+    [Header("Json Files")]
+    public PatchesJsonHandler PatchJson;
+    public SplineJsonHandler SplineJson;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -41,8 +38,6 @@ public class TrickyMapInterface : MonoBehaviour
     public List<InstanceObject> instanceObjects = new List<InstanceObject>();
     public List<ParticleInstanceObject> particleInstancesObjects = new List<ParticleInstanceObject>();
 
-    string BigPath;
-    bool BigImported;
     public string ConfigPath;
     public string Version = "0.0.3";
 
@@ -106,17 +101,7 @@ public class TrickyMapInterface : MonoBehaviour
     public void ForceUpdateAllTextures()
     {
         textures = new List<Texture2D>();
-        for (int i = 0; i < sshHandler.sshImages.Count; i++)
-        {
-            Texture2D texture2D = new Texture2D(1, 1);
-            MemoryStream stream = new MemoryStream();
-            sshHandler.sshImages[i].bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-            byte[] TempByte = new byte[stream.Length];
-            stream.Position = 0;
-            stream.Read(TempByte, 0, TempByte.Length);
-            texture2D.LoadImage(TempByte, true);
-            textures.Add(texture2D);
-        }
+
 
         for (int i = 0; i < patchObjects.Count; i++)
         {
@@ -167,7 +152,7 @@ public class TrickyMapInterface : MonoBehaviour
     {
         OpenFileDialog saveFileDialog = new OpenFileDialog()
         {
-            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
+            Filter = "Map Config File (*.ssx)|*.ssx|All files (*.*)|*.*",
             FilterIndex = 1,
             RestoreDirectory = false
         };
@@ -177,87 +162,37 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    public void ExtractBig()
+    void LoadMapFiles(string StringPath)
     {
-        BigHandler bigHandler = new BigHandler();
-        OpenFileDialog openFileDialog = new OpenFileDialog()
-        {
-            Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
-            FilterIndex = 1,
-            RestoreDirectory = false
-        };
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            bigHandler.LoadBig(openFileDialog.FileName);
-            if (Directory.Exists(UnityEngine.Application.dataPath + "\\TempExtracted"))
-            {
-                Directory.Delete(UnityEngine.Application.dataPath + "\\TempExtracted", true);
-            }
-            Directory.CreateDirectory(UnityEngine.Application.dataPath + "\\TempExtracted");
-            bigHandler.ExtractBig(UnityEngine.Application.dataPath + "\\TempExtracted");
-            string[] Paths = Directory.GetFiles(UnityEngine.Application.dataPath + "\\TempExtracted", "*.map", SearchOption.AllDirectories);
-            for (int i = 0; i < Paths.Length; i++)
-            {
-                if (Paths[i].Contains(".map"))
-                {
-                    BigImported = true;
-                    BigPath = Paths[i];
-                    LoadMapFiles(Paths[i]);
-                    break;
-                }
-            }
-        }
+        StringPath = Path.GetDirectoryName(StringPath);
+        LoadTextures(StringPath+ "\\Textures");
+        LoadPatches(StringPath + "\\Patches.json");
+        LoadSplines(StringPath + "\\Splines.json");
     }
 
-    void LoadMapFiles(string Path)
+    void LoadPatches(string PatchPath)
     {
-        LoadPath = Path.Substring(0, Path.Length - 4);
-        PBDHandler = new PBDHandler();
-        mMapHandler = new MapHandler();
-        //LoadLighting();
-        LoadMap();
-        if (LoadPBD())
+        PatchJson = new PatchesJsonHandler();
+        PatchJson = PatchesJsonHandler.Load(PatchPath);
+        for (int i = 0; i < PatchJson.patches.Count; i++)
         {
-            LoadTextures();
-            LoadPatches();
-            LoadSplines();
-            LoadTextureFlipbooks();
-            LoadInstances();
-            LoadParticleInstances();
-            GetComponent<ModelLibaray>().LoadModels(PBDHandler.models, PBDHandler.modelHeaders);
-        }
-        try
-        {
-            LoadSkyBox();
-        }
-        catch
-        {
-            NotifcationBarUI.instance.ShowNotifcation("No Skybox Textures Detected", 5f);
+            GameObject gameObject = Instantiate(PatchPrefab, patchesParent.transform);
+            var Patch = PatchJson.patches[i];
+            var PatchHolder = gameObject.GetComponent<PatchObject>();
+            PatchHolder.LoadPatch(Patch);
+            gameObject.transform.name = Patch.PatchName + " (" + i + ")";
+            patchObjects.Add(PatchHolder);
         }
     }
 
     void LoadInstances()
     {
-        instanceObjects = new List<InstanceObject>();
-        for (int i = 0; i < PBDHandler.Instances.Count; i++)
-        {
-            var TempGameObject = Instantiate(InstancePrefab, instanceParent.transform);
-            TempGameObject.transform.name = mMapHandler.InternalInstances[i].Name + " ("+i.ToString()+")";
-            TempGameObject.GetComponent<InstanceObject>().LoadInstance(PBDHandler.Instances[i]);
-            instanceObjects.Add(TempGameObject.GetComponent<InstanceObject>());
-        }
+
     }
 
     void LoadParticleInstances()
     {
-        particleInstancesObjects = new List<ParticleInstanceObject>();
-        for (int i = 0; i < PBDHandler.particleInstances.Count; i++)
-        {
-            var TempGameObject = Instantiate(particleInstancePrefab, particleInstanceParent.transform);
-            TempGameObject.transform.name = mMapHandler.ParticleInstances[i].Name + " (" + i.ToString() + ")";
-            TempGameObject.GetComponent<ParticleInstanceObject>().LoadParticleInstance(PBDHandler.particleInstances[i]);
-            particleInstancesObjects.Add(TempGameObject.GetComponent<ParticleInstanceObject>());
-        }
+
     }
 
     void LoadTextureFlipbooks()
@@ -265,208 +200,62 @@ public class TrickyMapInterface : MonoBehaviour
 
     }
 
-    bool LoadPBD()
+    void LoadSplines(string path)
     {
-        try
+        SplineJson = new SplineJsonHandler();
+        SplineJson = SplineJsonHandler.Load(path);
+        for (int i = 0; i < SplineJson.SplineJsons.Count; i++)
         {
-            if (File.Exists(LoadPath + " - Copy.pbd"))
-            {
-                File.Delete(LoadPath + ".pbd");
-                while (File.Exists(LoadPath + ".pbd"))
-                {
-
-                }
-                File.Copy(LoadPath + " - Copy.pbd", LoadPath + ".pbd");
-            }
-            PBDHandler.loadandsave(LoadPath + ".pbd");
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    void LoadSplines()
-    {
-        splineObjects = new List<SplineObject>();
-        for (int i = 0; i < PBDHandler.splines.Count; i++)
-        {
-            var Temp = PBDHandler.splines[i];
-
-            List<SplinesSegments> Segments = new List<SplinesSegments>();
-            for (int a = Temp.SplineSegmentPosition; a < Temp.SplineSegmentCount + Temp.SplineSegmentPosition; a++)
-            {
-                Segments.Add(PBDHandler.splinesSegments[a]);
-            }
-
+            var TempSplineData = SplineJson.SplineJsons[i];
             GameObject TempSpline = Instantiate(SplinePrefab, splineParent.transform);
-            TempSpline.transform.name = mMapHandler.Splines[i].Name + " (" + i.ToString() + ")";
-            TempSpline.GetComponent<SplineObject>().SplineName = mMapHandler.Splines[i].Name;
-            TempSpline.GetComponent<SplineObject>().LoadSpline(Temp, Segments);
+            TempSpline.transform.name = TempSplineData.SplineName + " (" + i.ToString() + ")";
+            TempSpline.GetComponent<SplineObject>().LoadSpline(TempSplineData);
             splineObjects.Add(TempSpline.GetComponent<SplineObject>());
-        }
-    }
-
-    void LoadPatches()
-    {
-        var TempData = PBDHandler.Patches;
-        for (int i = 0; i < TempData.Count; i++)
-        {
-            GameObject gameObject = Instantiate(PatchPrefab, patchesParent.transform);
-            var Patch = TempData[i];
-            var PatchHolder = gameObject.GetComponent<PatchObject>();
-            PatchHolder.LoadPatch(Patch, mMapHandler.Patchs[i].Name.TrimEnd(' '));
-            gameObject.transform.name = mMapHandler.Patchs[i].Name.TrimEnd(' ') + " (" + i + ")";
-            patchObjects.Add(PatchHolder);
         }
     }
 
     void LoadMap()
     {
-        mMapHandler.Load(LoadPath + ".map");
+
     }
 
-    void LoadTextures()
+    void LoadTextures(string Folder)
     {
-        sshHandler = new SSHHandler();
-        sshHandler.LoadSSH(LoadPath + ".ssh");
+        string[] Files = Directory.GetFiles(Folder);
         textures = new List<Texture2D>();
-        for (int i = 0; i < sshHandler.sshImages.Count; i++)
+        for (int i = 0; i < Files.Length; i++)
         {
-            sshHandler.BrightenBitmap(i);
-            Texture2D texture2D = new Texture2D(1, 1);
-            MemoryStream stream = new MemoryStream();
-            sshHandler.sshImages[i].bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-            byte[] TempByte = new byte[stream.Length];
-            stream.Position = 0;
-            stream.Read(TempByte, 0, TempByte.Length);
-            texture2D.LoadImage(TempByte, true);
-            textures.Add(texture2D);
+            Texture2D NewImage = new Texture2D(1, 1);
+            if (Files[i].ToLower().Contains(".png"))
+            {
+                using (Stream stream = File.Open(Files[i], FileMode.Open))
+                {
+                    byte[] bytes = new byte[stream.Length];
+                    stream.Read(bytes, 0, (int)stream.Length);
+                    NewImage.LoadImage(bytes);
+                }
+                textures.Add(NewImage);
+            }
         }
     }
     void LoadSkyBox()
     {
-        skyboxHandler = new SSHHandler();
-        skyboxHandler.LoadSSH(LoadPath + "_sky.ssh");
+
     }
 
     void LoadLighting()
     {
-        lightingHandler = new SSHHandler();
-        sshHandler.LoadSSH(LoadPath + "_L.ssh");
+
     }
 
     #endregion
 
     #region Save Stuff
-    void SavePBD(string path)
-    {
-        mMapHandler.Patchs.Clear();
-        List<Patch> patchList = new List<Patch>();
-        for (int i = 0; i < patchObjects.Count; i++)
-        {
-            var TempLinker = new LinkerItem();
-            TempLinker.Name = patchObjects[i].PatchName;
-            TempLinker.UID = i;
-            TempLinker.Ref = 1;
-            TempLinker.Hashvalue = "0";
-            mMapHandler.Patchs.Add(TempLinker);
 
-            patchList.Add(patchObjects[i].GeneratePatch());
-        }
-
-        mMapHandler.Splines.Clear();
-        List<Spline> splineList = new List<Spline>();
-        List<SplinesSegments> splinesSegmentsList = new List<SplinesSegments>();
-        int SegmentPos = 0;
-        for (int i = 0; i < splineObjects.Count; i++)
-        {
-            var TempLinker = new LinkerItem();
-            TempLinker.Name = splineObjects[i].SplineName;
-            TempLinker.UID = i;
-            TempLinker.Ref = 1;
-            TempLinker.Hashvalue = "0";
-            mMapHandler.Splines.Add(TempLinker);
-
-            splineList.Add(splineObjects[i].GenerateSpline(SegmentPos));
-            splinesSegmentsList.InsertRange(splinesSegmentsList.Count, splineObjects[i].GetSegments(SegmentPos, i));
-            SegmentPos += splineObjects[i].splineSegmentObjects.Count;
-        }
-
-        List<Instance> instanceList = new List<Instance>();
-        for (int i = 0; i < instanceObjects.Count; i++)
-        {
-            instanceList.Add(instanceObjects[i].GenerateInstance());
-        }
-
-        List<ParticleInstance> particleInstances = new List<ParticleInstance>();
-        for (int i = 0; i < particleInstances.Count; i++)
-        {
-            particleInstances.Add(particleInstancesObjects[i].GenerateParticleInstance());
-        }
-
-        //PBDHandler = new PBDHandler();
-        PBDHandler.NumTextures = sshHandler.sshImages.Count;
-        PBDHandler.Patches = patchList;
-        PBDHandler.splines = splineList;
-        PBDHandler.splinesSegments = splinesSegmentsList;
-        PBDHandler.Instances = instanceList;
-        PBDHandler.particleInstances = particleInstances;
-        PBDHandler.Save(path);
-    }
-
-    public void SaveFileMap()
-    {
-        SaveFileDialog saveFileDialog = new SaveFileDialog()
-        {
-            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
-            FilterIndex = 1,
-            RestoreDirectory = false
-        };
-        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            SaveFiles(saveFileDialog.FileName);
-            NotifcationBarUI.instance.ShowNotifcation("Exported Map", 5f);
-        }
-    }
 
     public void SaveFiles(string path)
     {
-        SavePBD(path.Substring(0, path.Length - 4) + ".pbd");
 
-        mMapHandler.Save(path);
-        if (TextureChanged)
-        {
-            for (int i = 0; i < sshHandler.sshImages.Count; i++)
-            {
-                sshHandler.DarkenImage(i);
-            }
-            sshHandler.SaveSSH(path.Substring(0, path.Length - 4) + ".ssh", false);
-            TextureChanged = false;
-        }
-
-    }
-
-    public void MakeBig()
-    {
-        if (BigImported)
-        {
-            BigHandler bigHandler = new BigHandler();
-            SaveFileDialog openFileDialog = new SaveFileDialog()
-            {
-                Filter = "Big Archive (*.big)|*.big|All files (*.*)|*.*",
-                FilterIndex = 1,
-                RestoreDirectory = false
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                SaveFiles(BigPath);
-                bigHandler.LoadFolder(UnityEngine.Application.dataPath + "\\TempExtracted");
-                bigHandler.bigType = BigType.C0FB;
-                bigHandler.BuildBig(openFileDialog.FileName);
-            }
-        }
     }
 
     #endregion

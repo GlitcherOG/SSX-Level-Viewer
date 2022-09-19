@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SSX_Modder.FileHandlers.MapEditor;
 using System.Linq;
+using SSXMultiTool.JsonFiles.Tricky;
+using SSXMultiTool.Utilities;
 
 public class SplineSegmentObject : MonoBehaviour
 {
-    public Vector3 ProcessedPoint1;
-    public Vector3 ProcessedPoint2;
-    public Vector3 ProcessedPoint3;
-    public Vector3 ProcessedPoint4;
     [Space(10)]
     public Vector3 Point1;
     public Vector3 Point2;
@@ -17,17 +14,8 @@ public class SplineSegmentObject : MonoBehaviour
     public Vector3 Point4;
     [Space(10)]
     public Vector4 ScalingPoint;
-    public Vector3 NormalizedScalingPoint;
+
     [Space(10)]
-    public int PreviousSegment;
-    public int NextSegment; //Model ID Or Object Parent?
-    public int SplineParent;
-    [Space(10)]
-    public Vector3 LowestXYZ;
-    public Vector3 HighestXYZ;
-    [Space(10)]
-    public float SegmentDisatnce;
-    public float PreviousSegmentsDistance;
     public int Unknown32;
     
     public LineRenderer lineRenderer;
@@ -37,98 +25,51 @@ public class SplineSegmentObject : MonoBehaviour
     private int curveCount = 0;
     private int SEGMENT_COUNT = 50;
 
-
-    void Start()
+    public void LoadSplineSegment(SplineJsonHandler.SegmentJson segments)
     {
-        
-    }
+        Point1 = JsonUtil.ArrayToVector3(segments.Point1);
+        Point2 = JsonUtil.ArrayToVector3(segments.Point2);
+        Point3 = JsonUtil.ArrayToVector3(segments.Point3);
+        Point4 = JsonUtil.ArrayToVector3(segments.Point4);
 
-    void Update()
-    {
+        ScalingPoint = JsonUtil.ArrayToVector4(segments.Unknown);
 
-    }
-
-    public void LoadSplineSegment(SplinesSegments segments)
-    {
-        ProcessedPoint1 = ConversionTools.Vertex3ToVector3(segments.ControlPoint);
-        ProcessedPoint2 = ConversionTools.Vertex3ToVector3(segments.Point2);
-        ProcessedPoint3 = ConversionTools.Vertex3ToVector3(segments.Point3);
-        ProcessedPoint4 = ConversionTools.Vertex3ToVector3(segments.Point4);
-
-        ScalingPoint = new Vector4(segments.ScalingPoint.X, segments.ScalingPoint.Y, segments.ScalingPoint.Z,segments.ScalingPoint.W);
-        NormalizedScalingPoint = ScalingPoint/ScalingPoint.w;
-
-        PreviousSegment = segments.PreviousSegment;
-        NextSegment = segments.NextSegment;
-        SplineParent = segments.SplineParent;
-
-        LowestXYZ = ConversionTools.Vertex3ToVector3(segments.LowestXYZ);
-        HighestXYZ = ConversionTools.Vertex3ToVector3(segments.HighestXYZ);
-
-        SegmentDisatnce = segments.SegmentDisatnce;
-        PreviousSegmentsDistance = segments.PreviousSegmentsDistance;
         Unknown32 = segments.Unknown32;
 
-        GeneratePoints();
         SetDataLineRender(false);
     }
 
-    float GenerateDistance()
-    {
-        float distance = 0;
-        for (int i = 0; i < lineRenderer.positionCount-1; i++)
-        {
-            distance += Vector3.Distance(lineRenderer.GetPosition(i), lineRenderer.GetPosition(i + 1));
-        }
-        return distance;
-    }
 
-    public SplinesSegments GenerateSplineSegment()
-    {
-        SplinesSegments segments = new SplinesSegments();
-        ProcessPoints();
-        segments.ControlPoint = ConversionTools.Vector3ToVertex3(ProcessedPoint1,1);
-        segments.Point2 = ConversionTools.Vector3ToVertex3(ProcessedPoint2, 0);
-        segments.Point3 = ConversionTools.Vector3ToVertex3(ProcessedPoint3, 0);
-        segments.Point4 = ConversionTools.Vector3ToVertex3(ProcessedPoint4, 0);
-        segments.ScalingPoint = ConversionTools.Vector4ToVertex3(ScalingPoint);
+    //public SplinesSegments GenerateSplineSegment()
+    //{
+    //    SplinesSegments segments = new SplinesSegments();
+    //    ProcessPoints();
+    //    segments.ControlPoint = ConversionTools.Vector3ToVertex3(ProcessedPoint1,1);
+    //    segments.Point2 = ConversionTools.Vector3ToVertex3(ProcessedPoint2, 0);
+    //    segments.Point3 = ConversionTools.Vector3ToVertex3(ProcessedPoint3, 0);
+    //    segments.Point4 = ConversionTools.Vector3ToVertex3(ProcessedPoint4, 0);
+    //    segments.ScalingPoint = ConversionTools.Vector4ToVertex3(ScalingPoint);
 
-        //Parent, Next Segment and Previous Segment Generated in Spline Object
+    //    //Parent, Next Segment and Previous Segment Generated in Spline Object
 
-        segments.LowestXYZ = ConversionTools.Vector3ToVertex3(Point1);
-        segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point2);
-        segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point3);
-        segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point4);
+    //    segments.LowestXYZ = ConversionTools.Vector3ToVertex3(Point1);
+    //    segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point2);
+    //    segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point3);
+    //    segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point4);
 
-        segments.HighestXYZ = ConversionTools.Vector3ToVertex3(Point1);
-        segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point2);
-        segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point3);
-        segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point4);
+    //    segments.HighestXYZ = ConversionTools.Vector3ToVertex3(Point1);
+    //    segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point2);
+    //    segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point3);
+    //    segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point4);
 
-        segments.SegmentDisatnce = Vector3.Distance(Point4, Point1);
+    //    segments.SegmentDisatnce = Vector3.Distance(Point4, Point1);
 
-        //Preveous Segment Distance Generated in Spline
+    //    //Preveous Segment Distance Generated in Spline
 
-        segments.Unknown32 = Unknown32;
+    //    segments.Unknown32 = Unknown32;
 
-        return segments;
-    }
-
-    void GeneratePoints()
-    {
-        Point1 = ProcessedPoint1;
-        Point2 = Point1 + ProcessedPoint2 / 3;
-        Point3 = Point2 + (ProcessedPoint2 + ProcessedPoint3) / 3;
-        Point4 = ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3 + ProcessedPoint4;
-    }
-
-    void ProcessPoints()
-    {
-        ProcessedPoint1 = Point1;
-        ProcessedPoint2 = (Point2-Point1)*3;
-        ProcessedPoint3 = (Point3 - Point2) * 3 - ProcessedPoint2;
-        ProcessedPoint4 = Point4 - (ProcessedPoint1 + ProcessedPoint2 + ProcessedPoint3);
-    }
+    //    return segments;
+    //}
 
     public void SetDataLineRender(bool UpdateCubePoints)
     {
@@ -220,17 +161,12 @@ public class SplineSegmentObject : MonoBehaviour
 
     void DrawCurve()
     {
-        curveCount = (int)4 / 3;
-        for (int j = 0; j < curveCount; j++)
+        for (int i = 1; i <= SEGMENT_COUNT; i++)
         {
-            for (int i = 1; i <= SEGMENT_COUNT; i++)
-            {
-                float t = i / (float)SEGMENT_COUNT;
-                Vector3 pixel = CalculateCubicBezierPoint(t, (Point1 - Point1) * TrickyMapInterface.Scale, (Point2 - Point1) * TrickyMapInterface.Scale, (Point3 - Point1) * TrickyMapInterface.Scale, (Point4 - Point1) * TrickyMapInterface.Scale);
-                lineRenderer.positionCount = ((j * SEGMENT_COUNT) + i);
-                lineRenderer.SetPosition((j * SEGMENT_COUNT) + (i - 1), pixel);
-            }
-
+            float t = i / (float)SEGMENT_COUNT;
+            Vector3 pixel = CalculateCubicBezierPoint(t, (Point1 - Point1) * TrickyMapInterface.Scale, (Point2 - Point1) * TrickyMapInterface.Scale, (Point3 - Point1) * TrickyMapInterface.Scale, (Point4 - Point1) * TrickyMapInterface.Scale);
+            lineRenderer.positionCount = (i);
+            lineRenderer.SetPosition((i - 1), pixel);
         }
     }
 
