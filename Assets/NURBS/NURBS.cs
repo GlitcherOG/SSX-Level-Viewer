@@ -217,6 +217,31 @@ namespace NURBS
             return mesh;
         }
 
+        public Vector3[] ReturnVertices(int resolutionU, int resolutionV, bool calculateTangents = false)
+        {
+            //No mesh provided
+
+            if (vertices == null || vertices.Length != (resolutionU + 1) * (resolutionV + 1))
+                vertices = new Vector3[(resolutionU + 1) * (resolutionV + 1)];
+            if (uvs == null || uvs.Length != (resolutionU + 1) * (resolutionV + 1))
+                uvs = new Vector2[(resolutionU + 1) * (resolutionV + 1)];
+            int ct = 0;
+
+            for (int a = 0; a <= resolutionU; a++)
+            {
+                float e = (float)a / resolutionU;
+                for (int b = 0; b <= resolutionV; b++)
+                {
+                    float d = (float)b / resolutionV;
+                    Vector3 c = GetPoint(d, e);
+                    vertices[ct] = c;
+                    ct++;
+                }
+            }
+
+            return vertices;
+        }
+
         /// <summary>
         /// Generate a balanced knot vector for specified amount of control points and degree with optional clamps.<br/>
         /// The resulting knot vector will have length nControlPoints + degree + 1.<br/>

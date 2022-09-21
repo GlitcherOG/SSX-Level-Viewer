@@ -94,7 +94,7 @@ public class PatchObject : MonoBehaviour
 
         transform.position = RawControlPoint * TrickyMapInterface.Scale;
 
-        LoadBezierPatch();
+        LoadNURBSpatch();
         oldPosition = transform.position;
     }
 
@@ -247,10 +247,9 @@ public class PatchObject : MonoBehaviour
         UpdateMeshPoints(true);
     }
 
-    public void LoadBezierPatch()
+    public void LoadNURBSpatch()
     {
         Vector3[,] vertices = new Vector3[4, 4];
-        List<Vector2> UV = new List<Vector2>();
 
         //Vertices
         vertices[0, 0] = ((RawControlPoint - RawControlPoint) * TrickyMapInterface.Scale);
@@ -286,15 +285,13 @@ public class PatchObject : MonoBehaviour
             }
         }
 
-        int degreeU = 2;
-        int degreeV = 2;
+        int degreeU = 3;
+        int degreeV = 3;
 
         int resolutionU = 12;
         int resolutionV = 12;
 
-        //Setup if not yet
-        if (surface == null)
-            surface = new NURBS.Surface(cps, degreeU, degreeV);
+        surface = new NURBS.Surface(cps, degreeU, degreeV);
 
         //Update degree
         surface.DegreeU(degreeU);
@@ -303,17 +300,31 @@ public class PatchObject : MonoBehaviour
         //Update control points
         surface.controlPoints = cps;
 
-        surface.UVPoint1 = UVPoint1;
-        surface.UVPoint2 = UVPoint3;
-        surface.UVPoint3 = UVPoint2;
-        surface.UVPoint4 = UVPoint4;
-
         //Build mesh (reusing Mesh to save GC allocation)
-        surface.BuildMesh(resolutionU, resolutionV, GetComponent<MeshFilter>().mesh);
+        var mesh=surface.BuildMesh(resolutionU, resolutionV);
 
+        cps = new NURBS.ControlPoint[2, 2];
+
+        cps[0, 0] = new NURBS.ControlPoint(UVPoint1.x, UVPoint1.y, 0, 1);
+        cps[0, 1] = new NURBS.ControlPoint(UVPoint2.x, UVPoint2.y, 0, 1);
+        cps[1, 0] = new NURBS.ControlPoint(UVPoint3.x, UVPoint3.y, 0, 1);
+        cps[1, 1] = new NURBS.ControlPoint(UVPoint4.x, UVPoint4.y, 0, 1);
+
+        surface = new NURBS.Surface(cps, 1, 1);
+
+        Vector3[] UV = surface.ReturnVertices(resolutionU, resolutionV);
+
+        Vector2[] UV2 = new Vector2[UV.Length];
+
+        for (int i = 0; i < UV.Length; i++)
+        {
+            UV2[i] = PointCorrection(new Vector2(UV[i].x, UV[i].y));
+        }
+        mesh.uv = UV2;
         //Set material
+        GetComponent<MeshFilter>().mesh= mesh;
         GetComponent<MeshCollider>().enabled = false;
-        GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
+        GetComponent<MeshCollider>().sharedMesh = mesh;
         GetComponent<MeshCollider>().enabled = true;
         GetComponent<Renderer>().material = MainMaterial;
         UpdateTexture(TextureAssigment);
@@ -506,12 +517,12 @@ public class PatchObject : MonoBehaviour
 
     public void UpdateMeshPoints(bool CubePointUpdate)
     {
-        LoadBezierPatch();
+        LoadNURBSpatch();
     }
 
     public void UpdateUVPoints()
     {
-        LoadBezierPatch();
+        LoadNURBSpatch();
     }
 
     public void ToggleLightingMode()
