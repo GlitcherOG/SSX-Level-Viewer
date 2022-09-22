@@ -2,11 +2,12 @@
 
 ## Current Features
 - Patch Editing
-- Texture Libaray Editing
+- Spline Editing
+- Texture Libaray viewing
  
 ## Next Big Update
-- Fix and Add Refreshing of the texture libaray
-- Save Patches and Splines
+- Add Refreshing of the texture libaray
+- Save Splines
 - Fix Patch No light mode Selection
  
  
@@ -37,7 +38,6 @@
 - Fix Darkened Bug
 
 ## Todo BugFixes
-- Fix Adding Image using 0 as base (I think all i really need to do is set the matrix type)
 - Fix Distance Generation Spline (Best guess is that they use the bezier curve generation to do it)
 - Fix Mesh Generation Spline
 

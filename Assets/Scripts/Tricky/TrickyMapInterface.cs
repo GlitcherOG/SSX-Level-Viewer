@@ -214,11 +214,6 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    void LoadMap()
-    {
-
-    }
-
     void LoadTextures(string Folder)
     {
         string[] Files = Directory.GetFiles(Folder);
@@ -252,11 +247,35 @@ public class TrickyMapInterface : MonoBehaviour
 
     #region Save Stuff
 
-
-    public void SaveFiles(string path)
+    public void SaveFileMap()
     {
-
+        SaveFileDialog saveFileDialog = new SaveFileDialog()
+        {
+            Filter = "Map Config File (*.ssx)|*.ssx|All files (*.*)|*.*",
+            FilterIndex = 1,
+            RestoreDirectory = false
+        };
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            SaveFiles(saveFileDialog.FileName);
+        }
     }
 
+    public void SaveFiles(string StringPath)
+    {
+        StringPath = Path.GetDirectoryName(StringPath);
+        SavePatches(StringPath + "\\Patches.json");
+    }
+
+    public void SavePatches(string PatchPath)
+    {
+        PatchJson = new PatchesJsonHandler();
+        PatchJson.patches = new List<PatchesJsonHandler.PatchJson>();
+        for (int i = 0; i < patchObjects.Count; i++)
+        {
+            PatchJson.patches.Add(patchObjects[i].GeneratePatch());
+        }
+        PatchJson.CreateJson(PatchPath);
+    }
     #endregion
 }

@@ -61,28 +61,27 @@ public class PatchObject : MonoBehaviour
         PatchName = import.PatchName;
         LightMapPoint = JsonUtil.ArrayToVector4(import.LightMapPoint);
 
-        //FIX SO OUTPUT IS CORRECT
         UVPoint1 = JsonUtil.ArrayToVector4(import.UVPoint1);
         UVPoint2 = JsonUtil.ArrayToVector4(import.UVPoint2);
         UVPoint3 = JsonUtil.ArrayToVector4(import.UVPoint3);
         UVPoint4 = JsonUtil.ArrayToVector4(import.UVPoint4);
 
-        RawR4C4 = JsonUtil.ArrayToVector3(import.R4C4);
-        RawR4C3 = JsonUtil.ArrayToVector3(import.R4C3);
-        RawR4C2 = JsonUtil.ArrayToVector3(import.R4C2);
-        RawR4C1 = JsonUtil.ArrayToVector3(import.R4C1);
-        RawR3C4 = JsonUtil.ArrayToVector3(import.R3C4);
-        RawR3C3 = JsonUtil.ArrayToVector3(import.R3C3);
-        RawR3C2 = JsonUtil.ArrayToVector3(import.R3C2);
-        RawR3C1 = JsonUtil.ArrayToVector3(import.R3C1);
-        RawR2C4 = JsonUtil.ArrayToVector3(import.R2C4);
-        RawR2C3 = JsonUtil.ArrayToVector3(import.R2C3);
-        RawR2C2 = JsonUtil.ArrayToVector3(import.R2C2);
-        RawR2C1 = JsonUtil.ArrayToVector3(import.R2C1);
-        RawR1C4 = JsonUtil.ArrayToVector3(import.R1C4);
-        RawR1C3 = JsonUtil.ArrayToVector3(import.R1C3);
-        RawR1C2 = JsonUtil.ArrayToVector3(import.R1C2);
-        RawControlPoint = JsonUtil.ArrayToVector3(import.R1C1);
+        RawR4C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C4));
+        RawR4C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C3));
+        RawR4C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C2));
+        RawR4C1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C1));
+        RawR3C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C4));
+        RawR3C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C3));
+        RawR3C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C2));
+        RawR3C1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C1));
+        RawR2C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C4));
+        RawR2C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C3));
+        RawR2C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C2));
+        RawR2C1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C1));
+        RawR1C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C4));
+        RawR1C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C3));
+        RawR1C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C2));
+        RawControlPoint = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C1));
 
         PatchStyle = import.PatchStyle;
         Unknown2 = import.Unknown2;
@@ -119,92 +118,44 @@ public class PatchObject : MonoBehaviour
         SpawnCube(RawR4C4, Color.black);
     }
 
-    //public Patch GeneratePatch()
-    //{
-    //    ProccessPoints();
-    //    Patch patch = new Patch();
+    public PatchesJsonHandler.PatchJson GeneratePatch()
+    {
+        PatchesJsonHandler.PatchJson patch = new PatchesJsonHandler.PatchJson();
+        patch.PatchName = PatchName;
+        patch.LightMapPoint = JsonUtil.Vector4ToArray(LightMapPoint);
 
-    //    patch.ScalePoint = ConversionTools.Vector4ToVertex3(ScalePoint);
+        patch.UVPoint1 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint1,1,1));
+        patch.UVPoint2 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint2, 1, 1));
+        patch.UVPoint3 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint3, 1, 1));
+        patch.UVPoint4 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint4, 1, 1));
 
-    //    patch.UVPoint1 = ConversionTools.Vector2ToVertex3(UVPoint1);
-    //    patch.UVPoint2 = ConversionTools.Vector2ToVertex3(UVPoint2);
-    //    patch.UVPoint3 = ConversionTools.Vector2ToVertex3(UVPoint3);
-    //    patch.UVPoint4 = ConversionTools.Vector2ToVertex3(UVPoint4);
+        patch.R1C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawControlPoint));
+        patch.R1C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR1C2));
+        patch.R1C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR1C3));
+        patch.R1C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR1C4));
+        patch.R2C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C1));
+        patch.R2C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C2));
+        patch.R2C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C3));
+        patch.R2C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C4));
+        patch.R3C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C1));
+        patch.R3C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C2));
+        patch.R3C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C3));
+        patch.R3C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C4));
+        patch.R4C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C1));
+        patch.R4C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C2));
+        patch.R4C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C3));
+        patch.R4C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C4));
 
-    //    patch.R1C1 = ConversionTools.Vector3ToVertex3(ControlPoint);
-    //    patch.R1C2 = ConversionTools.Vector3ToVertex3(R1C2);
-    //    patch.R1C3 = ConversionTools.Vector3ToVertex3(R1C3);
-    //    patch.R1C4 = ConversionTools.Vector3ToVertex3(R1C4);
-    //    patch.R2C1 = ConversionTools.Vector3ToVertex3(R2C1);
-    //    patch.R2C2 = ConversionTools.Vector3ToVertex3(R2C2);
-    //    patch.R2C3 = ConversionTools.Vector3ToVertex3(R2C3);
-    //    patch.R2C4 = ConversionTools.Vector3ToVertex3(R2C4);
-    //    patch.R3C1 = ConversionTools.Vector3ToVertex3(R3C1);
-    //    patch.R3C2 = ConversionTools.Vector3ToVertex3(R3C2);
-    //    patch.R3C3 = ConversionTools.Vector3ToVertex3(R3C3);
-    //    patch.R3C4 = ConversionTools.Vector3ToVertex3(R3C4);
-    //    patch.R4C1 = ConversionTools.Vector3ToVertex3(R4C1);
-    //    patch.R4C2 = ConversionTools.Vector3ToVertex3(R4C2);
-    //    patch.R4C3 = ConversionTools.Vector3ToVertex3(R4C3);
-    //    patch.R4C4 = ConversionTools.Vector3ToVertex3(R4C4);
+        patch.PatchStyle = PatchStyle;
+        patch.Unknown2 = Unknown2;
+        patch.TextureAssigment = TextureAssigment;
+        patch.LightmapID = LightmapID;
+        patch.Unknown4 = Unknown4;
+        patch.Unknown5 = Unknown5;
+        patch.Unknown6 = Unknown6;
 
-    //    Vertex3 HighestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C2);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C3);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR1C4);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C1);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C2);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C3);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR2C4);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR3C1);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR3C2);
-    //    //HighestXYZ = Highest(HighestXYZ, RawR3C3);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR3C4);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C1);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C2);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C3);
-    //    HighestXYZ = MathTools.Highest(HighestXYZ, RawR4C4);
-
-    //    Vertex3 LowestXYZ = ConversionTools.Vector3ToVertex3(RawControlPoint);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C2);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C3);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR1C4);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C1);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C2);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C3);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR2C4);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR3C1);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR3C2);
-    //    //LowestXYZ = Lowest(LowestXYZ, RawR3C3);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR3C4);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C1);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C2);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C3);
-    //    LowestXYZ = MathTools.Lowest(LowestXYZ, RawR4C4);
-
-    //    patch.HighestXYZ = HighestXYZ;
-    //    patch.LowestXYZ = LowestXYZ;
-
-    //    patch.Point1 = ConversionTools.Vector3ToVertex3(RawControlPoint);
-    //    patch.Point2 = ConversionTools.Vector3ToVertex3(RawR4C1);
-    //    patch.Point3 = ConversionTools.Vector3ToVertex3(RawR1C4);
-    //    patch.Point4 = ConversionTools.Vector3ToVertex3(RawR4C4);
-
-    //    OldPoint1 = RawControlPoint;
-    //    OldPoint2 = RawR4C1;
-    //    OldPoint3 = RawR1C4;
-    //    OldPoint4 = RawR4C4;
-
-    //    patch.PatchStyle = PatchStyle;
-    //    patch.Unknown2 = Unknown2;
-    //    patch.TextureAssigment = TextureAssigment;
-    //    patch.LightmapID = LightmapID;
-    //    patch.Unknown4 = Unknown4;
-    //    patch.Unknown5 = Unknown5;
-    //    patch.Unknown6 = Unknown6;
-
-    //    return patch;
-    //}
+        return patch;
+    }
 
     void SpawnCube(Vector3 Point, Color color)
     {

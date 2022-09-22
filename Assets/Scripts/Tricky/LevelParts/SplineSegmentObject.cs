@@ -27,10 +27,10 @@ public class SplineSegmentObject : MonoBehaviour
 
     public void LoadSplineSegment(SplineJsonHandler.SegmentJson segments)
     {
-        Point1 = JsonUtil.ArrayToVector3(segments.Point1);
-        Point2 = JsonUtil.ArrayToVector3(segments.Point2);
-        Point3 = JsonUtil.ArrayToVector3(segments.Point3);
-        Point4 = JsonUtil.ArrayToVector3(segments.Point4);
+        Point1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(segments.Point1));
+        Point2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(segments.Point2));
+        Point3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(segments.Point3));
+        Point4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(segments.Point4));
 
         ScalingPoint = JsonUtil.ArrayToVector4(segments.Unknown);
 

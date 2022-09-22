@@ -38,14 +38,19 @@ namespace SSXMultiTool.Utilities
         {
             float[] array = new float[3];
             array[0] = vector3.x;
-            array[1] = vector3.z;
-            array[2] = vector3.y;
+            array[1] = vector3.y;
+            array[2] = vector3.z;
             return array;
         }
 
         public static Vector3 ArrayToVector3(float[] floats)
         {
-            return new Vector3(floats[0], floats[2], floats[1]);
+            return new Vector3(floats[0], floats[1], floats[2]);
+        }
+
+        public static Vector4 Vector2ToVector4(Vector2 vector2 , float z=1, float w=1)
+        {
+            return new Vector4(vector2.x, vector2.y, z, w);
         }
 
     }
