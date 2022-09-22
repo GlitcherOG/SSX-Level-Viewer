@@ -40,36 +40,21 @@ public class SplineSegmentObject : MonoBehaviour
     }
 
 
-    //public SplinesSegments GenerateSplineSegment()
-    //{
-    //    SplinesSegments segments = new SplinesSegments();
-    //    ProcessPoints();
-    //    segments.ControlPoint = ConversionTools.Vector3ToVertex3(ProcessedPoint1,1);
-    //    segments.Point2 = ConversionTools.Vector3ToVertex3(ProcessedPoint2, 0);
-    //    segments.Point3 = ConversionTools.Vector3ToVertex3(ProcessedPoint3, 0);
-    //    segments.Point4 = ConversionTools.Vector3ToVertex3(ProcessedPoint4, 0);
-    //    segments.ScalingPoint = ConversionTools.Vector4ToVertex3(ScalingPoint);
+    public SplineJsonHandler.SegmentJson GenerateSplineSegment()
+    {
+        SplineJsonHandler.SegmentJson segments = new SplineJsonHandler.SegmentJson();
 
-    //    //Parent, Next Segment and Previous Segment Generated in Spline Object
+        segments.Point1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(Point1));
+        segments.Point2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(Point2));
+        segments.Point3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(Point3));
+        segments.Point4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(Point4));
 
-    //    segments.LowestXYZ = ConversionTools.Vector3ToVertex3(Point1);
-    //    segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point2);
-    //    segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point3);
-    //    segments.LowestXYZ = MathTools.Lowest(segments.LowestXYZ, Point4);
+        segments.Unknown = JsonUtil.Vector4ToArray(ScalingPoint);
 
-    //    segments.HighestXYZ = ConversionTools.Vector3ToVertex3(Point1);
-    //    segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point2);
-    //    segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point3);
-    //    segments.HighestXYZ = MathTools.Highest(segments.HighestXYZ, Point4);
+        segments.Unknown32 = Unknown32;
 
-    //    segments.SegmentDisatnce = Vector3.Distance(Point4, Point1);
-
-    //    //Preveous Segment Distance Generated in Spline
-
-    //    segments.Unknown32 = Unknown32;
-
-    //    return segments;
-    //}
+        return segments;
+    }
 
     public void SetDataLineRender(bool UpdateCubePoints)
     {

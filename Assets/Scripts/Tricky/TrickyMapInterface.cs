@@ -265,6 +265,7 @@ public class TrickyMapInterface : MonoBehaviour
     {
         StringPath = Path.GetDirectoryName(StringPath);
         SavePatches(StringPath + "\\Patches.json");
+        SaveSplines(StringPath + "\\Splines.json");
     }
 
     public void SavePatches(string PatchPath)
@@ -277,5 +278,17 @@ public class TrickyMapInterface : MonoBehaviour
         }
         PatchJson.CreateJson(PatchPath);
     }
+
+    public void SaveSplines(string SplinePath)
+    {
+        SplineJson = new SplineJsonHandler();
+        SplineJson.SplineJsons = new List<SplineJsonHandler.SplineJson>();
+        for (int i = 0; i < splineObjects.Count; i++)
+        {
+            SplineJson.SplineJsons.Add(splineObjects[i].GenerateSpline());
+        }
+        SplineJson.CreateJson(SplinePath);
+    }
+
     #endregion
 }
