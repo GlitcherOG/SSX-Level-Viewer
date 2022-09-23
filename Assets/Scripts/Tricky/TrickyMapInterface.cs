@@ -27,6 +27,7 @@ public class TrickyMapInterface : MonoBehaviour
     [Header("Json Files")]
     public PatchesJsonHandler PatchJson;
     public SplineJsonHandler SplineJson;
+    public InstanceJsonHandler InstanceJson;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -39,7 +40,7 @@ public class TrickyMapInterface : MonoBehaviour
     public List<ParticleInstanceObject> particleInstancesObjects = new List<ParticleInstanceObject>();
 
     public string ConfigPath;
-    public string Version = "0.0.3";
+    public string Version = "0.0.4";
 
     private void Awake()
     {
@@ -165,9 +166,11 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadMapFiles(string StringPath)
     {
         StringPath = Path.GetDirectoryName(StringPath);
+        LoadPath = StringPath;
         LoadTextures(StringPath+ "\\Textures");
         LoadPatches(StringPath + "\\Patches.json");
         LoadSplines(StringPath + "\\Splines.json");
+        LoadInstances(StringPath + "\\Instances.json");
     }
 
     void LoadPatches(string PatchPath)
@@ -185,9 +188,18 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    void LoadInstances()
+    void LoadInstances(string Path)
     {
-
+        InstanceJson = new InstanceJsonHandler();
+        InstanceJson = InstanceJsonHandler.Load(Path);
+        instanceObjects = new List<InstanceObject>();
+        for (int i = 0; i < InstanceJson.instances.Count; i++)
+        {
+            var TempGameObject = Instantiate(InstancePrefab, instanceParent.transform);
+            TempGameObject.transform.name = InstanceJson.instances[i].InstanceName + " (" + i.ToString() + ")";
+            TempGameObject.GetComponent<InstanceObject>().LoadInstance(InstanceJson.instances[i]);
+            instanceObjects.Add(TempGameObject.GetComponent<InstanceObject>());
+        }
     }
 
     void LoadParticleInstances()
@@ -233,6 +245,32 @@ public class TrickyMapInterface : MonoBehaviour
             }
         }
     }
+
+    public void ReloadTextures()
+    {
+        string[] Files = Directory.GetFiles(LoadPath + "\\Textures");
+        textures = new List<Texture2D>();
+        for (int i = 0; i < Files.Length; i++)
+        {
+            Texture2D NewImage = new Texture2D(1, 1);
+            if (Files[i].ToLower().Contains(".png"))
+            {
+                using (Stream stream = File.Open(Files[i], FileMode.Open))
+                {
+                    byte[] bytes = new byte[stream.Length];
+                    stream.Read(bytes, 0, (int)stream.Length);
+                    NewImage.LoadImage(bytes);
+                }
+                textures.Add(NewImage);
+            }
+        }
+        for (int i = 0; i < patchObjects.Count; i++)
+        {
+            patchObjects[i].UpdateTexture(patchObjects[i].TextureAssigment);
+        }
+
+    }
+
     void LoadSkyBox()
     {
 

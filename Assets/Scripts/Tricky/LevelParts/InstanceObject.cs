@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SSXMultiTool.JsonFiles;
+using SSXMultiTool.JsonFiles.Tricky;
+using SSXMultiTool.Utilities;
 
 public class InstanceObject : MonoBehaviour
 {
-    public Matrix4x4 matrix4X4;
-    public Quaternion rotation;
+    public string InstanceName;
+
+    public Vector3 rotation;
     public Vector3 scale;
     public Vector3 InstancePosition;
 
@@ -42,59 +44,51 @@ public class InstanceObject : MonoBehaviour
     public int UnknownInt32;
 
     Vector3 oldPos;
-    Quaternion oldRot;
+    Vector3 oldRot;
     Vector3 oldScale;
 
-    //public void LoadInstance(Instance instance)
-    //{
-    //    matrix4X4.SetColumn(0, ConversionTools.Vertex3ToVector4(instance.MatrixCol1));
-    //    matrix4X4.SetColumn(2, ConversionTools.Vertex3ToVector4(instance.MatrixCol2));
-    //    matrix4X4.SetColumn(1, ConversionTools.Vertex3ToVector4(instance.MatrixCol3));
-    //    matrix4X4.SetColumn(3, ConversionTools.Vertex3ToVector4(instance.InstancePosition));
-
-    //    InstancePosition = ConversionTools.Vertex3ToVector3(instance.InstancePosition);
-
-    //    Unknown5 = ConversionTools.Vertex3ToVector3(instance.Unknown5);
-    //    Unknown6 = ConversionTools.Vertex3ToVector3(instance.Unknown6);
-    //    Unknown7 = ConversionTools.Vertex3ToVector3(instance.Unknown7);
-    //    Unknown8 = ConversionTools.Vertex3ToVector3(instance.Unknown8);
-    //    Unknown9 = ConversionTools.Vertex3ToVector3(instance.Unknown9);
-    //    Unknown10 = ConversionTools.Vertex3ToVector3(instance.Unknown10);
-    //    Unknown11 = ConversionTools.Vertex3ToVector3(instance.Unknown11);
-    //    Unknown11 = ConversionTools.Vertex3ToVector3(instance.Unknown11);
-    //    RGBA = ConversionTools.Vertex3ToVector4(instance.RGBA);
-
-
-    //    ModelID = instance.ModelID;
-    //    PrevInstance = instance.PrevInstance;
-    //    NextInstance = instance.NextInstance;
-
-    //    LowestXYZ = ConversionTools.Vertex3ToVector3(instance.LowestXYZ);
-    //    HighestXYZ = ConversionTools.Vertex3ToVector3(instance.HighestXYZ);
-
-    //    UnknownInt26 = instance.UnknownInt26;
-    //    UnknownInt27 = instance.UnknownInt27;
-    //    UnknownInt28 = instance.UnknownInt28;
-    //    ModelID2 = instance.ModelID2;
-    //    UnknownInt30 = instance.UnknownInt30;
-    //    UnknownInt31 = instance.UnknownInt31;
-    //    UnknownInt32 = instance.UnknownInt32;
-
-
-    //    transform.position = InstancePosition * TrickyMapInterface.Scale;
-    //    transform.rotation = matrix4X4.rotation;
-    //    //transform.localScale = matrix4X4.lossyScale * TrickyMapInterface.Scale;
-
-    //    scale = matrix4X4.lossyScale;
-    //    rotation = matrix4X4.rotation;
-    //    oldPos = transform.position;
-    //    oldRot = matrix4X4.rotation;
-    //    oldScale = matrix4X4.lossyScale;
-    //}
-
-    public void UpdateMatrix()
+    public void LoadInstance(InstanceJsonHandler.InstanceJson instance)
     {
-        matrix4X4.SetTRS(InstancePosition, rotation, scale);
+        InstanceName = instance.InstanceName;
+
+        rotation = MathTools.FixYandZ(JsonUtil.ArrayToQuaternion(instance.Rotation).eulerAngles);
+        scale = MathTools.FixYandZ(JsonUtil.ArrayToVector3(instance.Scale));
+        InstancePosition = MathTools.FixYandZ(JsonUtil.ArrayToVector3(instance.Location));
+
+        Unknown5 = JsonUtil.ArrayToVector3(instance.Unknown5);
+        Unknown6 = JsonUtil.ArrayToVector3(instance.Unknown6);
+        Unknown7 = JsonUtil.ArrayToVector3(instance.Unknown7);
+        Unknown8 = JsonUtil.ArrayToVector3(instance.Unknown8);
+        Unknown9 = JsonUtil.ArrayToVector3(instance.Unknown9);
+        Unknown10 = JsonUtil.ArrayToVector3(instance.Unknown10);
+        Unknown11 = JsonUtil.ArrayToVector3(instance.Unknown11);
+        Unknown11 = JsonUtil.ArrayToVector3(instance.Unknown11);
+        RGBA = JsonUtil.ArrayToVector4(instance.RGBA);
+
+
+        ModelID = instance.ModelID;
+        PrevInstance = instance.PrevInstance;
+        NextInstance = instance.NextInstance;
+
+        LowestXYZ = JsonUtil.ArrayToVector3(instance.LowestXYZ);
+        HighestXYZ = JsonUtil.ArrayToVector3(instance.HighestXYZ);
+
+        UnknownInt26 = instance.UnknownInt26;
+        UnknownInt27 = instance.UnknownInt27;
+        UnknownInt28 = instance.UnknownInt28;
+        ModelID2 = instance.ModelID2;
+        UnknownInt30 = instance.UnknownInt30;
+        UnknownInt31 = instance.UnknownInt31;
+        UnknownInt32 = instance.UnknownInt32;
+
+
+        transform.position = InstancePosition * TrickyMapInterface.Scale;
+        transform.eulerAngles = rotation;
+        //transform.localScale = matrix4X4.lossyScale * TrickyMapInterface.Scale;
+
+        oldPos = transform.position;
+        oldRot = rotation;
+        oldScale = scale;
     }
 
     //public Instance GenerateInstance()
@@ -143,10 +137,10 @@ public class InstanceObject : MonoBehaviour
         //    oldScale = transform.localScale;
         //    scale = transform.localScale/TrickyMapInterface.Scale;
         //}
-        if(oldRot!=transform.rotation)
+        if(oldRot!=transform.eulerAngles)
         {
-            oldRot = transform.rotation;
-            rotation = transform.rotation;
+            oldRot = transform.eulerAngles;
+            rotation = transform.eulerAngles;
         }
     }
 }

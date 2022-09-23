@@ -5,13 +5,10 @@
 - Spline Editing
 - Texture Libaray viewing
  
-## Next Big Update
-- Add Refreshing of the texture libaray
-- Save Splines
-- Fix Patch No light mode Selection
- 
- 
 ## Todo add
+- Settings
+- Build Project
+
 - Xray Mesh
 - Patch Panel Texture Selector
 - key to focus on object
@@ -38,7 +35,6 @@
 - Fix Darkened Bug
 
 ## Todo BugFixes
-- Fix Distance Generation Spline (Best guess is that they use the bezier curve generation to do it)
 - Fix Mesh Generation Spline
 
 ## Todo in Later Update

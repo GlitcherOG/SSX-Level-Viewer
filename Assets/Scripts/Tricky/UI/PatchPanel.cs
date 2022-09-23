@@ -405,8 +405,12 @@ public class PatchPanel : MonoBehaviour
 
     public void HideSelfAndChild()
     {
-        UVWindow.Deactive();
-        gameObject.SetActive(false);
+        if (patchObject != null)
+        {
+            patchObject.UnSelectedObject();
+            UVWindow.Deactive();
+            gameObject.SetActive(false);
+        }
     }
 
     public void SetUVEditorActive()

@@ -469,6 +469,42 @@ public class PatchObject : MonoBehaviour
     public void UpdateMeshPoints(bool CubePointUpdate)
     {
         LoadNURBSpatch();
+        if (CubePointUpdate)
+        {
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].DisableUpdate = true;
+            }
+            transform.position = RawControlPoint * TrickyMapInterface.Scale;
+            PatchPoints[0].transform.position = RawControlPoint * TrickyMapInterface.Scale;
+            PatchPoints[1].transform.position = RawR1C2 * TrickyMapInterface.Scale;
+            PatchPoints[2].transform.position = RawR1C3 * TrickyMapInterface.Scale;
+            PatchPoints[3].transform.position = RawR1C4 * TrickyMapInterface.Scale;
+            PatchPoints[4].transform.position = RawR2C1 * TrickyMapInterface.Scale;
+            PatchPoints[5].transform.position = RawR2C2 * TrickyMapInterface.Scale;
+            PatchPoints[6].transform.position = RawR2C3 * TrickyMapInterface.Scale;
+            PatchPoints[7].transform.position = RawR2C4 * TrickyMapInterface.Scale;
+            PatchPoints[8].transform.position = RawR3C1 * TrickyMapInterface.Scale;
+            PatchPoints[9].transform.position = RawR3C2 * TrickyMapInterface.Scale;
+            PatchPoints[10].transform.position = RawR3C3 * TrickyMapInterface.Scale;
+            PatchPoints[11].transform.position = RawR3C4 * TrickyMapInterface.Scale;
+            PatchPoints[12].transform.position = RawR4C1 * TrickyMapInterface.Scale;
+            PatchPoints[13].transform.position = RawR4C2 * TrickyMapInterface.Scale;
+            PatchPoints[14].transform.position = RawR4C3 * TrickyMapInterface.Scale;
+            PatchPoints[15].transform.position = RawR4C4 * TrickyMapInterface.Scale;
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].ResetOldPosition();
+            }
+            for (int i = 0; i < PatchPoints.Count; i++)
+            {
+                PatchPoints[i].DisableUpdate = false;
+            }
+        }
+        if (PatchPanel.instance.patchObject == this)
+        {
+            PatchPanel.instance.UpdatePoint(false);
+        }
     }
 
     public void UpdateUVPoints()
@@ -506,7 +542,7 @@ public class PatchObject : MonoBehaviour
             Renderer.material.DisableKeyword("_EMISSION");
         }
         DestroyCube();
-        Renderer.material.SetColor("_EmissionColor", Color.white);
+        Renderer.material.SetColor("_EmissionColor", new Color(222f/255f, 222f / 255f, 222f / 255f));
     }
 
     public void LightMode()

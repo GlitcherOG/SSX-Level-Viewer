@@ -36,6 +36,12 @@ public class TextureLibarayPanel : MonoBehaviour
         SelectedImage=a;
     }
 
+    public void RefreshLibaray()
+    {
+        TrickyMapInterface.Instance.ReloadTextures();
+        LoadButtons();
+    }
+
     void DestroyButtons()
     {
         SelectedImage = -1;
