@@ -51,7 +51,7 @@ public class InstanceObject : MonoBehaviour
     {
         InstanceName = instance.InstanceName;
 
-        rotation = MathTools.FixYandZ(JsonUtil.ArrayToQuaternion(instance.Rotation).eulerAngles);
+        rotation = JsonUtil.ArrayToQuaternion(instance.Rotation).eulerAngles;
         scale = MathTools.FixYandZ(JsonUtil.ArrayToVector3(instance.Scale));
         InstancePosition = MathTools.FixYandZ(JsonUtil.ArrayToVector3(instance.Location));
 

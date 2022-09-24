@@ -12,7 +12,7 @@ public class TrickyMapInterface : MonoBehaviour
     public static TrickyMapInterface Instance;
     public LevelEditorSettings settings;
     public bool NoLightMode;
-    public string LoadPath;
+    public string LoadPath = "";
     public static float Scale = 0.01f;
     [Header("Parent Objects")]
     public GameObject patchesParent;
@@ -52,6 +52,16 @@ public class TrickyMapInterface : MonoBehaviour
             settings = new LevelEditorSettings();
         }
         settings.Save(UnityEngine.Application.dataPath + "/Config.json");
+    }
+
+    //Debug Crap
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.I))
+        {
+            instanceParent.SetActive(!instanceParent.activeSelf);
+            NotifcationBarUI.instance.ShowNotifcation("It's Tricky, It's Tricky", 5);
+        }
     }
 
     public void StartEmulator()
@@ -165,12 +175,21 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadMapFiles(string StringPath)
     {
-        StringPath = Path.GetDirectoryName(StringPath);
-        LoadPath = StringPath;
-        LoadTextures(StringPath+ "\\Textures");
-        LoadPatches(StringPath + "\\Patches.json");
-        LoadSplines(StringPath + "\\Splines.json");
-        LoadInstances(StringPath + "\\Instances.json");
+        SSXTrickyConfig trickyConfig = SSXTrickyConfig.Load(StringPath);
+        if (trickyConfig.Version == 1)
+        {
+            StringPath = Path.GetDirectoryName(StringPath);
+            LoadPath = StringPath;
+            LoadTextures(StringPath + "\\Textures");
+            LoadPatches(StringPath + "\\Patches.json");
+            LoadSplines(StringPath + "\\Splines.json");
+            LoadInstances(StringPath + "\\Instances.json");
+            NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
+        }
+        else
+        {
+            NotifcationBarUI.instance.SendMessage("Incorrect Project Version");
+        }
     }
 
     void LoadPatches(string PatchPath)
@@ -248,27 +267,29 @@ public class TrickyMapInterface : MonoBehaviour
 
     public void ReloadTextures()
     {
-        string[] Files = Directory.GetFiles(LoadPath + "\\Textures");
-        textures = new List<Texture2D>();
-        for (int i = 0; i < Files.Length; i++)
+        if (LoadPath != "")
         {
-            Texture2D NewImage = new Texture2D(1, 1);
-            if (Files[i].ToLower().Contains(".png"))
+            string[] Files = Directory.GetFiles(LoadPath + "\\Textures");
+            textures = new List<Texture2D>();
+            for (int i = 0; i < Files.Length; i++)
             {
-                using (Stream stream = File.Open(Files[i], FileMode.Open))
+                Texture2D NewImage = new Texture2D(1, 1);
+                if (Files[i].ToLower().Contains(".png"))
                 {
-                    byte[] bytes = new byte[stream.Length];
-                    stream.Read(bytes, 0, (int)stream.Length);
-                    NewImage.LoadImage(bytes);
+                    using (Stream stream = File.Open(Files[i], FileMode.Open))
+                    {
+                        byte[] bytes = new byte[stream.Length];
+                        stream.Read(bytes, 0, (int)stream.Length);
+                        NewImage.LoadImage(bytes);
+                    }
+                    textures.Add(NewImage);
                 }
-                textures.Add(NewImage);
+            }
+            for (int i = 0; i < patchObjects.Count; i++)
+            {
+                patchObjects[i].UpdateTexture(patchObjects[i].TextureAssigment);
             }
         }
-        for (int i = 0; i < patchObjects.Count; i++)
-        {
-            patchObjects[i].UpdateTexture(patchObjects[i].TextureAssigment);
-        }
-
     }
 
     void LoadSkyBox()
@@ -304,6 +325,7 @@ public class TrickyMapInterface : MonoBehaviour
         StringPath = Path.GetDirectoryName(StringPath);
         SavePatches(StringPath + "\\Patches.json");
         SaveSplines(StringPath + "\\Splines.json");
+        NotifcationBarUI.instance.ShowNotifcation("Project Saved" ,5);
     }
 
     public void SavePatches(string PatchPath)
