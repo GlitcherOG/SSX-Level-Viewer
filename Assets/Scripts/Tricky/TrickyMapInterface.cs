@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using SSXMultiTool.JsonFiles.Tricky;
+using Dummiesman;
+using SSXMultiTool.Utilities;
 
 public class TrickyMapInterface : MonoBehaviour
 {
@@ -24,10 +26,14 @@ public class TrickyMapInterface : MonoBehaviour
     public GameObject PatchPrefab;
     public GameObject InstancePrefab;
     public GameObject particleInstancePrefab;
+
     [Header("Json Files")]
     public PatchesJsonHandler PatchJson;
     public SplineJsonHandler SplineJson;
     public InstanceJsonHandler InstanceJson;
+    public ModelJsonHandler ModelJson;
+    public MaterialJsonHandler materialJson;
+    public MaterialBlockJsonHandler materialBlock;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -38,6 +44,9 @@ public class TrickyMapInterface : MonoBehaviour
     public List<SplineObject> splineObjects = new List<SplineObject>();
     public List<InstanceObject> instanceObjects = new List<InstanceObject>();
     public List<ParticleInstanceObject> particleInstancesObjects = new List<ParticleInstanceObject>();
+    public List<ModelObject> modelObjects = new List<ModelObject>();
+
+    public Material ModelMaterial;
 
     public string ConfigPath;
     public string Version = "0.0.4";
@@ -183,6 +192,9 @@ public class TrickyMapInterface : MonoBehaviour
             LoadTextures(StringPath + "\\Textures");
             LoadPatches(StringPath + "\\Patches.json");
             LoadSplines(StringPath + "\\Splines.json");
+            materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
+            materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
+            LoadModels(StringPath + "\\ModelHeaders.json");
             LoadInstances(StringPath + "\\Instances.json");
             NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
@@ -204,6 +216,29 @@ public class TrickyMapInterface : MonoBehaviour
             PatchHolder.LoadPatch(Patch);
             gameObject.transform.name = Patch.PatchName + " (" + i + ")";
             patchObjects.Add(PatchHolder);
+        }
+    }
+
+    void LoadModels(string Path)
+    {
+        modelObjects = new List<ModelObject>();
+        ModelJson = ModelJsonHandler.Load(Path);
+        int b = 0;
+        for (int i = 0; i < ModelJson.ModelJsons.Count; i++)
+        {
+            var TempModelJson = ModelJson.ModelJsons[i];
+            ModelObject mObject = new ModelObject();
+            int Pos = b;
+            for (int a = Pos; a < TempModelJson.ModelDataCount + Pos; a++)
+            {
+                GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + b.ToString() + ".obj", null);
+                mObject.meshes.Add(gameObject.GetComponentInChildren<MeshFilter>().mesh);
+                Destroy(gameObject);
+                b++;
+            }
+            mObject.ModelName = TempModelJson.ModelName;
+            mObject.Scale = MathTools.FixYandZ(JsonUtil.ArrayToVector3(TempModelJson.Scale))/32768f;
+            modelObjects.Add(mObject);
         }
     }
 

@@ -43,17 +43,14 @@ public class InstanceObject : MonoBehaviour
     public int UnknownInt31;
     public int UnknownInt32;
 
-    Vector3 oldPos;
-    Vector3 oldRot;
-    Vector3 oldScale;
 
     public void LoadInstance(InstanceJsonHandler.InstanceJson instance)
     {
         InstanceName = instance.InstanceName;
 
         rotation = JsonUtil.ArrayToQuaternion(instance.Rotation).eulerAngles;
-        scale = MathTools.FixYandZ(JsonUtil.ArrayToVector3(instance.Scale));
-        InstancePosition = MathTools.FixYandZ(JsonUtil.ArrayToVector3(instance.Location));
+        scale = JsonUtil.ArrayToVector3(instance.Scale);
+        InstancePosition = JsonUtil.ArrayToVector3(instance.Location);
 
         Unknown5 = JsonUtil.ArrayToVector3(instance.Unknown5);
         Unknown6 = JsonUtil.ArrayToVector3(instance.Unknown6);
@@ -81,14 +78,31 @@ public class InstanceObject : MonoBehaviour
         UnknownInt31 = instance.UnknownInt31;
         UnknownInt32 = instance.UnknownInt32;
 
+        var modelObject = TrickyMapInterface.Instance.modelObjects[instance.ModelID];
+        for (int i = 0; i < modelObject.meshes.Count; i++)
+        {
+            GameObject newGameObject = new GameObject();
+            newGameObject.AddComponent<MeshFilter>();
+            newGameObject.GetComponent<MeshFilter>().mesh = modelObject.meshes[i];
+            newGameObject.AddComponent<MeshRenderer>();
+            try 
+            {
+                newGameObject.GetComponent<MeshRenderer>().material = ModelObject.GenerateMaterial(ModelID, i);
+            }
+            catch
+            {
+                Debug.LogError("Error Loading Material " + ModelID + ", " + i);
+            }
+            newGameObject.transform.parent = transform;
+            newGameObject.transform.localScale = modelObject.Scale;
+            newGameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        }
 
-        transform.position = InstancePosition * TrickyMapInterface.Scale;
-        transform.eulerAngles = rotation;
-        //transform.localScale = matrix4X4.lossyScale * TrickyMapInterface.Scale;
+        transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
+        transform.localEulerAngles = rotation;
+        transform.localScale = scale * TrickyMapInterface.Scale;
 
-        oldPos = transform.position;
-        oldRot = rotation;
-        oldScale = scale;
+
     }
 
     //public Instance GenerateInstance()
@@ -127,20 +141,6 @@ public class InstanceObject : MonoBehaviour
 
     private void Update()
     {
-        if(oldPos!=transform.position)
-        {
-            oldPos = transform.position;
-            InstancePosition = transform.position / TrickyMapInterface.Scale;
-        }
-        //if(oldScale!=transform.localScale)
-        //{
-        //    oldScale = transform.localScale;
-        //    scale = transform.localScale/TrickyMapInterface.Scale;
-        //}
-        if(oldRot!=transform.eulerAngles)
-        {
-            oldRot = transform.eulerAngles;
-            rotation = transform.eulerAngles;
-        }
+
     }
 }

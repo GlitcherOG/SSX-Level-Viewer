@@ -2761,6 +2761,12 @@ MonoBehaviour:
     SplineJsons: []
   InstanceJson:
     instances: []
+  ModelJson:
+    ModelJsons: []
+  materialJson:
+    MaterialsJsons: []
+  materialBlock:
+    MaterialBlockJsons: []
   ErrorTexture: {fileID: 2800000, guid: c4bba0f5c3b6e6141843002b4e8bdca5, type: 3}
   TextureChanged: 0
   textures: []
@@ -2768,6 +2774,7 @@ MonoBehaviour:
   splineObjects: []
   instanceObjects: []
   particleInstancesObjects: []
+  ModelMaterial: {fileID: 2100000, guid: 8a9837f9067837049b3c29331cc94ebc, type: 2}
   ConfigPath: 
   Version: 0.0.3
 --- !u!4 &149250897
@@ -8954,7 +8961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &468660000
 Transform:
   m_ObjectHideFlags: 0
@@ -8962,13 +8969,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468659999}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.736614, y: 8.245009, z: -111.25945}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.70710677, z: -0.70710677, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: -90}
 --- !u!1 &472952196
 GameObject:
   m_ObjectHideFlags: 0

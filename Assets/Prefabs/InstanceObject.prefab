@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8575919627083122261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,7 +48,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8575919627083122261}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -94,43 +94,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361c5770a2cb0bd4e966f34daeec7f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Unknown1: {x: 0, y: 0, z: 0}
-  Unknown2: {x: 0, y: 0, z: 0}
-  Unknown3: {x: 0, y: 0, z: 0}
+  InstanceName: 
+  rotation: {x: 0, y: 0, z: 0}
+  scale: {x: 0, y: 0, z: 0}
   InstancePosition: {x: 0, y: 0, z: 0}
   Unknown5: {x: 0, y: 0, z: 0}
   Unknown6: {x: 0, y: 0, z: 0}
   Unknown7: {x: 0, y: 0, z: 0}
   Unknown8: {x: 0, y: 0, z: 0}
-  UnknownInt1: 0
-  UnknownInt2: 0
-  UnknownInt3: 0
-  UnknownInt4: 0
-  UnknownInt5: 0
-  UnknownInt6: 0
-  UnknownInt7: 0
-  UnknownInt8: 0
-  UnknownInt9: 0
-  UnknownInt10: 0
-  UnknownInt11: 0
-  UnknownInt12: 0
+  Unknown9: {x: 0, y: 0, z: 0}
+  Unknown10: {x: 0, y: 0, z: 0}
+  Unknown11: {x: 0, y: 0, z: 0}
+  RGBA: {x: 0, y: 0, z: 0, w: 0}
   UnknownInt13: 0
   UnknownInt14: 0
   UnknownInt15: 0
   UnknownInt16: 0
-  UnknownInt17: 0
-  UnknownInt18: 0
-  UnknownInt19: 0
-  UnknownInt20: 0
-  UnknownInt21: 0
-  UnknownInt22: 0
+  ModelID: 0
+  PrevInstance: 0
+  NextInstance: 0
+  LowestXYZ: {x: 0, y: 0, z: 0}
+  HighestXYZ: {x: 0, y: 0, z: 0}
   UnknownInt23: 0
   UnknownInt24: 0
   UnknownInt25: 0
   UnknownInt26: 0
   UnknownInt27: 0
   UnknownInt28: 0
-  UnknownInt29: 0
+  ModelID2: 0
   UnknownInt30: 0
   UnknownInt31: 0
   UnknownInt32: 0

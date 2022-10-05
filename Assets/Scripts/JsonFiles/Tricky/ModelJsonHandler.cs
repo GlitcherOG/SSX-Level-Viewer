@@ -8,6 +8,7 @@ using System.IO;
 
 namespace SSXMultiTool.JsonFiles.Tricky
 {
+    [Serializable]
     public class ModelJsonHandler
     {
         public List<ModelJson> ModelJsons = new List<ModelJson>();
@@ -44,10 +45,8 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public int Unknown2;
             public int Unknown3; //ID
             public float Unknown4;
-            public float ScaleX; //Scale X
-            public float ScaleZ; //Scale Z
-            public float ScaleY; //Scale Y
-            public int Unknown8; //Model Data Count?
+            public float[] Scale;
+            public int ModelDataCount;
             public int Unknown9;
             public int TriStripCount; //Tristrip Count
             public int VertexCount; //Vertex Count
@@ -61,10 +60,10 @@ namespace SSXMultiTool.JsonFiles.Tricky
 
             public int UnknownLength;
 
-            public Vector3 LowestXYZ;
-            public Vector3 HighestXYZ;
+            public float[] LowestXYZ;
+            public float[] HighestXYZ;
 
-            public byte[] bytes;
+            public string bytes;
         }
     }
 }

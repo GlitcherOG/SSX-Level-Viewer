@@ -8,4 +8,9 @@ public static class MathTools
     {
         return new Vector3(vector3.x, vector3.z, vector3.y);
     }
+
+    public static Vector3 FixXandZ(Vector3 vector3)
+    {
+        return new Vector3(vector3.z, vector3.y, vector3.x);
+    }
 }
