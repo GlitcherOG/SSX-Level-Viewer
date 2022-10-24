@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class XYZMovmentController : MonoBehaviour
 {
-    bool active;
+    public bool active;
+    public GimzoMode gimzoMode;
     bool centremode;
     Vector3 oldPos;
+    Vector3 oldRot;
     public GameObject Parent;
     public GameObject OldParent;
+
+    public GameObject Movement;
+    public GameObject Rotation;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -17,20 +22,31 @@ public class XYZMovmentController : MonoBehaviour
         if (active)
         {
             transform.localScale = Vector3.one * Vector3.Distance(Camera.main.transform.position, transform.position) / 150;
-            if (!centremode)
+            if (gimzoMode == GimzoMode.Movement)
             {
-                if (oldPos != transform.position)
+                if (!centremode)
                 {
-                    Parent.transform.position = transform.position;
-                    oldPos=transform.position;
+                    if (oldPos != transform.position)
+                    {
+                        Parent.transform.position = transform.position;
+                        oldPos = transform.position;
+                    }
+                }
+                else
+                {
+                    if (oldPos != transform.position)
+                    {
+                        Parent.transform.position += transform.position - oldPos;
+                        oldPos = transform.position;
+                    }
                 }
             }
-            else
+            if (gimzoMode == GimzoMode.Rotation)
             {
-                if (oldPos != transform.position)
+                if (oldRot != transform.eulerAngles)
                 {
-                    Parent.transform.position += transform.position-oldPos;
-                    oldPos = transform.position;
+                    Parent.transform.rotation = transform.rotation;
+                    oldRot = transform.eulerAngles;
                 }
             }
         }
@@ -40,17 +56,22 @@ public class XYZMovmentController : MonoBehaviour
     {
         centremode = false;
         transform.position = gameObject.transform.position;
+        transform.rotation = gameObject.transform.rotation;
         oldPos = transform.position;
+        oldRot = transform.eulerAngles;
         Parent = gameObject;
         OldParent = gameObject;
         active = true;
     }
 
+
     public void SetParentCentreMode(GameObject gameObject, Vector3 vector3)
     {
         centremode = true;
         transform.position = vector3;
+        transform.rotation = gameObject.transform.rotation;
         oldPos = vector3;
+        oldRot = transform.eulerAngles;
         Parent = gameObject;
         OldParent = gameObject;
         active = true;
@@ -66,6 +87,27 @@ public class XYZMovmentController : MonoBehaviour
     {
         Parent = OldParent;
         transform.position = oldPos;
+        transform.eulerAngles = oldRot;
         active = true;
+    }
+
+    public void EnableMovement()
+    {
+        gimzoMode = GimzoMode.Movement;
+        Movement.SetActive(true);
+        Rotation.SetActive(false);
+    }
+
+    public void EnableRotation()
+    {
+        gimzoMode = GimzoMode.Rotation;
+        Movement.SetActive(false);
+        Rotation.SetActive(true);
+    }
+
+    public enum GimzoMode
+    {
+        Movement,
+        Rotation
     }
 }

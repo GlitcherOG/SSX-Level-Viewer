@@ -12,10 +12,11 @@ using SSXMultiTool.Utilities;
 public class TrickyMapInterface : MonoBehaviour
 {
     public static TrickyMapInterface Instance;
+    public Shader shader;
     public LevelEditorSettings settings;
     public bool NoLightMode;
     public string LoadPath = "";
-    public static float Scale = 0.01f;
+    public static float Scale = 0.01f; //1f;
     [Header("Parent Objects")]
     public GameObject patchesParent;
     public GameObject splineParent;
@@ -185,7 +186,7 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadMapFiles(string StringPath)
     {
         SSXTrickyConfig trickyConfig = SSXTrickyConfig.Load(StringPath);
-        if (trickyConfig.Version == 1)
+        if (trickyConfig.Version == 2)
         {
             StringPath = Path.GetDirectoryName(StringPath);
             LoadPath = StringPath;
@@ -223,21 +224,19 @@ public class TrickyMapInterface : MonoBehaviour
     {
         modelObjects = new List<ModelObject>();
         ModelJson = ModelJsonHandler.Load(Path);
-        int b = 0;
         for (int i = 0; i < ModelJson.ModelJsons.Count; i++)
         {
             var TempModelJson = ModelJson.ModelJsons[i];
             ModelObject mObject = new ModelObject();
-            int Pos = b;
-            for (int a = Pos; a < TempModelJson.ModelDataCount + Pos; a++)
+            GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + i.ToString() + ".obj", null);
+            var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
+            for (int a = 0; a < Meshes.Length; a++)
             {
-                GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + b.ToString() + ".obj", null);
-                mObject.meshes.Add(gameObject.GetComponentInChildren<MeshFilter>().mesh);
-                Destroy(gameObject);
-                b++;
+                mObject.meshes.Add(Meshes[a].mesh);
             }
+            Destroy(gameObject);
+
             mObject.ModelName = TempModelJson.ModelName;
-            mObject.Scale = MathTools.FixYandZ(JsonUtil.ArrayToVector3(TempModelJson.Scale))/32768f;
             modelObjects.Add(mObject);
         }
     }
@@ -360,6 +359,7 @@ public class TrickyMapInterface : MonoBehaviour
         StringPath = Path.GetDirectoryName(StringPath);
         SavePatches(StringPath + "\\Patches.json");
         SaveSplines(StringPath + "\\Splines.json");
+        SaveInstances(StringPath + "\\Instances.json");
         NotifcationBarUI.instance.ShowNotifcation("Project Saved" ,5);
     }
 
@@ -383,6 +383,17 @@ public class TrickyMapInterface : MonoBehaviour
             SplineJson.SplineJsons.Add(splineObjects[i].GenerateSpline());
         }
         SplineJson.CreateJson(SplinePath);
+    }
+
+    public void SaveInstances(string InstancePath)
+    {
+        InstanceJson = new InstanceJsonHandler();
+        InstanceJson.instances = new List<InstanceJsonHandler.InstanceJson>();
+        for (int i = 0; i < instanceObjects.Count; i++)
+        {
+            InstanceJson.instances.Add(instanceObjects[i].GenerateInstance());
+        }
+        InstanceJson.CreateJson(InstancePath);
     }
 
     #endregion

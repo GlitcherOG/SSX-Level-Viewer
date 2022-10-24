@@ -8,6 +8,8 @@ TagManager:
   - Patch Point
   - XYZMovement
   - Spline
+  - Instances
+  - XYZRotation
   layers:
   - Default
   - TransparentFX

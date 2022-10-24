@@ -5,12 +5,11 @@ using UnityEngine;
 public class ModelObject
 {
     public string ModelName;
-    public Vector3 Scale;
     public List<Mesh> meshes = new List<Mesh>();
 
     public static Material GenerateMaterial(int block, int meshID)
     {
-        Material material = new Material(Shader.Find("Standard"));
+        Material material = new Material(Shader.Find("ModelShader"));
         material.CopyPropertiesFromMaterial(TrickyMapInterface.Instance.ModelMaterial);
         int MaterialID = 0;
         if(TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count-1>= meshID)
@@ -19,11 +18,25 @@ public class ModelObject
         }
         else
         {
-            MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[0];
+            MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count - 1];
         }
         int TextureID = TrickyMapInterface.Instance.materialJson.MaterialsJsons[MaterialID].TextureID;
-        material.mainTexture = TrickyMapInterface.Instance.textures[TextureID];
-        material.SetTexture("_EmissionMap", material.mainTexture);
+        material.SetTexture("_MainTexture", GetTexture(TextureID));
         return material;
+    }
+
+    public static Texture2D GetTexture(int TextureID)
+    {
+        Texture2D texture = null;
+        try
+        {
+            texture = TrickyMapInterface.Instance.textures[TextureID];
+
+        }
+        catch
+        {
+            texture = TrickyMapInterface.Instance.ErrorTexture;
+        }
+        return texture;
     }
 }

@@ -83,6 +83,28 @@ public class PatchObject : MonoBehaviour
         RawR1C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C2));
         RawControlPoint = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C1));
 
+
+        //float tempx = Random.Range(-1000f, 1000f);
+        //float tempy = Random.Range(-1000f, 1000f);
+        //float tempz = Random.Range(-1000f, 1000f);
+        //Debug.Log(tempy);
+        //RawR3C3 += new Vector3(tempx, tempy, tempz);
+
+        // tempx = Random.Range(-1000f, 1000f);
+        // tempy = Random.Range(-1000f, 1000f);
+        // tempz = Random.Range(-1000f, 1000f);
+        //RawR3C2 += new Vector3(tempx, tempy, tempz);
+
+        // tempx = Random.Range(-1000f, 1000f);
+        // tempy = Random.Range(-1000f, 1000f);
+        // tempz = Random.Range(-1000f, 1000f);
+        //RawR2C3 += new Vector3(tempx, tempy, tempz);
+
+        // tempx = Random.Range(-1000f, 1000f);
+        // tempy = Random.Range(-1000f, 1000f);
+        // tempz = Random.Range(-1000f, 1000f);
+        //RawR2C2 += new Vector3(tempx, tempy, tempz);
+
         PatchStyle = import.PatchStyle;
         Unknown2 = import.Unknown2;
         TextureAssigment = import.TextureAssigment;
@@ -203,25 +225,25 @@ public class PatchObject : MonoBehaviour
         Vector3[,] vertices = new Vector3[4, 4];
 
         //Vertices
-        vertices[0, 0] = ((RawControlPoint - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[1, 0] = ((RawR1C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[2, 0] = ((RawR1C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[3, 0] = ((RawR1C4 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices[0, 0] = transform.InverseTransformPoint(RawControlPoint * TrickyMapInterface.Scale);
+        vertices[1, 0] = transform.InverseTransformPoint(RawR1C2 * TrickyMapInterface.Scale);
+        vertices[2, 0] = transform.InverseTransformPoint(RawR1C3 * TrickyMapInterface.Scale);
+        vertices[3, 0] = transform.InverseTransformPoint(RawR1C4 * TrickyMapInterface.Scale);
 
-        vertices[0, 1] = ((RawR2C1 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[1, 1] = ((RawR2C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[2, 1] = ((RawR2C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[3, 1] = ((RawR2C4 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices[0, 1] = transform.InverseTransformPoint(RawR2C1 * TrickyMapInterface.Scale);
+        vertices[1, 1] = transform.InverseTransformPoint(RawR2C2 * TrickyMapInterface.Scale);
+        vertices[2, 1] = transform.InverseTransformPoint(RawR2C3 * TrickyMapInterface.Scale);
+        vertices[3, 1] = transform.InverseTransformPoint(RawR2C4 * TrickyMapInterface.Scale);
 
-        vertices[0, 2] = ((RawR3C1 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[1, 2] = ((RawR3C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[2, 2] = ((RawR3C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[3, 2] = ((RawR3C4 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices[0, 2] = transform.InverseTransformPoint(RawR3C1 * TrickyMapInterface.Scale);
+        vertices[1, 2] = transform.InverseTransformPoint(RawR3C2 * TrickyMapInterface.Scale);
+        vertices[2, 2] = transform.InverseTransformPoint(RawR3C3 * TrickyMapInterface.Scale);
+        vertices[3, 2] = transform.InverseTransformPoint(RawR3C4 * TrickyMapInterface.Scale);
 
-        vertices[0, 3] = ((RawR4C1 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[1, 3] = ((RawR4C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[2, 3] = ((RawR4C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices[3, 3] = ((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
+        vertices[0, 3] = transform.InverseTransformPoint(RawR4C1 * TrickyMapInterface.Scale);
+        vertices[1, 3] = transform.InverseTransformPoint(RawR4C2 * TrickyMapInterface.Scale);
+        vertices[2, 3] = transform.InverseTransformPoint(RawR4C3 * TrickyMapInterface.Scale);
+        vertices[3, 3] = transform.InverseTransformPoint(RawR4C4 * TrickyMapInterface.Scale);
 
         //Control points
         NURBS.ControlPoint[,] cps = new NURBS.ControlPoint[4, 4];
@@ -239,8 +261,8 @@ public class PatchObject : MonoBehaviour
         int degreeU = 3;
         int degreeV = 3;
 
-        int resolutionU = 12;
-        int resolutionV = 12;
+        int resolutionU = 12; //7;
+        int resolutionV = 12; //7;
 
         surface = new NURBS.Surface(cps, degreeU, degreeV);
 
@@ -560,7 +582,7 @@ public class PatchObject : MonoBehaviour
     {
         try
         {
-            Renderer.material.mainTexture = TrickyMapInterface.Instance.textures[a];
+            Renderer.material.mainTexture = TrickyMapInterface.Instance.textures[TextureAssigment];
             TextureAssigment = a;
             Renderer.material.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
         }

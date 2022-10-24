@@ -58,6 +58,12 @@ public class FlyAroundCamera : MonoBehaviour
             {
                 transform.position += transform.up * (CurrentSpeed * Time.deltaTime);
             }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            ScreenCapture.CaptureScreenshot("HighResTest.png", 3);
         }
 
         if (Input.GetKeyDown(TrickyMapInterface.Instance.settings.ZeroCamera))

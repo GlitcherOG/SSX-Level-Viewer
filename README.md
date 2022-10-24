@@ -6,10 +6,20 @@
 - Texture Libaray viewing
  
 ## Todo add
+- Fix Opacity Mask Model Shader
+- Patch Shader Doublesided and Outline
+- Instance Panel set
+- Material Library
+- Model Library
+- Scale Gimzos
+- Fix Gizmos spawn location to be at povit
+- Fix Gizmos XYZ
+- Custom Gizmos UI for rotation, scale and location
+- Randomiser GUI
+- Xray Mesh
+
 - Settings
 - Build Project
-
-- Xray Mesh
 - Patch Panel Texture Selector
 - key to focus on object
 - Add Patch Size Warning
@@ -43,9 +53,6 @@
 - Auto Updater
 - Fix UI Scaling
 - Controller Camera Movement
-- Allow Control Of Patch Possition In Tree
-- Attempt Auto Sort Of Patches
-- Show Patch List Postion
 - Edge Selector
 - Point Combine
 - Rotation Tool
@@ -58,3 +65,7 @@ https://github.com/SSXModding/bigfile <br>
 
 ## Donate
 [![Donate](https://www.paypalobjects.com/en_AU/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?business=VT6TG8KKZM98E&no_recurring=0&currency_code=AUD)
+
+http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
+
+https://discord.com/channels/163541742266613761/163543093910568961/1028554665715056771

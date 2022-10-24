@@ -399,9 +399,6 @@ public class PatchPanel : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-    }
 
     public void HideSelfAndChild()
     {

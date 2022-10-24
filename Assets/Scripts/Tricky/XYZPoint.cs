@@ -5,6 +5,7 @@ using UnityEngine;
 public class XYZPoint : MonoBehaviour
 {
     public bool Active;
+    public GameObject Parent;
     public XYZAxis axis = XYZAxis.XAxis;
     public Vector2 InputPoint;
     public Vector3 OldPoint;
@@ -30,18 +31,20 @@ public class XYZPoint : MonoBehaviour
                 int layerMask = 1 << 6;
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    transform.parent.position = OldPoint + new Vector3(hit.point.x - HitPoint.x,0, 0);
+                    Parent.transform.position = Parent.transform.position + transform.right * (hit.point.x - HitPoint.x);
                 }
+                HitPoint = hit.point;
             }
             if (axis == XYZAxis.YAxis)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 int layerMask = 1 << 6;
-                if (Physics.Raycast(ray, out hit,10000, layerMask))
+                if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    transform.parent.position = OldPoint + new Vector3(0,hit.point.y - HitPoint.y,0);
+                    Parent.transform.position = Parent.transform.position + transform.up * (hit.point.y - HitPoint.y);
                 }
+                HitPoint = hit.point;
             }
             if (axis == XYZAxis.ZAxis)
             {
@@ -50,8 +53,9 @@ public class XYZPoint : MonoBehaviour
                 int layerMask = 1 << 6;
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    transform.parent.position = OldPoint + new Vector3(0,0, hit.point.z - HitPoint.z);
+                    Parent.transform.position = Parent.transform.position + transform.forward * (hit.point.z - HitPoint.z);
                 }
+                HitPoint = hit.point;
             }
 
             if (Input.GetMouseButtonUp(0))

@@ -6,11 +6,11 @@ public static class MathTools
 {
     public static Vector3 FixYandZ(Vector3 vector3)
     {
-        return new Vector3(vector3.x, vector3.z, vector3.y);
+        return new Vector3(vector3.x, vector3.z, vector3.y); //return new Vector3(vector3.x, vector3.y, vector3.z);
     }
 
-    public static Vector3 FixXandZ(Vector3 vector3)
-    {
-        return new Vector3(vector3.z, vector3.y, vector3.x);
-    }
+    //public static Vector3 FixXandZ(Vector3 vector3)
+    //{
+    //    return new Vector3(vector3.z, vector3.y, vector3.x);
+    //}
 }

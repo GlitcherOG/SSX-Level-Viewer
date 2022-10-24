@@ -13,6 +13,7 @@ public class SelectorScript : MonoBehaviour
     public string selectedTag;
     public GameObject PatchPanelObject;
     public GameObject SplinePanelObject;
+    public GameObject InstancePanelObject;
     public GameObject XYZMovement;
 
     public GraphicRaycaster m_Raycaster;
@@ -100,6 +101,14 @@ public class SelectorScript : MonoBehaviour
                 SplinePanel.instance.LoadSplineAndSegment(SelectedGameObject.GetComponent<SplineSegmentObject>());
                 XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<SplineSegmentObject>().GetCentrePoint() * TrickyMapInterface.Scale);
             }
+            if (selectedTag == "Instances")
+            {
+                XYZMovement.SetActive(true);
+                InstancePanelObject.SetActive(true);
+                InstancePanel.instance.UpdateAll(SelectedGameObject.GetComponent<InstanceObject>());
+                XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
+
+            }
             if (selectedTag == "Patch Point")
             {
                 XYZMovement.SetActive(true);
@@ -110,6 +119,12 @@ public class SelectorScript : MonoBehaviour
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetOldParent();
                 SelectedGameObject.GetComponent<XYZPoint>().SetActive();
+            }
+            if (selectedTag == "XYZRotation")
+            {
+                XYZMovement.SetActive(true);
+                XYZMovement.GetComponent<XYZMovmentController>().SetOldParent();
+                SelectedGameObject.GetComponent<XYZRotation>().SetActive();
             }
         }
         else
@@ -145,8 +160,13 @@ public class SelectorScript : MonoBehaviour
             {
                 SelectedGameObject.GetComponent<SplineSegmentObject>().UnSelectedObject();
             }
+            if(selectedTag== "Instances")
+            {
+                SelectedGameObject.GetComponent<InstanceObject>().UnSelectedObject();
+            }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);
+            InstancePanelObject.GetComponent<InstancePanel>().HideSelfAndChild();
             SplinePanelObject.GetComponent<SplinePanel>().HideSelfAndChild();
             PatchPanelObject.GetComponent<PatchPanel>().HideSelfAndChild();
             selectedTag = "";
