@@ -91,7 +91,7 @@ public class SelectorScript : MonoBehaviour
             {
                 PatchPanelObject.SetActive(true);
                 XYZMovement.SetActive(true);
-                XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<PatchObject>().GetCentrePoint() * TrickyMapInterface.Scale);
+                XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
                 PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
             }
             if (selectedTag == "Spline")
@@ -99,7 +99,7 @@ public class SelectorScript : MonoBehaviour
                 XYZMovement.SetActive(true);
                 SplinePanelObject.SetActive(true);
                 SplinePanel.instance.LoadSplineAndSegment(SelectedGameObject.GetComponent<SplineSegmentObject>());
-                XYZMovement.GetComponent<XYZMovmentController>().SetParentCentreMode(SelectedGameObject, SelectedGameObject.GetComponent<SplineSegmentObject>().GetCentrePoint() * TrickyMapInterface.Scale);
+                XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
             }
             if (selectedTag == "Instances")
             {

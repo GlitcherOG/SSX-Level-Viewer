@@ -147,6 +147,13 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
+    public void UpdateNURBSRes()
+    {
+        for (int i = 0; i < patchObjects.Count; i++)
+        {
+            patchObjects[i].GetComponent<PatchObject>().LoadNURBSpatch();
+        }
+    }
 
     void SpawnPoints(Vector3 vector3, string Name)
     {

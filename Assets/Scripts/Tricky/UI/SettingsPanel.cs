@@ -11,6 +11,9 @@ public class SettingsPanel : MonoBehaviour
     public TMP_InputField EmulaterInput;
     public TMP_InputField WorkspaceInput;
 
+    public TMP_Text PatchResText;
+    public Slider PatchSlider;
+
     bool DisableUpdate;
 
     private void Start()
@@ -23,8 +26,19 @@ public class SettingsPanel : MonoBehaviour
         DisableUpdate = true;
         LanuchInput.text = TrickyMapInterface.Instance.settings.LaunchPath;
         EmulaterInput.text = TrickyMapInterface.Instance.settings.EmulatorPath;
-        WorkspaceInput.text = TrickyMapInterface.Instance.settings.WorkspacePath;
+        //WorkspaceInput.text = TrickyMapInterface.Instance.settings.WorkspacePath;
+
+        PatchResText.text = "Patch Resolution: " + TrickyMapInterface.Instance.settings.PatchResolution.ToString();
+        PatchSlider.value = TrickyMapInterface.Instance.settings.PatchResolution;
         DisableUpdate = false;
+    }
+
+    public void UpdateResolution(float Value)
+    {
+        TrickyMapInterface.Instance.settings.PatchResolution = (int)Value;
+        TrickyMapInterface.Instance.UpdateNURBSRes();
+        PatchResText.text = "Patch Resolution: " + TrickyMapInterface.Instance.settings.PatchResolution.ToString();
+        TrickyMapInterface.Instance.settings.Save(TrickyMapInterface.Instance.ConfigPath);
     }
 
     public void UpdateLaunchPath(string Path)

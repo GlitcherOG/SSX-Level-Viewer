@@ -3,21 +3,21 @@
 ## Current Features
 - Patch Editing
 - Spline Editing
-- Texture Libaray viewing
+- Texture Library viewing
  
 ## Todo add
-- Fix Opacity Mask Model Shader
+- Fix Rotation Gizmos
+
 - Patch Shader Doublesided and Outline
-- Instance Panel set
 - Material Library
 - Model Library
 - Scale Gimzos
-- Fix Gizmos spawn location to be at povit
-- Fix Gizmos XYZ
-- Custom Gizmos UI for rotation, scale and location
 - Randomiser GUI
 - Xray Mesh
 
+
+- Custom Gizmos UI for rotation, scale and location
+- Make Settings Applying a thing
 - Settings
 - Build Project
 - Patch Panel Texture Selector

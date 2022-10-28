@@ -113,6 +113,13 @@ public class InstanceObject : MonoBehaviour
 
     }
 
+    public void UpdateTransform()
+    {
+        transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
+        transform.localEulerAngles = rotation;
+        transform.localScale = scale * TrickyMapInterface.Scale;
+    }
+
     public void SelectedObject()
     {
         for (int i = 0; i < meshes.Count; i++)

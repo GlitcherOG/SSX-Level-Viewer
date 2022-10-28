@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InstancePanel : MonoBehaviour
 {
@@ -76,6 +78,187 @@ public class InstancePanel : MonoBehaviour
         UnknownInt5.text = instanceObject.UnknownInt31.ToString();
         UnknownInt6.text = instanceObject.UnknownInt32.ToString();
         DisallowUpdate = false;
+    }
+
+    public void SetInstanceData()
+    {
+        if(!DisallowUpdate)
+        {
+            instanceObject.InstanceName = InstanceName.text;
+            instanceObject.InstancePosition = Location.GrabXYZ();
+            instanceObject.rotation = Rotation.GrabXYZ();
+            instanceObject.scale = Scale.GrabXYZ();
+
+            instanceObject.Unknown5 = Unknown1.GrabXYZW();
+            instanceObject.Unknown6 = Unknown2.GrabXYZW();
+            instanceObject.Unknown7 = Unknown3.GrabXYZW();
+            instanceObject.Unknown8 = Unknown4.GrabXYZW();
+            instanceObject.Unknown9 = Unknown5.GrabXYZW();
+            instanceObject.Unknown10 = Unknown6.GrabXYZW();
+            instanceObject.Unknown11 = Unknown7.GrabXYZW();
+            instanceObject.RGBA = RGBA.GrabXYZW();
+            instanceObject.UpdateTransform();
+        }
+    }
+
+    public void SetModelID()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.ModelID = Int32.Parse(ModelID.text);
+                ModelID.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                ModelID.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetPrevInstance()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.PrevInstance = Int32.Parse(PrevInstance.text);
+                PrevInstance.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                PrevInstance.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetNextInstance()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.NextInstance = Int32.Parse(NextInstance.text);
+                NextInstance.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                NextInstance.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetUnknown1()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.UnknownInt26 = Int32.Parse(UnknownInt1.text);
+                UnknownInt1.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                UnknownInt1.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetUnknown2()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.UnknownInt27 = Int32.Parse(UnknownInt2.text);
+                UnknownInt2.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                UnknownInt2.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetUnknown3()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.UnknownInt28 = Int32.Parse(UnknownInt3.text);
+                UnknownInt3.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                UnknownInt3.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetModelID2()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.ModelID2 = Int32.Parse(ModelID2.text);
+                ModelID2.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                ModelID2.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetUnknown4()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.UnknownInt30 = Int32.Parse(UnknownInt4.text);
+                UnknownInt4.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                UnknownInt4.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetUnknown5()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.UnknownInt31 = Int32.Parse(UnknownInt5.text);
+                UnknownInt5.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                UnknownInt5.GetComponent<Image>().color = Color.red;
+            }
+        }
+    }
+
+    public void SetUnknown6()
+    {
+        if (!DisallowUpdate)
+        {
+            try
+            {
+                instanceObject.UnknownInt31 = Int32.Parse(UnknownInt6.text);
+                UnknownInt6.GetComponent<Image>().color = Color.white;
+            }
+            catch
+            {
+                UnknownInt6.GetComponent<Image>().color = Color.red;
+            }
+        }
     }
 
     public void HideSelfAndChild()

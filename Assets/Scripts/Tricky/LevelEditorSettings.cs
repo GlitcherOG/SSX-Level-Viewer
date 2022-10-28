@@ -21,6 +21,7 @@ public class LevelEditorSettings
     public string EmulatorPath = "";
     public string WorkspacePath = "";
     public string LaunchPath = "";
+    public int PatchResolution = 8;
 
     public void Save(string path)
     {

@@ -261,8 +261,8 @@ public class PatchObject : MonoBehaviour
         int degreeU = 3;
         int degreeV = 3;
 
-        int resolutionU = 12; //7;
-        int resolutionV = 12; //7;
+        int resolutionU = TrickyMapInterface.Instance.settings.PatchResolution; //7;
+        int resolutionV = TrickyMapInterface.Instance.settings.PatchResolution; //7; ()
 
         surface = new NURBS.Surface(cps, degreeU, degreeV);
 

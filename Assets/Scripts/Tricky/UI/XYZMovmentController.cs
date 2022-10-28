@@ -56,26 +56,26 @@ public class XYZMovmentController : MonoBehaviour
     {
         centremode = false;
         transform.position = gameObject.transform.position;
-        transform.rotation = gameObject.transform.rotation;
-        oldPos = transform.position;
-        oldRot = transform.eulerAngles;
+        oldPos = gameObject.transform.position;
+        oldRot = gameObject.transform.eulerAngles;
         Parent = gameObject;
         OldParent = gameObject;
+        RotationCheck();
         active = true;
     }
 
 
-    public void SetParentCentreMode(GameObject gameObject, Vector3 vector3)
-    {
-        centremode = true;
-        transform.position = vector3;
-        transform.rotation = gameObject.transform.rotation;
-        oldPos = vector3;
-        oldRot = transform.eulerAngles;
-        Parent = gameObject;
-        OldParent = gameObject;
-        active = true;
-    }
+    //public void SetParentCentreMode(GameObject gameObject, Vector3 vector3)
+    //{
+    //    centremode = true;
+    //    transform.position = vector3;
+    //    oldPos = vector3;
+    //    oldRot = gameObject.transform.eulerAngles;
+    //    Parent = gameObject;
+    //    OldParent = gameObject;
+    //    RotationCheck();
+    //    active = true;
+    //}
 
     public void RemoveParent()
     {
@@ -86,14 +86,27 @@ public class XYZMovmentController : MonoBehaviour
     public void SetOldParent()
     {
         Parent = OldParent;
+        RotationCheck();
         transform.position = oldPos;
-        transform.eulerAngles = oldRot;
         active = true;
+    }
+
+    void RotationCheck()
+    {
+        if (gimzoMode == GimzoMode.Movement)
+        {
+            EnableMovement();
+        }
+        if (gimzoMode == GimzoMode.Rotation)
+        {
+            EnableRotation();
+        }
     }
 
     public void EnableMovement()
     {
         gimzoMode = GimzoMode.Movement;
+        transform.eulerAngles = new Vector3(0, 0, 0);
         Movement.SetActive(true);
         Rotation.SetActive(false);
     }
@@ -101,6 +114,7 @@ public class XYZMovmentController : MonoBehaviour
     public void EnableRotation()
     {
         gimzoMode = GimzoMode.Rotation;
+        transform.eulerAngles = oldRot;
         Movement.SetActive(false);
         Rotation.SetActive(true);
     }
