@@ -49,7 +49,6 @@ public class PatchObject : MonoBehaviour
 
     [Space(10)]
     public Material MainMaterial;
-    public Material NoLightMaterial;
     public Renderer Renderer;
     public GameObject PointPrefab;
     public List<PatchPoint> PatchPoints;
@@ -276,6 +275,8 @@ public class PatchObject : MonoBehaviour
         //Build mesh (reusing Mesh to save GC allocation)
         var mesh=surface.BuildMesh(resolutionU, resolutionV);
 
+        //Build UV Points
+
         cps = new NURBS.ControlPoint[2, 2];
 
         cps[0, 0] = new NURBS.ControlPoint(UVPoint1.x, UVPoint1.y, 0, 1);
@@ -294,6 +295,25 @@ public class PatchObject : MonoBehaviour
             UV2[i] = PointCorrection(new Vector2(UV[i].x, UV[i].y));
         }
         mesh.uv = UV2;
+
+        //Build Lightmap Points
+
+        cps = new NURBS.ControlPoint[2, 2];
+
+        cps[0, 0] = new NURBS.ControlPoint(-LightMapPoint.x, -LightMapPoint.y, 0, 1);
+        cps[0, 1] = new NURBS.ControlPoint(-LightMapPoint.x, -LightMapPoint.y+ LightMapPoint.w, 0, 1);
+        cps[1, 0] = new NURBS.ControlPoint(-LightMapPoint.x+LightMapPoint.z, 0, 0, 1);
+        cps[1, 1] = new NURBS.ControlPoint(-LightMapPoint.x + LightMapPoint.z, -LightMapPoint.y + LightMapPoint.w, 0, 1);
+
+        surface = new NURBS.Surface(cps, 1, 1);
+
+        UV = surface.ReturnVertices(resolutionU, resolutionV);
+
+        UV2 = new Vector2[UV.Length];
+
+        mesh.uv4 = UV2;
+
+
         //Set material
         GetComponent<MeshFilter>().mesh= mesh;
         GetComponent<MeshCollider>().enabled = false;
@@ -304,175 +324,175 @@ public class PatchObject : MonoBehaviour
         ToggleLightingMode();
     }
 
-    public void LoadHighPolyMesh()
-    {
-        List<int> ints = new List<int>();
-        List<Vector3> vertices = new List<Vector3>();
-        List<Vector2> UV = new List<Vector2>();
-        Mesh mesh = new Mesh();
+    //public void LoadHighPolyMesh()
+    //{
+    //    List<int> ints = new List<int>();
+    //    List<Vector3> vertices = new List<Vector3>();
+    //    List<Vector2> UV = new List<Vector2>();
+    //    Mesh mesh = new Mesh();
 
-        //Vertices
-        vertices.Add((RawControlPoint - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR1C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR1C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR1C4 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    //Vertices
+    //    vertices.Add((RawControlPoint - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR1C2 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR1C3 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR1C4 - RawControlPoint) * TrickyMapInterface.Scale);
 
-        vertices.Add((RawR2C1 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR2C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR2C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR2C4 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR2C1 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR2C2 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR2C3 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR2C4 - RawControlPoint) * TrickyMapInterface.Scale);
 
-        vertices.Add((RawR3C1 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR3C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR3C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR3C4 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR3C1 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR3C2 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR3C3 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR3C4 - RawControlPoint) * TrickyMapInterface.Scale);
 
-        vertices.Add((RawR4C1 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR4C2 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR4C3 - RawControlPoint) * TrickyMapInterface.Scale);
-        vertices.Add((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR4C1 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR4C2 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR4C3 - RawControlPoint) * TrickyMapInterface.Scale);
+    //    vertices.Add((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
 
-        //UV Points
+    //    //UV Points
 
-        Vector2 Point13Dif = (UVPoint3 - UVPoint1);
-        Vector2 Point24Dif = (UVPoint4 - UVPoint2);
-        Vector2 Point12Dif = (UVPoint2 - UVPoint1);
-        Vector2 Point34Dif = (UVPoint4 - UVPoint3);
+    //    Vector2 Point13Dif = (UVPoint3 - UVPoint1);
+    //    Vector2 Point24Dif = (UVPoint4 - UVPoint2);
+    //    Vector2 Point12Dif = (UVPoint2 - UVPoint1);
+    //    Vector2 Point34Dif = (UVPoint4 - UVPoint3);
 
-        Vector2 Point11 = (UVPoint1 + Point13Dif * (1f / 3f));
-        Vector2 Point1131Dif = (UVPoint2 + Point24Dif * (1f / 3f) - (UVPoint1 + Point13Dif * (1f / 3f)));
-        Vector2 Point12 = (UVPoint1 + Point13Dif * (2f / 3f));
-        Vector2 Point1232Dif = (UVPoint2 + Point24Dif * (2f / 3f) - (UVPoint1 + Point13Dif * (2f / 3f)));
+    //    Vector2 Point11 = (UVPoint1 + Point13Dif * (1f / 3f));
+    //    Vector2 Point1131Dif = (UVPoint2 + Point24Dif * (1f / 3f) - (UVPoint1 + Point13Dif * (1f / 3f)));
+    //    Vector2 Point12 = (UVPoint1 + Point13Dif * (2f / 3f));
+    //    Vector2 Point1232Dif = (UVPoint2 + Point24Dif * (2f / 3f) - (UVPoint1 + Point13Dif * (2f / 3f)));
 
-        UV.Add(UVPoint1);
-        UV.Add(UVPoint1 + Point13Dif * (1f / 3f));
-        UV.Add(UVPoint1 + Point13Dif * (2f / 3f));
-        UV.Add(UVPoint3);
+    //    UV.Add(UVPoint1);
+    //    UV.Add(UVPoint1 + Point13Dif * (1f / 3f));
+    //    UV.Add(UVPoint1 + Point13Dif * (2f / 3f));
+    //    UV.Add(UVPoint3);
 
-        UV.Add(UVPoint1 + Point12Dif * (1f / 3f));
-        UV.Add(Point11 + Point1131Dif * (1f / 3f));
-        UV.Add(Point12 + Point1232Dif * (1f / 3f));
-        UV.Add(UVPoint3 + Point34Dif * (1f / 3f));
+    //    UV.Add(UVPoint1 + Point12Dif * (1f / 3f));
+    //    UV.Add(Point11 + Point1131Dif * (1f / 3f));
+    //    UV.Add(Point12 + Point1232Dif * (1f / 3f));
+    //    UV.Add(UVPoint3 + Point34Dif * (1f / 3f));
 
-        UV.Add(UVPoint1 + Point12Dif * (2f / 3f));
-        UV.Add(Point11 + Point1131Dif * (2f / 3f));
-        UV.Add(Point12 + Point1232Dif * (2f / 3f));
-        UV.Add(UVPoint3 + Point34Dif * (2f / 3f));
+    //    UV.Add(UVPoint1 + Point12Dif * (2f / 3f));
+    //    UV.Add(Point11 + Point1131Dif * (2f / 3f));
+    //    UV.Add(Point12 + Point1232Dif * (2f / 3f));
+    //    UV.Add(UVPoint3 + Point34Dif * (2f / 3f));
 
-        UV.Add(UVPoint2);
-        UV.Add(UVPoint2 + Point24Dif * (1f / 3f));
-        UV.Add(UVPoint2 + Point24Dif * (2f / 3f));
-        UV.Add(UVPoint4);
+    //    UV.Add(UVPoint2);
+    //    UV.Add(UVPoint2 + Point24Dif * (1f / 3f));
+    //    UV.Add(UVPoint2 + Point24Dif * (2f / 3f));
+    //    UV.Add(UVPoint4);
 
-        for (int i = 0; i < UV.Count; i++)
-        {
-            UV[i] = PointCorrection(UV[i]);
-        }
+    //    for (int i = 0; i < UV.Count; i++)
+    //    {
+    //        UV[i] = PointCorrection(UV[i]);
+    //    }
 
-        //Faces
-        //Working
-        ints.Add(0);
-        ints.Add(1);
-        ints.Add(4);
+    //    //Faces
+    //    //Working
+    //    ints.Add(0);
+    //    ints.Add(1);
+    //    ints.Add(4);
 
-        //Working
-        ints.Add(1);
-        ints.Add(5);
-        ints.Add(4);
+    //    //Working
+    //    ints.Add(1);
+    //    ints.Add(5);
+    //    ints.Add(4);
 
-        //Working
-        ints.Add(1);
-        ints.Add(2);
-        ints.Add(5);
+    //    //Working
+    //    ints.Add(1);
+    //    ints.Add(2);
+    //    ints.Add(5);
 
-        //Working
-        ints.Add(5);
-        ints.Add(2);
-        ints.Add(6);
+    //    //Working
+    //    ints.Add(5);
+    //    ints.Add(2);
+    //    ints.Add(6);
 
-        //Working
-        ints.Add(2);
-        ints.Add(3);
-        ints.Add(6);
+    //    //Working
+    //    ints.Add(2);
+    //    ints.Add(3);
+    //    ints.Add(6);
 
-        //Working
-        ints.Add(3);
-        ints.Add(7);
-        ints.Add(6);
+    //    //Working
+    //    ints.Add(3);
+    //    ints.Add(7);
+    //    ints.Add(6);
 
-        //Working
-        ints.Add(4);
-        ints.Add(5);
-        ints.Add(8);
+    //    //Working
+    //    ints.Add(4);
+    //    ints.Add(5);
+    //    ints.Add(8);
 
-        //Working
-        ints.Add(8);
-        ints.Add(5);
-        ints.Add(9);
+    //    //Working
+    //    ints.Add(8);
+    //    ints.Add(5);
+    //    ints.Add(9);
 
-        //Working
-        ints.Add(5);
-        ints.Add(6);
-        ints.Add(9);
+    //    //Working
+    //    ints.Add(5);
+    //    ints.Add(6);
+    //    ints.Add(9);
 
-        //Comment Out
-        ints.Add(9);
-        ints.Add(6);
-        ints.Add(10);
+    //    //Comment Out
+    //    ints.Add(9);
+    //    ints.Add(6);
+    //    ints.Add(10);
 
-        ints.Add(6);
-        ints.Add(7);
-        ints.Add(10);
+    //    ints.Add(6);
+    //    ints.Add(7);
+    //    ints.Add(10);
 
-        ints.Add(10);
-        ints.Add(7);
-        ints.Add(11);
-        //
+    //    ints.Add(10);
+    //    ints.Add(7);
+    //    ints.Add(11);
+    //    //
 
-        //Working
-        ints.Add(8);
-        ints.Add(9);
-        ints.Add(12);
+    //    //Working
+    //    ints.Add(8);
+    //    ints.Add(9);
+    //    ints.Add(12);
 
-        //Working
-        ints.Add(12);
-        ints.Add(9);
-        ints.Add(13);
+    //    //Working
+    //    ints.Add(12);
+    //    ints.Add(9);
+    //    ints.Add(13);
 
-        //Comment out
-        ints.Add(9);
-        ints.Add(10);
-        ints.Add(13);
+    //    //Comment out
+    //    ints.Add(9);
+    //    ints.Add(10);
+    //    ints.Add(13);
 
-        ints.Add(13);
-        ints.Add(10);
-        ints.Add(14);
+    //    ints.Add(13);
+    //    ints.Add(10);
+    //    ints.Add(14);
 
-        ints.Add(10);
-        ints.Add(11);
-        ints.Add(14);
-        ///
+    //    ints.Add(10);
+    //    ints.Add(11);
+    //    ints.Add(14);
+    //    ///
 
-        //Working
-        ints.Add(15);
-        ints.Add(14);
-        ints.Add(11);
+    //    //Working
+    //    ints.Add(15);
+    //    ints.Add(14);
+    //    ints.Add(11);
 
-        //Set Mesh Data
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = ints.ToArray();
-        mesh.uv = UV.ToArray();
-        mesh.RecalculateNormals();
-        GetComponent<MeshFilter>().mesh = mesh;
+    //    //Set Mesh Data
+    //    mesh.vertices = vertices.ToArray();
+    //    mesh.triangles = ints.ToArray();
+    //    mesh.uv = UV.ToArray();
+    //    mesh.RecalculateNormals();
+    //    GetComponent<MeshFilter>().mesh = mesh;
 
-        //Set material
-        GetComponent<MeshCollider>().enabled = false;
-        GetComponent<MeshCollider>().sharedMesh = mesh;
-        GetComponent<MeshCollider>().enabled = true;
-        GetComponent<Renderer>().material = MainMaterial;
-        UpdateTexture(TextureAssigment);
-        ToggleLightingMode();
-    }
+    //    //Set material
+    //    GetComponent<MeshCollider>().enabled = false;
+    //    GetComponent<MeshCollider>().sharedMesh = mesh;
+    //    GetComponent<MeshCollider>().enabled = true;
+    //    GetComponent<Renderer>().material = MainMaterial;
+    //    UpdateTexture(TextureAssigment);
+    //    ToggleLightingMode();
+    //}
 
 
     public Vector2 PointCorrection(Vector2 Newpoint)
@@ -549,52 +569,49 @@ public class PatchObject : MonoBehaviour
 
     public void SelectedObject()
     {
-        if (!TrickyMapInterface.Instance.NoLightMode)
-        {
-            Renderer.material.EnableKeyword("_EMISSION");
-        }
+        Renderer.material.SetFloat("_OutlineWidth", -1);
+        Renderer.material.SetColor("_OutlineColor", Color.red);
+        Renderer.material.SetFloat("_OpacityMaskOutline", 0.5f);
         GenerateCubePoints();
-        Renderer.material.SetColor("_EmissionColor", Color.grey);
     }
 
     public void UnSelectedObject()
     {
-        if (!TrickyMapInterface.Instance.NoLightMode)
-        {
-            Renderer.material.DisableKeyword("_EMISSION");
-        }
+        Renderer.material.SetFloat("_OutlineWidth", 0);
+        Renderer.material.SetFloat("_OpacityMaskOutline", 0f);
+        Renderer.material.SetColor("_OutlineColor", new Color32(255, 255, 255, 0));
         DestroyCube();
-        Renderer.material.SetColor("_EmissionColor", new Color(222f/255f, 222f / 255f, 222f / 255f));
     }
 
     public void LightMode()
     {
-        Renderer.material = MainMaterial;
+        
     }
 
     public void NoLightMode()
     {
-        Renderer.material = NoLightMaterial;
-        UpdateTexture(TextureAssigment);
+
     }
 
     public void UpdateTexture(int a)
     {
         try
         {
-            Renderer.material.mainTexture = TrickyMapInterface.Instance.textures[TextureAssigment];
+            Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.textures[TextureAssigment]);
+            Renderer.material.SetTextureOffset("_Lightmap", new Vector2(LightMapPoint.x, LightMapPoint.y));
+            Renderer.material.SetTextureScale("_Lightmap", new Vector2(LightMapPoint.z, LightMapPoint.w));
+            Renderer.material.SetTexture("_Lightmap", TrickyMapInterface.Instance.lightmaps[LightmapID]);
             TextureAssigment = a;
-            Renderer.material.SetTexture("_EmissionMap", TrickyMapInterface.Instance.textures[TextureAssigment]);
         }
         catch
         {
-            Renderer.material.mainTexture = TrickyMapInterface.Instance.ErrorTexture;
+            Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.ErrorTexture);;
         }
     }
 
     public Vector3 GetCentrePoint()
     {
-        Vector3 vector3 = (RawControlPoint + RawR1C2 + RawR1C3 + RawR1C4 + RawR2C1 + RawR2C2 + RawR2C3 + RawR2C4 + RawR3C1 + RawR3C2 /*+ RawR3C3*/ + RawR3C4 + RawR4C1 + RawR4C2 +RawR4C3+RawR4C4)/15;
+        Vector3 vector3 = (RawControlPoint + RawR1C2 + RawR1C3 + RawR1C4 + RawR2C1 + RawR2C2 + RawR2C3 + RawR2C4 + RawR3C1 + RawR3C2 + RawR3C3 + RawR3C4 + RawR4C1 + RawR4C2 +RawR4C3+RawR4C4)/16;
         return vector3;
     }
 }

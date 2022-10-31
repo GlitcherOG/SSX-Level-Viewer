@@ -41,6 +41,7 @@ public class TrickyMapInterface : MonoBehaviour
 
     [Header("Lists")]
     public List<Texture2D> textures;
+    public List<Texture2D> lightmaps;
     public List<PatchObject> patchObjects = new List<PatchObject>();
     public List<SplineObject> splineObjects = new List<SplineObject>();
     public List<InstanceObject> instanceObjects = new List<InstanceObject>();
@@ -198,6 +199,7 @@ public class TrickyMapInterface : MonoBehaviour
             StringPath = Path.GetDirectoryName(StringPath);
             LoadPath = StringPath;
             LoadTextures(StringPath + "\\Textures");
+            Loadlightmaps(StringPath + "\\Lightmaps");
             LoadPatches(StringPath + "\\Patches.json");
             LoadSplines(StringPath + "\\Splines.json");
             materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
@@ -302,6 +304,26 @@ public class TrickyMapInterface : MonoBehaviour
                     NewImage.LoadImage(bytes);
                 }
                 textures.Add(NewImage);
+            }
+        }
+    }
+
+    void Loadlightmaps(string Folder)
+    {
+        string[] Files = Directory.GetFiles(Folder);
+        lightmaps = new List<Texture2D>();
+        for (int i = 0; i < Files.Length; i++)
+        {
+            Texture2D NewImage = new Texture2D(1, 1);
+            if (Files[i].ToLower().Contains(".png"))
+            {
+                using (Stream stream = File.Open(Files[i], FileMode.Open))
+                {
+                    byte[] bytes = new byte[stream.Length];
+                    stream.Read(bytes, 0, (int)stream.Length);
+                    NewImage.LoadImage(bytes);
+                }
+                lightmaps.Add(NewImage);
             }
         }
     }

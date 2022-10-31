@@ -4,6 +4,7 @@
 - Patch Editing
 - Spline Editing
 - Texture Library viewing
+- Instance Editing
  
 ## Todo add
 - Fix Rotation Gizmos
@@ -18,7 +19,6 @@
 
 - Custom Gizmos UI for rotation, scale and location
 - Make Settings Applying a thing
-- Settings
 - Build Project
 - Patch Panel Texture Selector
 - key to focus on object

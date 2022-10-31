@@ -54,8 +54,8 @@ MeshRenderer:
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -139,7 +139,6 @@ MonoBehaviour:
   Unknown5: 0
   Unknown6: 0
   MainMaterial: {fileID: 2100000, guid: ec6b63a856104e243966b95562cc89e6, type: 2}
-  NoLightMaterial: {fileID: 2100000, guid: a18bd8ad8080fbe4cb28e038884df268, type: 2}
   Renderer: {fileID: 5244062748462653824}
   PointPrefab: {fileID: 2226801304746188414, guid: 9530f6efd356716419e78a0107feac7c, type: 3}
   PatchPoints: []
