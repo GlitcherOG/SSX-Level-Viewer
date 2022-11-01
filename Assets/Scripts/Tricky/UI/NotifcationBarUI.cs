@@ -22,7 +22,10 @@ public class NotifcationBarUI : MonoBehaviour
     {
         if(Timer<0)
         {
-            bar.SetActive(false);
+            if (bar!=null)
+            {
+                bar.SetActive(false);
+            }
         }
         else
         {

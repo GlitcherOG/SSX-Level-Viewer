@@ -53,6 +53,9 @@ public class TrickyMapInterface : MonoBehaviour
     public string ConfigPath;
     public string Version = "0.0.4";
 
+    public GameObject LevelEditorObject;
+    public GameObject MaterialLibrayObject;
+
     private void Awake()
     {
         ConfigPath = UnityEngine.Application.dataPath + "/Config.json";
@@ -156,15 +159,6 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    void SpawnPoints(Vector3 vector3, string Name)
-    {
-        GameObject gameObject = new GameObject();
-        gameObject.transform.position = vector3;
-        gameObject.transform.parent = this.gameObject.transform;
-        gameObject.name = Name;
-        gameObject.AddComponent<CubeID>();
-    }
-
     public void RegenerateSplineMesh()
     {
         for (int i = 0; i < splineObjects.Count; i++)
@@ -174,6 +168,20 @@ public class TrickyMapInterface : MonoBehaviour
                 splineObjects[i].splineSegmentObjects[a].RegenerateModel();
             }
         }
+    }
+
+    public void ShowMatieralLibrary()
+    {
+        SelectorScript.instance.active = false;
+        MaterialLibrayObject.SetActive(true);
+        LevelEditorObject.SetActive(false);
+    }
+
+    public void ShowLeveEditor()
+    {
+        SelectorScript.instance.active = true;
+        MaterialLibrayObject.SetActive(false);
+        LevelEditorObject.SetActive(true);
     }
 
     #region Load Stuff
