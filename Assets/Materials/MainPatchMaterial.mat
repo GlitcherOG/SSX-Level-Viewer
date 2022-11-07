@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: MainPatchMaterial
   m_Shader: {fileID: 4800000, guid: 94bc902fe4745464b995339cd65b8b32, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
+  m_ShaderKeywords: _ALPHATEST_ON _GLOSSYREFLECTIONS_OFF _NOLIGHT_ON _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -93,9 +93,10 @@ Material:
     - _Glossiness: 1
     - _GlossyReflections: 0
     - _Keyword0: 0
+    - _LightMapStrength: 1
     - _Metallic: 0
     - _Mode: 1
-    - _NoLight: 0
+    - _NoLight: 1
     - _NoLightMode: 0
     - _OcclusionStrength: 1
     - _OpacityMaskOutline: 0

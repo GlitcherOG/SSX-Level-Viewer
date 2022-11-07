@@ -189,9 +189,17 @@ public class TrickyMapInterface : MonoBehaviour
         int Width = (int)(lightmapPoint.z * lightmaps[ID].width);
         int Height = (int)(lightmapPoint.w * lightmaps[ID].height);
         int XCord  = (int)(lightmapPoint.x * lightmaps[ID].width);
-        int YCord = (int)(lightmapPoint.y * lightmaps[ID].width); ;
-
-        return null;
+        int YCord = (int)(lightmapPoint.y * lightmaps[ID].height);
+        Texture2D LightmapGrab = new Texture2D(Width, Height);
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                LightmapGrab.SetPixel(x, y,  lightmaps[ID].GetPixel(XCord + x, YCord + y));
+            }
+        }
+        LightmapGrab.Apply();
+        return LightmapGrab;
     }
 
     #region Load Stuff
@@ -341,16 +349,16 @@ public class TrickyMapInterface : MonoBehaviour
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
                 }
-                //Texture2D correctedTexture = new Texture2D(NewImage.width, NewImage.height);
-                //for (int x = 0; x < NewImage.width; x++)
-                //{
-                //    for (int y = 0; y < NewImage.height; y++)
-                //    {
-                //        correctedTexture.SetPixel(NewImage.width- y, x, NewImage.GetPixel(x, y));
-                //    }
-                //}
-                //correctedTexture.Apply();
-                lightmaps.Add(NewImage);
+                Texture2D correctedTexture = new Texture2D(NewImage.width, NewImage.height);
+                for (int x = 0; x < NewImage.width; x++)
+                {
+                    for (int y = 0; y < NewImage.height; y++)
+                    {
+                        correctedTexture.SetPixel(NewImage.width - y, x, NewImage.GetPixel(x, y));
+                    }
+                }
+                correctedTexture.Apply();
+                lightmaps.Add(correctedTexture);
             }
         }
     }

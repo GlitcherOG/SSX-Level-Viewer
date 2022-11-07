@@ -441,12 +441,12 @@ public class PatchObject : MonoBehaviour
 
     public void LightMode()
     {
-        
+        Renderer.material.SetFloat("_LightMapStrength", 1);
     }
 
     public void NoLightMode()
     {
-
+        Renderer.material.SetFloat("_LightMapStrength", 0);
     }
 
     public void UpdateTexture(int a)
@@ -454,9 +454,9 @@ public class PatchObject : MonoBehaviour
         try
         {
             Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.textures[TextureAssigment]);
-            Renderer.material.SetTextureOffset("_Lightmap", new Vector2(LightMapPoint.x, LightMapPoint.y));
-            Renderer.material.SetTextureScale("_Lightmap", new Vector2(LightMapPoint.z, LightMapPoint.w));
-            Renderer.material.SetTexture("_Lightmap", TrickyMapInterface.Instance.lightmaps[LightmapID]);
+            //Renderer.material.SetTextureOffset("_Lightmap", new Vector2(LightMapPoint.x, LightMapPoint.y));
+            //Renderer.material.SetTextureScale("_Lightmap", new Vector2(LightMapPoint.z, LightMapPoint.w));
+            Renderer.material.SetTexture("_Lightmap", TrickyMapInterface.Instance.GrabLightmapTexture(LightMapPoint, LightmapID));
             TextureAssigment = a;
         }
         catch
