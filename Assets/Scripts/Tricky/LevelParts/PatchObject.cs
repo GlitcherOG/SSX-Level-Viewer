@@ -279,10 +279,18 @@ public class PatchObject : MonoBehaviour
 
         cps = new NURBS.ControlPoint[2, 2];
 
-        cps[0, 0] = new NURBS.ControlPoint(UVPoint1.x, UVPoint1.y, 0, 1);
-        cps[0, 1] = new NURBS.ControlPoint(UVPoint2.x, UVPoint2.y, 0, 1);
-        cps[1, 0] = new NURBS.ControlPoint(UVPoint3.x, UVPoint3.y, 0, 1);
-        cps[1, 1] = new NURBS.ControlPoint(UVPoint4.x, UVPoint4.y, 0, 1);
+        List<Vector2> vector2s = new List<Vector2>();
+        vector2s.Add(UVPoint1);
+        vector2s.Add(UVPoint2);
+        vector2s.Add(UVPoint3);
+        vector2s.Add(UVPoint4);
+
+        vector2s = PointCorrection(vector2s);
+
+        cps[0, 0] = new NURBS.ControlPoint(vector2s[0].x, vector2s[0].y, 0, 1);
+        cps[0, 1] = new NURBS.ControlPoint(vector2s[1].x, vector2s[1].y, 0, 1);
+        cps[1, 0] = new NURBS.ControlPoint(vector2s[2].x, vector2s[2].y, 0, 1);
+        cps[1, 1] = new NURBS.ControlPoint(vector2s[3].x, vector2s[3].y, 0, 1);
 
         surface = new NURBS.Surface(cps, 1, 1);
 
@@ -292,26 +300,9 @@ public class PatchObject : MonoBehaviour
 
         for (int i = 0; i < UV.Length; i++)
         {
-            UV2[i] = PointCorrection(new Vector2(UV[i].x, UV[i].y));
+            UV2[i] = new Vector2(UV[i].x, UV[i].y);
         }
         mesh.uv = UV2;
-
-        //Build Lightmap Points
-
-        cps = new NURBS.ControlPoint[2, 2];
-
-        cps[0, 0] = new NURBS.ControlPoint(-LightMapPoint.x, -LightMapPoint.y, 0, 1);
-        cps[0, 1] = new NURBS.ControlPoint(-LightMapPoint.x, -LightMapPoint.y+ LightMapPoint.w, 0, 1);
-        cps[1, 0] = new NURBS.ControlPoint(-LightMapPoint.x+LightMapPoint.z, 0, 0, 1);
-        cps[1, 1] = new NURBS.ControlPoint(-LightMapPoint.x + LightMapPoint.z, -LightMapPoint.y + LightMapPoint.w, 0, 1);
-
-        surface = new NURBS.Surface(cps, 1, 1);
-
-        UV = surface.ReturnVertices(resolutionU, resolutionV);
-
-        UV2 = new Vector2[UV.Length];
-
-        mesh.uv4 = UV2;
 
 
         //Set material
@@ -324,188 +315,53 @@ public class PatchObject : MonoBehaviour
         ToggleLightingMode();
     }
 
-    //public void LoadHighPolyMesh()
-    //{
-    //    List<int> ints = new List<int>();
-    //    List<Vector3> vertices = new List<Vector3>();
-    //    List<Vector2> UV = new List<Vector2>();
-    //    Mesh mesh = new Mesh();
 
-    //    //Vertices
-    //    vertices.Add((RawControlPoint - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR1C2 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR1C3 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR1C4 - RawControlPoint) * TrickyMapInterface.Scale);
-
-    //    vertices.Add((RawR2C1 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR2C2 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR2C3 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR2C4 - RawControlPoint) * TrickyMapInterface.Scale);
-
-    //    vertices.Add((RawR3C1 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR3C2 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR3C3 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR3C4 - RawControlPoint) * TrickyMapInterface.Scale);
-
-    //    vertices.Add((RawR4C1 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR4C2 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR4C3 - RawControlPoint) * TrickyMapInterface.Scale);
-    //    vertices.Add((RawR4C4 - RawControlPoint) * TrickyMapInterface.Scale);
-
-    //    //UV Points
-
-    //    Vector2 Point13Dif = (UVPoint3 - UVPoint1);
-    //    Vector2 Point24Dif = (UVPoint4 - UVPoint2);
-    //    Vector2 Point12Dif = (UVPoint2 - UVPoint1);
-    //    Vector2 Point34Dif = (UVPoint4 - UVPoint3);
-
-    //    Vector2 Point11 = (UVPoint1 + Point13Dif * (1f / 3f));
-    //    Vector2 Point1131Dif = (UVPoint2 + Point24Dif * (1f / 3f) - (UVPoint1 + Point13Dif * (1f / 3f)));
-    //    Vector2 Point12 = (UVPoint1 + Point13Dif * (2f / 3f));
-    //    Vector2 Point1232Dif = (UVPoint2 + Point24Dif * (2f / 3f) - (UVPoint1 + Point13Dif * (2f / 3f)));
-
-    //    UV.Add(UVPoint1);
-    //    UV.Add(UVPoint1 + Point13Dif * (1f / 3f));
-    //    UV.Add(UVPoint1 + Point13Dif * (2f / 3f));
-    //    UV.Add(UVPoint3);
-
-    //    UV.Add(UVPoint1 + Point12Dif * (1f / 3f));
-    //    UV.Add(Point11 + Point1131Dif * (1f / 3f));
-    //    UV.Add(Point12 + Point1232Dif * (1f / 3f));
-    //    UV.Add(UVPoint3 + Point34Dif * (1f / 3f));
-
-    //    UV.Add(UVPoint1 + Point12Dif * (2f / 3f));
-    //    UV.Add(Point11 + Point1131Dif * (2f / 3f));
-    //    UV.Add(Point12 + Point1232Dif * (2f / 3f));
-    //    UV.Add(UVPoint3 + Point34Dif * (2f / 3f));
-
-    //    UV.Add(UVPoint2);
-    //    UV.Add(UVPoint2 + Point24Dif * (1f / 3f));
-    //    UV.Add(UVPoint2 + Point24Dif * (2f / 3f));
-    //    UV.Add(UVPoint4);
-
-    //    for (int i = 0; i < UV.Count; i++)
-    //    {
-    //        UV[i] = PointCorrection(UV[i]);
-    //    }
-
-    //    //Faces
-    //    //Working
-    //    ints.Add(0);
-    //    ints.Add(1);
-    //    ints.Add(4);
-
-    //    //Working
-    //    ints.Add(1);
-    //    ints.Add(5);
-    //    ints.Add(4);
-
-    //    //Working
-    //    ints.Add(1);
-    //    ints.Add(2);
-    //    ints.Add(5);
-
-    //    //Working
-    //    ints.Add(5);
-    //    ints.Add(2);
-    //    ints.Add(6);
-
-    //    //Working
-    //    ints.Add(2);
-    //    ints.Add(3);
-    //    ints.Add(6);
-
-    //    //Working
-    //    ints.Add(3);
-    //    ints.Add(7);
-    //    ints.Add(6);
-
-    //    //Working
-    //    ints.Add(4);
-    //    ints.Add(5);
-    //    ints.Add(8);
-
-    //    //Working
-    //    ints.Add(8);
-    //    ints.Add(5);
-    //    ints.Add(9);
-
-    //    //Working
-    //    ints.Add(5);
-    //    ints.Add(6);
-    //    ints.Add(9);
-
-    //    //Comment Out
-    //    ints.Add(9);
-    //    ints.Add(6);
-    //    ints.Add(10);
-
-    //    ints.Add(6);
-    //    ints.Add(7);
-    //    ints.Add(10);
-
-    //    ints.Add(10);
-    //    ints.Add(7);
-    //    ints.Add(11);
-    //    //
-
-    //    //Working
-    //    ints.Add(8);
-    //    ints.Add(9);
-    //    ints.Add(12);
-
-    //    //Working
-    //    ints.Add(12);
-    //    ints.Add(9);
-    //    ints.Add(13);
-
-    //    //Comment out
-    //    ints.Add(9);
-    //    ints.Add(10);
-    //    ints.Add(13);
-
-    //    ints.Add(13);
-    //    ints.Add(10);
-    //    ints.Add(14);
-
-    //    ints.Add(10);
-    //    ints.Add(11);
-    //    ints.Add(14);
-    //    ///
-
-    //    //Working
-    //    ints.Add(15);
-    //    ints.Add(14);
-    //    ints.Add(11);
-
-    //    //Set Mesh Data
-    //    mesh.vertices = vertices.ToArray();
-    //    mesh.triangles = ints.ToArray();
-    //    mesh.uv = UV.ToArray();
-    //    mesh.RecalculateNormals();
-    //    GetComponent<MeshFilter>().mesh = mesh;
-
-    //    //Set material
-    //    GetComponent<MeshCollider>().enabled = false;
-    //    GetComponent<MeshCollider>().sharedMesh = mesh;
-    //    GetComponent<MeshCollider>().enabled = true;
-    //    GetComponent<Renderer>().material = MainMaterial;
-    //    UpdateTexture(TextureAssigment);
-    //    ToggleLightingMode();
-    //}
-
-
-    public Vector2 PointCorrection(Vector2 Newpoint)
+    public List<Vector2> PointCorrection(List<Vector2> NewList)
     {
-        if (Newpoint.y < 0)
+        for (int i = 0; i < NewList.Count; i++)
         {
-            Newpoint.y = -Newpoint.y;
+            var TempPoint = NewList[i];
+            //if (TempPoint.y < 0)
+            //{
+                TempPoint.y = -TempPoint.y;
+            //}
+            //if (TempPoint.x < 0)
+            //{
+            //    TempPoint.x = -TempPoint.x;
+            //}
+            NewList[i] = TempPoint;
         }
-        if (Newpoint.x < 0)
+
+
+        return NewList;
+    }
+
+    public static Vector2 Highest(Vector2 current, Vector2 vector3)
+    {
+        Vector2 vertex = vector3;
+        if (vertex.x > current.x)
         {
-            Newpoint.x = -Newpoint.x;
+            current.x = vertex.x;
         }
-        return Newpoint;
+        if (vertex.y > current.y)
+        {
+            current.y = vertex.y;
+        }
+        return current;
+    }
+
+    public static Vector2 Lowest(Vector2 current, Vector2 vector3)
+    {
+        Vector2 vertex = vector3;
+        if (vertex.x < current.x)
+        {
+            current.x = vertex.x;
+        }
+        if (vertex.y < current.y)
+        {
+            current.y = vertex.y;
+        }
+        return current;
     }
 
     public void UpdateMeshPoints(bool CubePointUpdate)

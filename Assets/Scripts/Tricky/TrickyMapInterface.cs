@@ -184,6 +184,16 @@ public class TrickyMapInterface : MonoBehaviour
         LevelEditorObject.SetActive(true);
     }
 
+    public Texture2D GrabLightmapTexture(Vector4 lightmapPoint, int ID)
+    {
+        int Width = (int)(lightmapPoint.z * lightmaps[ID].width);
+        int Height = (int)(lightmapPoint.w * lightmaps[ID].height);
+        int XCord  = (int)(lightmapPoint.x * lightmaps[ID].width);
+        int YCord = (int)(lightmapPoint.y * lightmaps[ID].width); ;
+
+        return null;
+    }
+
     #region Load Stuff
     public void OpenFileMap()
     {
@@ -331,6 +341,15 @@ public class TrickyMapInterface : MonoBehaviour
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
                 }
+                //Texture2D correctedTexture = new Texture2D(NewImage.width, NewImage.height);
+                //for (int x = 0; x < NewImage.width; x++)
+                //{
+                //    for (int y = 0; y < NewImage.height; y++)
+                //    {
+                //        correctedTexture.SetPixel(NewImage.width- y, x, NewImage.GetPixel(x, y));
+                //    }
+                //}
+                //correctedTexture.Apply();
                 lightmaps.Add(NewImage);
             }
         }

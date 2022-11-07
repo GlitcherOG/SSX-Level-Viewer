@@ -11,7 +11,6 @@ Shader "PatchShader"
 		_OutlineWidth("Outline Width", Float) = 10
 		[Toggle(_NOLIGHT_ON)] _NoLight("NoLight", Float) = 0
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
-		[HideInInspector] _texcoord4( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
 
@@ -58,7 +57,6 @@ Shader "PatchShader"
 		struct Input
 		{
 			float2 uv_texcoord;
-			float2 uv4_texcoord4;
 		};
 
 		uniform sampler2D _MainTexture;
@@ -83,8 +81,8 @@ Shader "PatchShader"
 		{
 			float2 uv_MainTexture = i.uv_texcoord * _MainTexture_ST.xy + _MainTexture_ST.zw;
 			float4 tex2DNode1 = tex2D( _MainTexture, uv_MainTexture );
-			float2 uv4_Lightmap = i.uv4_texcoord4 * _Lightmap_ST.xy + _Lightmap_ST.zw;
-			float4 tex2DNode18 = tex2D( _Lightmap, uv4_Lightmap );
+			float2 uv_Lightmap = i.uv_texcoord * _Lightmap_ST.xy + _Lightmap_ST.zw;
+			float4 tex2DNode18 = tex2D( _Lightmap, uv_Lightmap );
 			#ifdef _NOLIGHT_ON
 				float4 staticSwitch20 = tex2DNode1;
 			#else
@@ -101,9 +99,9 @@ Shader "PatchShader"
 }
 /*ASEBEGIN
 Version=19002
--1920;58;1920;983;1787.346;790.5084;1.3;True;False
+0;105;1920;977;2561.491;1264.483;1.971382;True;False
+Node;AmplifyShaderEditor.SamplerNode;18;-1923.194,84.44622;Inherit;True;Property;_Lightmap;Lightmap;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;1;-1888.443,-276.4063;Inherit;True;Property;_MainTexture;Main Texture;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;18;-1923.194,84.44622;Inherit;True;Property;_Lightmap;Lightmap;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;3;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleSubtractOpNode;24;-1548.132,34.50164;Inherit;False;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;-1322.752,63.44651;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.StaticSwitch;20;-1010.413,-138.6224;Inherit;False;Property;_NoLight;NoLight;5;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
@@ -130,4 +128,4 @@ WireConnection;12;1;7;0
 WireConnection;0;2;6;0
 WireConnection;0;11;12;0
 ASEEND*/
-//CHKSM=23AFD74A90BFE22E63A19834153C0140E404AB54
+//CHKSM=8B6B85EEBFE1E2C8EEA68AAC8A2B4CDE55DF78CD
