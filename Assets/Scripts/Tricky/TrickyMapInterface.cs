@@ -200,26 +200,6 @@ public class TrickyMapInterface : MonoBehaviour
             }
         }
         LightmapGrab.Apply();
-        LightmapGrab.filterMode = FilterMode.Point;
-        //Texture2D correctedTexture = new Texture2D(LightmapGrab.width, LightmapGrab.height);
-        //for (int x = 0; x < LightmapGrab.width; x++)
-        //{
-        //    for (int y = 0; y < LightmapGrab.height; y++)
-        //    {
-        //        correctedTexture.SetPixel(LightmapGrab.width-1 - y, x, LightmapGrab.GetPixel(x, y));
-        //    }
-        //}
-        //correctedTexture.Apply();
-
-        //Texture2D correctedTexture1 = new Texture2D(correctedTexture.width, correctedTexture.height);
-        //for (int x = 0; x < LightmapGrab.width; x++)
-        //{
-        //    for (int y = 0; y < correctedTexture.height; y++)
-        //    {
-        //        correctedTexture1.SetPixel(correctedTexture.width - 1 - y, x, correctedTexture.GetPixel(x, y));
-        //    }
-        //}
-        //correctedTexture1.Apply();
 
         return LightmapGrab;
     }

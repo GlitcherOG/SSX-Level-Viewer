@@ -304,6 +304,28 @@ public class PatchObject : MonoBehaviour
         }
         mesh.uv = UV2;
 
+        //Build Lightmap Points
+
+        cps = new NURBS.ControlPoint[2, 2];
+
+        cps[0, 0] = new NURBS.ControlPoint(0, 0, 0, 1);
+        cps[0, 1] = new NURBS.ControlPoint(0, 1, 0, 1);
+        cps[1, 0] = new NURBS.ControlPoint(1, 0, 0, 1);
+        cps[1, 1] = new NURBS.ControlPoint(1, 1, 0, 1);
+
+        surface = new NURBS.Surface(cps, 1, 1);
+
+        UV = surface.ReturnVertices(resolutionU, resolutionV);
+
+        UV2 = new Vector2[UV.Length];
+
+        for (int i = 0; i < UV.Length; i++)
+        {
+            UV2[i] = new Vector2(UV[i].x, UV[i].y);
+        }
+
+        mesh.uv2 = UV2;
+
 
         //Set material
         GetComponent<MeshFilter>().mesh= mesh;
