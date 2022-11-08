@@ -186,19 +186,41 @@ public class TrickyMapInterface : MonoBehaviour
 
     public Texture2D GrabLightmapTexture(Vector4 lightmapPoint, int ID)
     {
+        int XCord = (int)(lightmapPoint.x * lightmaps[ID].width);
+        int YCord = (int)(lightmapPoint.y * lightmaps[ID].height);
         int Width = (int)(lightmapPoint.z * lightmaps[ID].width);
         int Height = (int)(lightmapPoint.w * lightmaps[ID].height);
-        int XCord  = (int)(lightmapPoint.x * lightmaps[ID].width);
-        int YCord = (int)(lightmapPoint.y * lightmaps[ID].height);
         Texture2D LightmapGrab = new Texture2D(Width, Height);
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
-                LightmapGrab.SetPixel(x, y,  lightmaps[ID].GetPixel(XCord + x, YCord + y));
+                var Colour = lightmaps[ID].GetPixel(XCord + x, YCord + y);
+                LightmapGrab.SetPixel(x, y, Colour);
             }
         }
         LightmapGrab.Apply();
+        LightmapGrab.filterMode = FilterMode.Point;
+        //Texture2D correctedTexture = new Texture2D(LightmapGrab.width, LightmapGrab.height);
+        //for (int x = 0; x < LightmapGrab.width; x++)
+        //{
+        //    for (int y = 0; y < LightmapGrab.height; y++)
+        //    {
+        //        correctedTexture.SetPixel(LightmapGrab.width-1 - y, x, LightmapGrab.GetPixel(x, y));
+        //    }
+        //}
+        //correctedTexture.Apply();
+
+        //Texture2D correctedTexture1 = new Texture2D(correctedTexture.width, correctedTexture.height);
+        //for (int x = 0; x < LightmapGrab.width; x++)
+        //{
+        //    for (int y = 0; y < correctedTexture.height; y++)
+        //    {
+        //        correctedTexture1.SetPixel(correctedTexture.width - 1 - y, x, correctedTexture.GetPixel(x, y));
+        //    }
+        //}
+        //correctedTexture1.Apply();
+
         return LightmapGrab;
     }
 
@@ -328,6 +350,7 @@ public class TrickyMapInterface : MonoBehaviour
                     byte[] bytes = new byte[stream.Length];
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
+                    //NewImage.wrapMode = TextureWrapMode.MirrorOnce;
                 }
                 textures.Add(NewImage);
             }
@@ -348,13 +371,14 @@ public class TrickyMapInterface : MonoBehaviour
                     byte[] bytes = new byte[stream.Length];
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
+                    NewImage.filterMode = FilterMode.Point;
                 }
                 Texture2D correctedTexture = new Texture2D(NewImage.width, NewImage.height);
                 for (int x = 0; x < NewImage.width; x++)
                 {
                     for (int y = 0; y < NewImage.height; y++)
                     {
-                        correctedTexture.SetPixel(NewImage.width - y, x, NewImage.GetPixel(x, y));
+                        correctedTexture.SetPixel(x, y, NewImage.GetPixel(x, NewImage.height-1 - y));
                     }
                 }
                 correctedTexture.Apply();
