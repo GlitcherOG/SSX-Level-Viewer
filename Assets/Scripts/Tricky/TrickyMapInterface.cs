@@ -184,7 +184,7 @@ public class TrickyMapInterface : MonoBehaviour
         LevelEditorObject.SetActive(true);
     }
 
-    public Texture2D GrabLightmapTexture(Vector4 lightmapPoint, int ID)
+    public Texture2D GrabLightmapTexture(Vector4 lightmapPoint, int ID /*, int Xscale = 64, int Yscale = 64*/)
     {
         int XCord = (int)(lightmapPoint.x * lightmaps[ID].width);
         int YCord = (int)(lightmapPoint.y * lightmaps[ID].height);
@@ -200,7 +200,6 @@ public class TrickyMapInterface : MonoBehaviour
             }
         }
         LightmapGrab.Apply();
-
         return LightmapGrab;
     }
 
