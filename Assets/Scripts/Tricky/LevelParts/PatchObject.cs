@@ -308,10 +308,10 @@ public class PatchObject : MonoBehaviour
 
         cps = new NURBS.ControlPoint[2, 2];
 
-        cps[0, 0] = new NURBS.ControlPoint(0, 0, 0, 1);
-        cps[0, 1] = new NURBS.ControlPoint(0, 1, 0, 1);
-        cps[1, 0] = new NURBS.ControlPoint(1, 0, 0, 1);
-        cps[1, 1] = new NURBS.ControlPoint(1, 1, 0, 1);
+        cps[0, 0] = new NURBS.ControlPoint(0.1f, 0.1f, 0, 1);
+        cps[0, 1] = new NURBS.ControlPoint(0.1f, 0.9f, 0, 1);
+        cps[1, 0] = new NURBS.ControlPoint(0.9f, 0.1f, 0, 1);
+        cps[1, 1] = new NURBS.ControlPoint(0.9f, 0.9f, 0, 1);
 
         surface = new NURBS.Surface(cps, 1, 1);
 
