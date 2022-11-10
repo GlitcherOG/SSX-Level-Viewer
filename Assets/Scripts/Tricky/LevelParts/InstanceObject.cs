@@ -76,9 +76,29 @@ public class InstanceObject : MonoBehaviour
         UnknownInt31 = instance.UnknownInt31;
         UnknownInt32 = instance.UnknownInt32;
 
+        GenerateMeshes();
+
+        transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
+        transform.localEulerAngles = rotation;
+        transform.localScale = scale * TrickyMapInterface.Scale;
+
+        Oldposition = transform.localPosition;
+        Oldrotation = transform.localEulerAngles;
+        Oldscale = transform.localScale;
+
+    }
+
+    public void GenerateMeshes()
+    {
+        for (int i = 0; i < meshes.Count; i++)
+        {
+            Destroy(meshes[i]);
+            Destroy(colliders[i]);
+        }
+
         colliders = new List<MeshCollider>();
         meshes = new List<GameObject>();
-        var modelObject = TrickyMapInterface.Instance.modelObjects[instance.ModelID];
+        var modelObject = TrickyMapInterface.Instance.modelObjects[ModelID];
         for (int i = 0; i < modelObject.meshes.Count; i++)
         {
             GameObject newGameObject = new GameObject();
@@ -102,15 +122,6 @@ public class InstanceObject : MonoBehaviour
             newGameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
             meshes.Add(newGameObject);
         }
-
-        transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
-        transform.localEulerAngles = rotation;
-        transform.localScale = scale * TrickyMapInterface.Scale;
-
-        Oldposition = transform.localPosition;
-        Oldrotation = transform.localEulerAngles;
-        Oldscale = transform.localScale;
-
     }
 
     public void UpdateTransform()

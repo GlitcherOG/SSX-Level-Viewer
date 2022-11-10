@@ -174,6 +174,7 @@ public class TrickyMapInterface : MonoBehaviour
     {
         SelectorScript.instance.active = false;
         MaterialLibrayObject.SetActive(true);
+        MaterialLibrayObject.GetComponent<MaterialPanel>().GenerateButtons();
         LevelEditorObject.SetActive(false);
     }
 

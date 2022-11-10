@@ -108,6 +108,7 @@ public class InstancePanel : MonoBehaviour
             try
             {
                 instanceObject.ModelID = Int32.Parse(ModelID.text);
+                instanceObject.GenerateMeshes();
                 ModelID.GetComponent<Image>().color = Color.white;
             }
             catch
