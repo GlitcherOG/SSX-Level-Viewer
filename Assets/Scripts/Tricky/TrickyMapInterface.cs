@@ -215,30 +215,34 @@ public class TrickyMapInterface : MonoBehaviour
 
         for (int i = 0; i < Width; i++)
         {
-            var Colour = LightmapGrab.GetPixel(i, 0);
-            TenByTen.SetPixel(i+1, 0, Colour);
-            
-            Colour = LightmapGrab.GetPixel(0, i);
+            var Colour = LightmapGrab.GetPixel(0, i);
             TenByTen.SetPixel(0, i+1, Colour);
 
             Colour = LightmapGrab.GetPixel(i, Height-1);
             TenByTen.SetPixel(i+1, Height+1, Colour);
-
-            Colour = LightmapGrab.GetPixel(Width-1, i);
-            TenByTen.SetPixel(Width+1, i+1, Colour);
         }
+
+        for (int i = 0; i < Height; i++)
+        {
+            var Colour = LightmapGrab.GetPixel(i, 0);
+            TenByTen.SetPixel(i + 1, 0, Colour);
+
+            Colour = LightmapGrab.GetPixel(Width - 1, i);
+            TenByTen.SetPixel(Width + 1, i + 1, Colour);
+        }
+
         //Probably better to replace with averages of what the corners should look like
         var Colour1 = LightmapGrab.GetPixel(0, 0);
         TenByTen.SetPixel(0, 0, Colour1);
 
-        Colour1 = LightmapGrab.GetPixel(7, 0);
-        TenByTen.SetPixel(9, 0, Colour1);
+        Colour1 = LightmapGrab.GetPixel(Width-1, 0);
+        TenByTen.SetPixel(Width + 1, 0, Colour1);
 
-        Colour1 = LightmapGrab.GetPixel(0, 7);
-        TenByTen.SetPixel(0, 9, Colour1);
+        Colour1 = LightmapGrab.GetPixel(0, Height - 1);
+        TenByTen.SetPixel(0, Height + 1, Colour1);
 
-        Colour1 = LightmapGrab.GetPixel(7, 7);
-        TenByTen.SetPixel(9, 9, Colour1);
+        Colour1 = LightmapGrab.GetPixel(Width - 1, Height - 1);
+        TenByTen.SetPixel(Width + 1, Height + 1, Colour1);
 
         TenByTen.Apply();
         //TenByTen.filterMode = FilterMode.Point;
