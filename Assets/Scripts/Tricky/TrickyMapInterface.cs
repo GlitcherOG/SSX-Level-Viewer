@@ -74,8 +74,17 @@ public class TrickyMapInterface : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.I))
         {
-            instanceParent.SetActive(!instanceParent.activeSelf);
-            NotifcationBarUI.instance.ShowNotifcation("It's Tricky, It's Tricky", 5);
+            for (int i = 0; i < patchObjects.Count; i++)
+            {
+                if (patchObjects[i].PatchStyle == 0)
+                {
+                    patchObjects[i].Renderer.material.SetColor("_Highlight", Color.red);
+                }
+                if (patchObjects[i].PatchStyle == 6 || patchObjects[i].PatchStyle == 10)
+                {
+                    patchObjects[i].Renderer.material.SetColor("_Highlight", Color.yellow);
+                }
+            }
         }
     }
 
