@@ -444,6 +444,37 @@ public class PatchObject : MonoBehaviour
         }
         UpdateTexture(TextureAssigment);
     }
+    public void LightMode()
+    {
+        Renderer.material.SetFloat("_LightMapStrength", 1);
+    }
+
+    public void NoLightMode()
+    {
+        Renderer.material.SetFloat("_LightMapStrength", 0);
+    }
+
+    public void ToggleHardwareMode()
+    {
+        if (TrickyMapInterface.Instance.HardwareMode)
+        {
+            HardwareMode();
+        }
+        else
+        {
+            SoftwareMode();
+        }
+    }
+
+    public void HardwareMode()
+    {
+        Renderer.material.SetFloat("_TextureStrength", 0.5f);
+    }
+
+    public void SoftwareMode()
+    {
+        Renderer.material.SetFloat("_TextureStrength", 1f);
+    }
 
     public void SelectedObject()
     {
@@ -459,16 +490,6 @@ public class PatchObject : MonoBehaviour
         Renderer.material.SetFloat("_OpacityMaskOutline", 0f);
         Renderer.material.SetColor("_OutlineColor", new Color32(255, 255, 255, 0));
         DestroyCube();
-    }
-
-    public void LightMode()
-    {
-        Renderer.material.SetFloat("_LightMapStrength", 1);
-    }
-
-    public void NoLightMode()
-    {
-        Renderer.material.SetFloat("_LightMapStrength", 0);
     }
 
     public void UpdateTexture(int a)

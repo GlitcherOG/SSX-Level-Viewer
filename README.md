@@ -7,11 +7,10 @@
 - Instance Editing
  
 ## Todo add
-- Add Hardware Display
+- Add Hardware Display (PCSX2 Emulation)
 - Fix Rotation Gizmos
 - Point Filtering Options lightmap
-- Patch Shader Outline
-- Material Library get/set
+- Material Library set
 - Model Library
 - Scale Gimzos
 - Randomiser GUI

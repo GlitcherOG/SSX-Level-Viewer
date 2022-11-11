@@ -15,6 +15,7 @@ public class TrickyMapInterface : MonoBehaviour
     public Shader shader;
     public LevelEditorSettings settings;
     public bool NoLightMode;
+    public bool HardwareMode;
     public string LoadPath = "";
     public static float Scale = 0.01f; //1f;
     [Header("Parent Objects")]
@@ -123,6 +124,15 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
+    public void ToggleTextureEmulation()
+    {
+        HardwareMode = !HardwareMode;
+        for (int i = 0; i < patchObjects.Count; i++)
+        {
+            patchObjects[i].ToggleHardwareMode();
+        }
+    }
+
     public void ForceUpdateAllTextures()
     {
         textures = new List<Texture2D>();
@@ -185,7 +195,7 @@ public class TrickyMapInterface : MonoBehaviour
         LevelEditorObject.SetActive(true);
     }
 
-    public Texture2D GrabLightmapTexture(Vector4 lightmapPoint, int ID /*, int Xscale = 64, int Yscale = 64*/)
+    public Texture2D GrabLightmapTexture(Vector4 lightmapPoint, int ID)
     {
         int XCord = (int)(lightmapPoint.x * lightmaps[ID].width);
         int YCord = (int)(lightmapPoint.y * lightmaps[ID].height);
