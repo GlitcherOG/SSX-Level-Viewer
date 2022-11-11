@@ -7,6 +7,7 @@
 - Instance Editing
  
 ## Todo add
+- Add Hardware Display
 - Fix Rotation Gizmos
 - Point Filtering Options lightmap
 - Patch Shader Outline
