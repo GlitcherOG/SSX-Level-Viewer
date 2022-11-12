@@ -298,6 +298,7 @@ public class TrickyMapInterface : MonoBehaviour
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
             LoadModels(StringPath + "\\ModelHeaders.json");
             LoadInstances(StringPath + "\\Instances.json");
+            SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
             NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
         else

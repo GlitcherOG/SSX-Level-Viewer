@@ -7,7 +7,8 @@
 - Instance Editing
  
 ## Todo add
-- Add Hardware Display (PCSX2 Emulation)
+- Fix Skybox Loading
+- Add Skybox Files Check
 - Fix Rotation Gizmos
 - Point Filtering Options lightmap
 - Material Library set
