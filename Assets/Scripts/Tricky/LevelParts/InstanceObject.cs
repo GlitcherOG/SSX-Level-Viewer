@@ -173,6 +173,9 @@ public class InstanceObject : MonoBehaviour
         TempInstance.PrevInstance = PrevInstance;
         TempInstance.NextInstance = NextInstance;
 
+        transform.localScale = scale;
+        transform.localPosition = InstancePosition;
+
         LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
         for (int i = 0; i < meshes.Count; i++)
         {
@@ -182,7 +185,9 @@ public class InstanceObject : MonoBehaviour
                 LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
             }
         }
-        LowestXYZ = (InstancePosition + LowestXYZ*1.5f);
+
+
+        LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(LowestXYZ));
 
 
         HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
@@ -194,7 +199,10 @@ public class InstanceObject : MonoBehaviour
                 HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
             }
         }
-        HighestXYZ = (InstancePosition + HighestXYZ * 1.5f);
+        HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(HighestXYZ));
+
+        transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
+        transform.localScale = scale * TrickyMapInterface.Scale;
 
         TempInstance.LowestXYZ = JsonUtil.Vector3ToArray(LowestXYZ);
         TempInstance.HighestXYZ = JsonUtil.Vector3ToArray(HighestXYZ);
