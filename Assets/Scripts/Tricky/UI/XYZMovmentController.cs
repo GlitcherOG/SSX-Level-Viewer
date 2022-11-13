@@ -14,6 +14,11 @@ public class XYZMovmentController : MonoBehaviour
 
     public GameObject Movement;
     public GameObject Rotation;
+
+    public GameObject RotationX;
+    public GameObject RotationY;
+    public GameObject RotationZ;
+
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -50,6 +55,21 @@ public class XYZMovmentController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void DisableRotation(GameObject ThisObject)
+    {
+        RotationX.SetActive(false);
+        RotationY.SetActive(false);
+        RotationZ.SetActive(false);
+        ThisObject.SetActive(true);
+    }
+
+    public void EnableRotaiton()
+    {
+        RotationX.SetActive(true);
+        RotationY.SetActive(true);
+        RotationZ.SetActive(true);
     }
 
     public void SetParent(GameObject gameObject)

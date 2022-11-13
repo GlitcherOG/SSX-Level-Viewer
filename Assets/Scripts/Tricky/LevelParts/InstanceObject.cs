@@ -9,6 +9,7 @@ public class InstanceObject : MonoBehaviour
     public string InstanceName;
 
     bool IsLoaded = false;
+    bool UpdateXYZ = false;
 
     public Vector3 rotation;
     public Vector3 scale;
@@ -101,6 +102,7 @@ public class InstanceObject : MonoBehaviour
 
     public void GenerateMeshes()
     {
+        var modelObject = TrickyMapInterface.Instance.modelObjects[ModelID];
         for (int i = 0; i < meshes.Count; i++)
         {
             Destroy(meshes[i]);
@@ -109,7 +111,6 @@ public class InstanceObject : MonoBehaviour
 
         colliders = new List<MeshCollider>();
         meshes = new List<GameObject>();
-        var modelObject = TrickyMapInterface.Instance.modelObjects[ModelID];
         for (int i = 0; i < modelObject.meshes.Count; i++)
         {
             GameObject newGameObject = new GameObject();
@@ -188,28 +189,31 @@ public class InstanceObject : MonoBehaviour
         transform.localScale = scale;
         transform.localPosition = InstancePosition;
 
-        //LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
-        //for (int i = 0; i < meshes.Count; i++)
-        //{
-        //    var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-        //    for (int a = 0; a < MeshGet.vertices.Length; a++)
-        //    {
-        //        LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
-        //    }
-        //}
+        if (UpdateXYZ)
+        {
+            LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+            for (int i = 0; i < meshes.Count; i++)
+            {
+                var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+                for (int a = 0; a < MeshGet.vertices.Length; a++)
+                {
+                    LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
+                }
+            }
+
+
+            HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+            for (int i = 0; i < meshes.Count; i++)
+            {
+                var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+                for (int a = 0; a < MeshGet.vertices.Length; a++)
+                {
+                    HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
+                }
+            }
+        }
 
         LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(LowestXYZ));
-
-
-        //HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
-        //for (int i = 0; i < meshes.Count; i++)
-        //{
-        //    var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-        //    for (int a = 0; a < MeshGet.vertices.Length; a++)
-        //    {
-        //        HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
-        //    }
-        //}
         HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(HighestXYZ));
 
         transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
@@ -226,6 +230,21 @@ public class InstanceObject : MonoBehaviour
         TempInstance.UnknownInt31 = UnknownInt31;
         TempInstance.UnknownInt32 = UnknownInt32;
         return TempInstance;
+    }
+
+    public void SetUpdateMeshes(int NewMeshID)
+    {
+        int Test = ModelID;
+        try 
+        {
+            ModelID = NewMeshID;
+            GenerateMeshes();
+            UpdateXYZ = true;
+        }
+        catch
+        {
+            ModelID = Test;
+        }
     }
 
     private void Update()

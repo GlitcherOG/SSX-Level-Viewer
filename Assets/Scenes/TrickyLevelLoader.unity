@@ -2870,7 +2870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -153.5, y: 44.3}
+  m_AnchoredPosition: {x: -153.5, y: 44.30005}
   m_SizeDelta: {x: 278.9, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &52309152
@@ -62835,7 +62835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1469728005
 Transform:
   m_ObjectHideFlags: 0
@@ -72904,7 +72904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1691531255
 RectTransform:
   m_ObjectHideFlags: 0
@@ -93790,6 +93790,18 @@ PrefabInstance:
       propertyPath: Rotation
       value: 
       objectReference: {fileID: 2877188}
+    - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+      propertyPath: RotationX
+      value: 
+      objectReference: {fileID: 1110959753}
+    - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+      propertyPath: RotationY
+      value: 
+      objectReference: {fileID: 1520016610}
+    - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+      propertyPath: RotationZ
+      value: 
+      objectReference: {fileID: 1401669717}
     - target: {fileID: 1397791656969793401, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
       propertyPath: m_IsActive
       value: 1

@@ -75,6 +75,7 @@ public class XYZRotation : MonoBehaviour
 
     public void SetActive()
     {
+        Controller.DisableRotation(this.gameObject);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         int layerMask = 1 << 6;
@@ -87,6 +88,7 @@ public class XYZRotation : MonoBehaviour
 
     public void SetUnactive()
     {
+        Controller.EnableRotaiton();
         Active = false;
     }
 

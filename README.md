@@ -7,11 +7,8 @@
 - Instance Editing
  
 ## Todo add
-- Fix Rotation Gizmos
-- Hide Material Library
-
 - Fix Skybox Loading
-- Point Filtering Options lightmap
+- Point Filtering Options
 - Material Library set
 - Model Library
 - Scale Gimzos
@@ -34,6 +31,7 @@
 - Make way to dismiss notifcation/Nofication Sounds
 
 ## Todo Change
+- Fix Instance High/Low XYZ (IDK Old Code Worked But Had Issues With Collision Could possibly need animation data to know true bounds)
 - Redo Dropdown Menus so it auto adds hide menu
 - Tweak Toggle Object Script
 - Scroll wheel to have variable speed
