@@ -7,9 +7,11 @@
 - Instance Editing
  
 ## Todo add
-- Fix Skybox Loading
-- Add Skybox Files Check
 - Fix Rotation Gizmos
+- Hide Material Library
+- Fix High/Low XYZ Instaces
+
+- Fix Skybox Loading
 - Point Filtering Options lightmap
 - Material Library set
 - Model Library

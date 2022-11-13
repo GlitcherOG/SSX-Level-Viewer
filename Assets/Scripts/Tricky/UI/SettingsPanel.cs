@@ -7,6 +7,7 @@ using System.IO;
 using UnityEngine.UI;
 public class SettingsPanel : MonoBehaviour
 {
+    LevelEditorSettings settings;
     public TMP_InputField LanuchInput;
     public TMP_InputField EmulaterInput;
     public TMP_InputField WorkspaceInput;
@@ -18,26 +19,32 @@ public class SettingsPanel : MonoBehaviour
 
     private void Start()
     {
-        LoadSaveFile();
+
     }
 
     public void LoadSaveFile()
     {
         DisableUpdate = true;
-        LanuchInput.text = TrickyMapInterface.Instance.settings.LaunchPath;
-        EmulaterInput.text = TrickyMapInterface.Instance.settings.EmulatorPath;
+        settings = TrickyMapInterface.Instance.settings;
+        LanuchInput.text = settings.LaunchPath;
+        EmulaterInput.text = settings.EmulatorPath;
         //WorkspaceInput.text = TrickyMapInterface.Instance.settings.WorkspacePath;
 
-        PatchResText.text = "Patch Resolution: " + TrickyMapInterface.Instance.settings.PatchResolution.ToString();
-        PatchSlider.value = TrickyMapInterface.Instance.settings.PatchResolution;
+        PatchResText.text = "Patch Resolution: " + settings.PatchResolution.ToString();
+        PatchSlider.value = settings.PatchResolution;
         DisableUpdate = false;
     }
 
     public void UpdateResolution(float Value)
     {
-        TrickyMapInterface.Instance.settings.PatchResolution = (int)Value;
+        settings.PatchResolution = (int)Value;
+        PatchResText.text = "Patch Resolution: " + settings.PatchResolution.ToString();
+    }
+
+    public void ApplySettings()
+    {
+        TrickyMapInterface.Instance.settings = settings;
         TrickyMapInterface.Instance.UpdateNURBSRes();
-        PatchResText.text = "Patch Resolution: " + TrickyMapInterface.Instance.settings.PatchResolution.ToString();
         TrickyMapInterface.Instance.settings.Save(TrickyMapInterface.Instance.ConfigPath);
     }
 
@@ -48,8 +55,7 @@ public class SettingsPanel : MonoBehaviour
             if (File.Exists(Path) && (Path.ToLower().Contains(".iso") || Path.ToLower().Contains(".elf")))
             {
                 LanuchInput.GetComponent<Image>().color = Color.white;
-                TrickyMapInterface.Instance.settings.LaunchPath = Path;
-                TrickyMapInterface.Instance.settings.Save(TrickyMapInterface.Instance.ConfigPath);
+                settings.LaunchPath = Path;
             }
             else
             {
@@ -65,8 +71,7 @@ public class SettingsPanel : MonoBehaviour
             if (File.Exists(Path))
             {
                 EmulaterInput.GetComponent<Image>().color = Color.white;
-                TrickyMapInterface.Instance.settings.EmulatorPath = Path;
-                TrickyMapInterface.Instance.settings.Save(TrickyMapInterface.Instance.ConfigPath);
+                settings.EmulatorPath = Path;
             }
             else
             {
@@ -82,8 +87,7 @@ public class SettingsPanel : MonoBehaviour
             if (Directory.Exists(Path))
             {
                 WorkspaceInput.GetComponent<Image>().color = Color.white;
-                TrickyMapInterface.Instance.settings.WorkspacePath = Path;
-                TrickyMapInterface.Instance.settings.Save(TrickyMapInterface.Instance.ConfigPath);
+                settings.WorkspacePath = Path;
             }
             else
             {
