@@ -8,6 +8,8 @@ public class InstanceObject : MonoBehaviour
 {
     public string InstanceName;
 
+    bool IsLoaded = false;
+
     public Vector3 rotation;
     public Vector3 scale;
     public Vector3 InstancePosition;
@@ -65,8 +67,15 @@ public class InstanceObject : MonoBehaviour
         PrevInstance = instance.PrevInstance;
         NextInstance = instance.NextInstance;
 
-        LowestXYZ = JsonUtil.ArrayToVector3(instance.LowestXYZ);
-        HighestXYZ = JsonUtil.ArrayToVector3(instance.HighestXYZ);
+        var TempPos = InstancePosition;
+        var TempScale = scale;
+
+        transform.localPosition = InstancePosition;
+        transform.localEulerAngles = rotation;
+        transform.localScale = scale;
+
+        LowestXYZ = transform.InverseTransformPoint(TrickyMapInterface.Instance.instanceParent.transform.TransformPoint(JsonUtil.ArrayToVector3(instance.LowestXYZ)));
+        HighestXYZ = transform.InverseTransformPoint(TrickyMapInterface.Instance.instanceParent.transform.TransformPoint(JsonUtil.ArrayToVector3(instance.HighestXYZ)));
 
         UnknownInt26 = instance.UnknownInt26;
         UnknownInt27 = instance.UnknownInt27;
@@ -78,13 +87,15 @@ public class InstanceObject : MonoBehaviour
 
         GenerateMeshes();
 
-        transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
+        transform.localPosition = TempPos * TrickyMapInterface.Scale;
         transform.localEulerAngles = rotation;
-        transform.localScale = scale * TrickyMapInterface.Scale;
+        transform.localScale = TempScale * TrickyMapInterface.Scale;
 
         Oldposition = transform.localPosition;
         Oldrotation = transform.localEulerAngles;
         Oldscale = transform.localScale;
+
+        IsLoaded = true;
 
     }
 
@@ -118,6 +129,7 @@ public class InstanceObject : MonoBehaviour
                 Debug.LogError("Error Loading Material " + ModelID + ", " + i + ", " + a + ", " + TrickyMapInterface.Instance.materialJson.MaterialsJsons[a].TextureID);
             }
             newGameObject.transform.parent = transform;
+            newGameObject.transform.localPosition = new Vector3(0, 0, 0);
             newGameObject.transform.localScale = new Vector3(1, 1, 1);
             newGameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
             meshes.Add(newGameObject);
@@ -176,29 +188,28 @@ public class InstanceObject : MonoBehaviour
         transform.localScale = scale;
         transform.localPosition = InstancePosition;
 
-        LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
-        for (int i = 0; i < meshes.Count; i++)
-        {
-            var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-            for (int a = 0; a < MeshGet.vertices.Length; a++)
-            {
-                LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
-            }
-        }
-
+        //LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+        //for (int i = 0; i < meshes.Count; i++)
+        //{
+        //    var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+        //    for (int a = 0; a < MeshGet.vertices.Length; a++)
+        //    {
+        //        LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
+        //    }
+        //}
 
         LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(LowestXYZ));
 
 
-        HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
-        for (int i = 0; i < meshes.Count; i++)
-        {
-            var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-            for (int a = 0; a < MeshGet.vertices.Length; a++)
-            {
-                HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
-            }
-        }
+        //HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+        //for (int i = 0; i < meshes.Count; i++)
+        //{
+        //    var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+        //    for (int a = 0; a < MeshGet.vertices.Length; a++)
+        //    {
+        //        HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
+        //    }
+        //}
         HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(HighestXYZ));
 
         transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
@@ -219,20 +230,23 @@ public class InstanceObject : MonoBehaviour
 
     private void Update()
     {
-        if(Oldscale!=transform.localScale)
+        if (IsLoaded)
         {
-            Oldscale = transform.localScale;
-            scale = transform.localScale / TrickyMapInterface.Scale;
-        }
-        if (Oldrotation != transform.localEulerAngles)
-        {
-            Oldrotation = transform.eulerAngles;
-            rotation = transform.localEulerAngles;
-        }
-        if (Oldposition != transform.localPosition)
-        {
-            Oldposition = transform.localPosition;
-            InstancePosition = transform.localPosition / TrickyMapInterface.Scale;
+            if (Oldscale != transform.localScale)
+            {
+                Oldscale = transform.localScale;
+                scale = transform.localScale / TrickyMapInterface.Scale;
+            }
+            if (Oldrotation != transform.localEulerAngles)
+            {
+                Oldrotation = transform.eulerAngles;
+                rotation = transform.localEulerAngles;
+            }
+            if (Oldposition != transform.localPosition)
+            {
+                Oldposition = transform.localPosition;
+                InstancePosition = transform.localPosition / TrickyMapInterface.Scale;
+            }
         }
     }
 }
