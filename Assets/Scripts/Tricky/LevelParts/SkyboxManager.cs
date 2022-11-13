@@ -31,6 +31,7 @@ public class SkyboxManager : MonoBehaviour
     {
         if(active)
         {
+            //Located in Mouse Look Script
             //Skybox.transform.eulerAngles = new Vector3(-90, 0, 0);
         }
     }

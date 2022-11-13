@@ -9,7 +9,6 @@
 ## Todo add
 - Fix Rotation Gizmos
 - Hide Material Library
-- Fix High/Low XYZ Instaces
 
 - Fix Skybox Loading
 - Point Filtering Options lightmap

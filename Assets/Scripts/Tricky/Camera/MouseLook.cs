@@ -21,7 +21,6 @@ namespace RPG.Player
                 rotation.x += -Input.GetAxis("Mouse Y") * sensitivity;
                 transform.eulerAngles = rotation;
                 SkyboxManager.Instance.Skybox.transform.eulerAngles = new Vector3(-90, -180, 0);
-                //transform.Rotate(Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime, Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime, 0);
             }
         }
     }

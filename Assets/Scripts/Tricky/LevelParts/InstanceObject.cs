@@ -173,6 +173,29 @@ public class InstanceObject : MonoBehaviour
         TempInstance.PrevInstance = PrevInstance;
         TempInstance.NextInstance = NextInstance;
 
+        LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+        for (int i = 0; i < meshes.Count; i++)
+        {
+            var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+            for (int a = 0; a < MeshGet.vertices.Length; a++)
+            {
+                LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
+            }
+        }
+        LowestXYZ = (InstancePosition + LowestXYZ*1.5f);
+
+
+        HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+        for (int i = 0; i < meshes.Count; i++)
+        {
+            var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+            for (int a = 0; a < MeshGet.vertices.Length; a++)
+            {
+                HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
+            }
+        }
+        HighestXYZ = (InstancePosition + HighestXYZ * 1.5f);
+
         TempInstance.LowestXYZ = JsonUtil.Vector3ToArray(LowestXYZ);
         TempInstance.HighestXYZ = JsonUtil.Vector3ToArray(HighestXYZ);
 
