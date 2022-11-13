@@ -10,6 +10,7 @@ public class SkyboxManager : MonoBehaviour
     public bool active = true;
     string LoadPath;
     public static SkyboxManager Instance;
+    public Camera SkyboxCamera;
 
     public Material SkyboxMaterial;
     public GameObject Skybox;
@@ -38,24 +39,31 @@ public class SkyboxManager : MonoBehaviour
     {
         StringPath = Path.GetDirectoryName(StringPath);
         LoadPath = StringPath;
-        materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
-        materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
-        LoadModels(StringPath + "\\ModelHeaders.json");
-        LoadTextures(StringPath + "\\Textures");
-
-        for (int i = 0; i < modelObjects[0].meshes.Count; i++)
+        if (File.Exists(StringPath + "\\MaterialBlocks.json"))
         {
-            var NewObject = new GameObject();
-            NewObject.layer = 8;
-            NewObject.transform.parent = Skybox.transform;
-            NewObject.transform.localPosition = new Vector3(0, 0, 0);
-            NewObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
-            var Renderer = NewObject.AddComponent<MeshRenderer>();
-            var Filter = NewObject.AddComponent<MeshFilter>();
-            Material newSkyboxMat = new Material(SkyboxMaterial);
-            newSkyboxMat.SetTexture("_MainTexture", textures[i]);
-            Filter.mesh = modelObjects[0].meshes[i];
-            Renderer.material = newSkyboxMat;
+            materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
+            materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
+            LoadModels(StringPath + "\\ModelHeaders.json");
+            LoadTextures(StringPath + "\\Textures");
+
+            if (modelObjects.Count != 0)
+            {
+                for (int i = 0; i < modelObjects[0].meshes.Count; i++)
+                {
+                    var NewObject = new GameObject();
+                    NewObject.layer = 8;
+                    NewObject.transform.parent = Skybox.transform;
+                    NewObject.transform.localPosition = new Vector3(0, 0, 0);
+                    NewObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    var Renderer = NewObject.AddComponent<MeshRenderer>();
+                    var Filter = NewObject.AddComponent<MeshFilter>();
+                    Material newSkyboxMat = new Material(SkyboxMaterial);
+                    newSkyboxMat.SetTexture("_MainTexture", textures[i]);
+                    Filter.mesh = modelObjects[0].meshes[i];
+                    Renderer.material = newSkyboxMat;
+                }
+            }
+            SkyboxCamera.backgroundColor = textures[0].GetPixel(textures[0].width - 1, textures[0].height - 1);
         }
     }
 
@@ -94,6 +102,7 @@ public class SkyboxManager : MonoBehaviour
                     byte[] bytes = new byte[stream.Length];
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
+                    NewImage.filterMode = FilterMode.Point;
                     //NewImage.wrapMode = TextureWrapMode.MirrorOnce;
                 }
                 textures.Add(NewImage);
