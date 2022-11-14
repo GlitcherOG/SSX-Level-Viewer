@@ -168,6 +168,10 @@ public class TrickyMapInterface : MonoBehaviour
         {
             splineParent.SetActive(!splineParent.activeSelf);
         }
+        if (a == 2)
+        {
+            instanceParent.SetActive(!instanceParent.activeSelf);
+        }
     }
 
     public void UpdateNURBSRes()
@@ -264,7 +268,7 @@ public class TrickyMapInterface : MonoBehaviour
         TenByTen.SetPixel(Width + 1, Height + 1, Colour1);
 
         TenByTen.Apply();
-        //TenByTen.filterMode = FilterMode.Point;
+        //TenByTen.filterMode = FilterMode.Bilinear;
         return TenByTen;
     }
 

@@ -103,7 +103,7 @@ public class SkyboxManager : MonoBehaviour
                     byte[] bytes = new byte[stream.Length];
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
-                    NewImage.filterMode = FilterMode.Point;
+                    //NewImage.filterMode = FilterMode.Point;
                     //NewImage.wrapMode = TextureWrapMode.MirrorOnce;
                 }
                 textures.Add(NewImage);

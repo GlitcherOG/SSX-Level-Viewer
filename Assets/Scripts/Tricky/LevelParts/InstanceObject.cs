@@ -186,6 +186,7 @@ public class InstanceObject : MonoBehaviour
         TempInstance.PrevInstance = PrevInstance;
         TempInstance.NextInstance = NextInstance;
 
+        IsLoaded = false;
         transform.localScale = scale;
         transform.localPosition = InstancePosition;
 
@@ -218,6 +219,8 @@ public class InstanceObject : MonoBehaviour
 
         transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
         transform.localScale = scale * TrickyMapInterface.Scale;
+
+        IsLoaded = true;
 
         TempInstance.LowestXYZ = JsonUtil.Vector3ToArray(LowestXYZ);
         TempInstance.HighestXYZ = JsonUtil.Vector3ToArray(HighestXYZ);
