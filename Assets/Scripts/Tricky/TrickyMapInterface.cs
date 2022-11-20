@@ -24,7 +24,7 @@ public class TrickyMapInterface : MonoBehaviour
     public GameObject instanceParent;
     public GameObject particleInstanceParent;
     public GameObject lightParent;
-[Header("Object Prefabs")]
+    [Header("Object Prefabs")]
     public GameObject SplinePrefab;
     public GameObject PatchPrefab;
     public GameObject InstancePrefab;
@@ -305,6 +305,7 @@ public class TrickyMapInterface : MonoBehaviour
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
             LoadModels(StringPath + "\\ModelHeaders.json");
             LoadInstances(StringPath + "\\Instances.json");
+            LoadLighting(StringPath + "\\Lights.json");
             SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
             NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
@@ -372,6 +373,20 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadTextureFlipbooks()
     {
 
+    }
+
+    void LoadLighting(string Path)
+    {
+        lightJson = new LightJsonHandler();
+        lightJson = LightJsonHandler.Load(Path);
+        //instanceObjects = new List<InstanceObject>();
+        for (int i = 0; i < lightJson.LightJsons.Count; i++)
+        {
+            var TempGameObject = Instantiate(lightPrefab, lightParent.transform);
+            TempGameObject.transform.name = lightJson.LightJsons[i].LightName + " (" + i.ToString() + ")";
+            TempGameObject.GetComponent<LightingObject>().LoadLightingObject(lightJson.LightJsons[i]);
+            //instanceObjects.Add(TempGameObject.GetComponent<InstanceObject>());
+        }
     }
 
     void LoadSplines(string path)
