@@ -45,6 +45,8 @@ public class InstanceObject : MonoBehaviour
     public List<GameObject> meshes;
     public List<MeshCollider> colliders;
 
+    public MaterialJsonHandler.MaterialsJson Mat = new MaterialJsonHandler.MaterialsJson(); 
+
     public void LoadInstance(InstanceJsonHandler.InstanceJson instance)
     {
         InstanceName = instance.InstanceName;
@@ -123,6 +125,7 @@ public class InstanceObject : MonoBehaviour
             try
             {
                 newGameObject.GetComponent<MeshRenderer>().material = ModelObject.GenerateMaterial(ModelID, i);
+                Mat = TrickyMapInterface.Instance.materialJson.MaterialsJsons[TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[ModelID].ints[0]];
             }
             catch
             {

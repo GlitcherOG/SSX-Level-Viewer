@@ -14,6 +14,8 @@
 - Scale Gimzos
 - Randomiser GUI
 - Xray Mesh
+- Particle Instances
+- Lighting Instances
 
 - Make Settings Applying a thing
 - Build Project

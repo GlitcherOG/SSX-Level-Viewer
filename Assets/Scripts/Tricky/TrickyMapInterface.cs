@@ -23,11 +23,13 @@ public class TrickyMapInterface : MonoBehaviour
     public GameObject splineParent;
     public GameObject instanceParent;
     public GameObject particleInstanceParent;
-    [Header("Object Prefabs")]
+    public GameObject lightParent;
+[Header("Object Prefabs")]
     public GameObject SplinePrefab;
     public GameObject PatchPrefab;
     public GameObject InstancePrefab;
     public GameObject particleInstancePrefab;
+    public GameObject lightPrefab;
 
     [Header("Json Files")]
     public PatchesJsonHandler PatchJson;
@@ -36,6 +38,7 @@ public class TrickyMapInterface : MonoBehaviour
     public ModelJsonHandler ModelJson;
     public MaterialJsonHandler materialJson;
     public MaterialBlockJsonHandler materialBlock;
+    public LightJsonHandler lightJson;
 
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -52,7 +55,7 @@ public class TrickyMapInterface : MonoBehaviour
     public Material ModelMaterial;
 
     public string ConfigPath;
-    public string Version = "0.0.4";
+    public string Version = "0.0.6";
 
     public GameObject LevelEditorObject;
     public GameObject MaterialLibrayObject;
@@ -290,7 +293,7 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadMapFiles(string StringPath)
     {
         SSXTrickyConfig trickyConfig = SSXTrickyConfig.Load(StringPath);
-        if (trickyConfig.Version == 2)
+        if (trickyConfig.Version == 3)
         {
             StringPath = Path.GetDirectoryName(StringPath);
             LoadPath = StringPath;
