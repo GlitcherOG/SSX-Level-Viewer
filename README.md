@@ -7,6 +7,7 @@
 - Instance Editing
  
 ## Todo add
+- Fix Instance Json and Gem Toggle
 - Fix Skybox Loading
 - Point Filtering Options
 - Material Library set

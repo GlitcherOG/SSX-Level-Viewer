@@ -7,8 +7,6 @@ using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using SSXMultiTool.JsonFiles.Tricky;
 using Dummiesman;
-using SSXMultiTool.Utilities;
-using SSXMultiTool.FileHandlers.LevelFiles.TrickyPS2;
 
 public class TrickyMapInterface : MonoBehaviour
 {
@@ -308,7 +306,6 @@ public class TrickyMapInterface : MonoBehaviour
             LoadInstances(StringPath + "\\Instances.json");
             LoadLighting(StringPath + "\\Lights.json");
             SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
-            LoadAndDisplayLTG(StringPath + "\\Original\\ltg.ltg");
             NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
         else
@@ -491,38 +488,6 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadLighting()
     {
 
-    }
-
-    public GameObject LTGParent;
-    public GameObject MainBox;
-    public GameObject NodeBox;
-    void LoadAndDisplayLTG(string path)
-    {
-        LTGHandler handler = new LTGHandler();
-        handler.LoadLTG(path);
-
-        for (int y = 0; y < handler.pointerListCount; y++)
-        {
-            for (int x = 0; x < handler.pointerCount; x++)
-            {
-                if (!handler.mainBboxes[x, y].Equals(new LTGHandler.mainBbox()))
-                {
-                    var MainBoxTemp = Instantiate(MainBox, LTGParent.transform);
-                    MainBoxTemp.transform.position = JsonUtil.NumericVector3ToUnity(handler.mainBboxes[x, y].WorldBounds3*TrickyMapInterface.Scale);
-                    for (int y1 = 0; y1 < handler.nodeBoxWidth; y1++)
-                    {
-                        for (int x1 = 0; x1 < handler.nodeBoxWidth; x1++)
-                        {
-                            var NodeBoxTemp = Instantiate(NodeBox, LTGParent.transform);
-                            NodeBoxTemp.transform.position = JsonUtil.NumericVector3ToUnity(handler.mainBboxes[x, y].nodeBBoxes[x1, y1].WorldBounds3 * TrickyMapInterface.Scale);
-                        }
-                    }
-                }
-            }
-        }
-
-        LTGParent.transform.localScale = new Vector3(-1, 1, 1);
-        LTGParent.transform.localEulerAngles = new Vector3(-90, -90, -90);
     }
 
     #endregion
