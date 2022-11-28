@@ -64,6 +64,3 @@ https://github.com/SsxMapper/SSXandTrickyMapExtractor <br>
 ## Donate
 [![Donate](https://www.paypalobjects.com/en_AU/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?business=VT6TG8KKZM98E&no_recurring=0&currency_code=AUD)
 
-http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
-
-https://discord.com/channels/163541742266613761/163543093910568961/1028554665715056771
