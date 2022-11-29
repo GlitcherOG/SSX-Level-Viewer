@@ -90,34 +90,22 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    public void StartEmulator()
+    public void BuildAndRun()
     {
-        if (File.Exists(settings.EmulatorPath))
+        SaveFileDialog saveFileDialog = new SaveFileDialog()
+        {
+            Filter = "Map File (*.map)|*.map|All files (*.*)|*.*",
+            FilterIndex = 1,
+            RestoreDirectory = false
+        };
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = settings.EmulatorPath;
-            string path = settings.LaunchPath;
-
-            if (File.Exists(path))
-            {
-                if (path.ToLower().Contains(".iso"))
-                {
-                    startInfo.Arguments = "\"" + path + "\"";
-                }
-                else if (path.ToLower().Contains(".elf"))
-                {
-                    startInfo.Arguments = "-elf \"" + path + "\"";
-                }
-            }
-            else
-            {
-                NotifcationBarUI.instance.ShowNotifcation("No .Elf or ISO Path set", 5);
-            }
+            startInfo.FileName = @"H:\Visual Studio Projects\SSX Tricky Level Export\bin\Debug\net6.0-windows\SSX MultiTool.exe";
+            string BuildPath = saveFileDialog.FileName;
+            startInfo.Arguments = "trickylevel build \"" + LoadPath + "\" \"" + BuildPath + " \" run \"" + settings.EmulatorPath + "\" \"" + settings.LaunchPath + "\"";
             Process.Start(startInfo);
-        }
-        else
-        {
-            NotifcationBarUI.instance.ShowNotifcation("No Emulator Path Set", 5);
+            NotifcationBarUI.instance.ShowNotifcation("Please Wait as MultiTool Attempts To Build", 5);
         }
     }
 

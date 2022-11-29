@@ -34,7 +34,7 @@
 - Make way to dismiss notifcation/Nofication Sounds
 
 ## Todo Change
-- Fix Instance High/Low XYZ (IDK Old Code Worked But Had Issues With Collision Could possibly need animation data to know true bounds)
+- Fix Instance High/Low XYZ (Patched but its possible that it does need animation data)
 - Redo Dropdown Menus so it auto adds hide menu
 - Tweak Toggle Object Script
 - Scroll wheel to have variable speed

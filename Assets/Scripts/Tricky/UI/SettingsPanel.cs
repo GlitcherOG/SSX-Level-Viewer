@@ -43,7 +43,6 @@ public class SettingsPanel : MonoBehaviour
 
     public void ApplySettings()
     {
-        TrickyMapInterface.Instance.settings = settings;
         TrickyMapInterface.Instance.UpdateNURBSRes();
         TrickyMapInterface.Instance.settings.Save(TrickyMapInterface.Instance.ConfigPath);
     }
