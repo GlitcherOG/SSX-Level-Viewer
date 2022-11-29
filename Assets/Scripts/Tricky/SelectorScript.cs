@@ -51,11 +51,19 @@ public class SelectorScript : MonoBehaviour
                     int layerMask2 = 1 << 6;
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                     {
+                        if (selectedTag == "Patch Point")
+                        {
+                            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
+                        }
                         RaycastSelection(hit);
                     }
                     else
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
                     {
+                        if (selectedTag == "Patch Point")
+                        {
+                            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
+                        }
                         RaycastSelection(hit);
                     }
                     else
@@ -112,6 +120,7 @@ public class SelectorScript : MonoBehaviour
             if (selectedTag == "Patch Point")
             {
                 XYZMovement.SetActive(true);
+                SelectedGameObject.GetComponent<PatchPoint>().Selected();
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
             }
             if (selectedTag == "XYZMovement")

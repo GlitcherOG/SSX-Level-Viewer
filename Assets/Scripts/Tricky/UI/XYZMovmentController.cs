@@ -13,6 +13,11 @@ public class XYZMovmentController : MonoBehaviour
     public GameObject OldParent;
 
     public GameObject Movement;
+
+    public GameObject MovementX;
+    public GameObject MovementY;
+    public GameObject MovementZ;
+
     public GameObject Rotation;
 
     public GameObject RotationX;
@@ -70,6 +75,21 @@ public class XYZMovmentController : MonoBehaviour
         RotationX.SetActive(true);
         RotationY.SetActive(true);
         RotationZ.SetActive(true);
+    }
+
+    public void DisableMovement(GameObject ThisObject)
+    {
+        MovementX.SetActive(false);
+        MovementY.SetActive(false);
+        MovementZ.SetActive(false);
+        ThisObject.SetActive(true);
+    }
+
+    public void EnableMovementAll()
+    {
+        MovementX.SetActive(true);
+        MovementY.SetActive(true);
+        MovementZ.SetActive(true);
     }
 
     public void SetParent(GameObject gameObject)

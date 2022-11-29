@@ -358,34 +358,6 @@ public class PatchObject : MonoBehaviour
         return NewList;
     }
 
-    public static Vector2 Highest(Vector2 current, Vector2 vector3)
-    {
-        Vector2 vertex = vector3;
-        if (vertex.x > current.x)
-        {
-            current.x = vertex.x;
-        }
-        if (vertex.y > current.y)
-        {
-            current.y = vertex.y;
-        }
-        return current;
-    }
-
-    public static Vector2 Lowest(Vector2 current, Vector2 vector3)
-    {
-        Vector2 vertex = vector3;
-        if (vertex.x < current.x)
-        {
-            current.x = vertex.x;
-        }
-        if (vertex.y < current.y)
-        {
-            current.y = vertex.y;
-        }
-        return current;
-    }
-
     public void UpdateMeshPoints(bool CubePointUpdate)
     {
         LoadNURBSpatch();
@@ -395,7 +367,6 @@ public class PatchObject : MonoBehaviour
             {
                 PatchPoints[i].DisableUpdate = true;
             }
-            transform.position = RawControlPoint * TrickyMapInterface.Scale;
             PatchPoints[0].transform.position = RawControlPoint * TrickyMapInterface.Scale;
             PatchPoints[1].transform.position = RawR1C2 * TrickyMapInterface.Scale;
             PatchPoints[2].transform.position = RawR1C3 * TrickyMapInterface.Scale;
@@ -412,6 +383,7 @@ public class PatchObject : MonoBehaviour
             PatchPoints[13].transform.position = RawR4C2 * TrickyMapInterface.Scale;
             PatchPoints[14].transform.position = RawR4C3 * TrickyMapInterface.Scale;
             PatchPoints[15].transform.position = RawR4C4 * TrickyMapInterface.Scale;
+            transform.position = RawControlPoint * TrickyMapInterface.Scale;
             for (int i = 0; i < PatchPoints.Count; i++)
             {
                 PatchPoints[i].ResetOldPosition();
@@ -478,7 +450,7 @@ public class PatchObject : MonoBehaviour
 
     public void SelectedObject()
     {
-        Renderer.material.SetFloat("_OutlineWidth", -1);
+        Renderer.material.SetFloat("_OutlineWidth", 0);
         Renderer.material.SetColor("_OutlineColor", Color.red);
         Renderer.material.SetFloat("_OpacityMaskOutline", 0.5f);
         GenerateCubePoints();

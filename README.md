@@ -7,7 +7,8 @@
 - Instance Editing
  
 ## Todo add
-- Fix Instance Json and Gem Toggle
+- Redesign Panel UI System
+- Add LTG State To Instance Panel
 - Fix Skybox Loading
 - Point Filtering Options
 - Material Library set
@@ -39,7 +40,7 @@
 - Tweak Toggle Object Script
 - Scroll wheel to have variable speed
 - Limit Mouse Look so camera doesnt freak out
-- Settings for keybindings, workspace path
+- Settings for keybindings
 - Open File for Settings Page
 
 ## Todo BugFixes

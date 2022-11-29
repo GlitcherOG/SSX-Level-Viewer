@@ -32,4 +32,14 @@ public class PatchPoint : MonoBehaviour
     {
         OldPosition = transform.position;
     }
+
+    public void Selected()
+    {
+        GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0.5f);
+    }
+
+    public void UnSelected()
+    {
+        GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0);
+    }
 }

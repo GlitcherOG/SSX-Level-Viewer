@@ -39,6 +39,8 @@ public class InstanceObject : MonoBehaviour
     public int UnknownInt31;
     public int UnknownInt32;
 
+    public int LTGState;
+
     public Vector3 Oldrotation;
     public Vector3 Oldscale;
     public Vector3 Oldposition;
@@ -87,6 +89,8 @@ public class InstanceObject : MonoBehaviour
         UnknownInt30 = instance.UnknownInt30;
         UnknownInt31 = instance.UnknownInt31;
         UnknownInt32 = instance.UnknownInt32;
+
+        LTGState = instance.LTGState;
 
         GenerateMeshes();
 
@@ -193,24 +197,16 @@ public class InstanceObject : MonoBehaviour
         transform.localScale = scale;
         transform.localPosition = InstancePosition;
 
-        if (true)
+        LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
+        HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
+        for (int i = 0; i < meshes.Count; i++)
         {
-            LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
-            HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
-            for (int i = 0; i < meshes.Count; i++)
+            var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
+            for (int a = 0; a < MeshGet.vertices.Length; a++)
             {
-                var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-                for (int a = 0; a < MeshGet.vertices.Length; a++)
-                {
-                    LowestXYZ = MathTools.Lowest(LowestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
-                    HighestXYZ = MathTools.Highest(HighestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
-                }
+                LowestXYZ = MathTools.Lowest(LowestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
+                HighestXYZ = MathTools.Highest(HighestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
             }
-        }
-        else
-        {
-            LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(LowestXYZ));
-            HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(HighestXYZ));
         }
 
         transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
@@ -228,6 +224,9 @@ public class InstanceObject : MonoBehaviour
         TempInstance.UnknownInt30 = UnknownInt30;
         TempInstance.UnknownInt31 = UnknownInt31;
         TempInstance.UnknownInt32 = UnknownInt32;
+
+        TempInstance.LTGState = LTGState;
+
         return TempInstance;
     }
 

@@ -22215,6 +22215,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &527693080 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3838767638339567277, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+  m_PrefabInstance: {fileID: 2512590638954399270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &528134293
 GameObject:
   m_ObjectHideFlags: 0
@@ -39590,6 +39595,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931934755}
   m_CullTransparentMesh: 1
+--- !u!1 &932512162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2213405260750165720, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+  m_PrefabInstance: {fileID: 2512590638954399270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &940328090
 GameObject:
   m_ObjectHideFlags: 0
@@ -48340,7 +48350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 612.52747, y: -0.94277954}
+  m_AnchoredPosition: {x: 612.52747, y: 0}
   m_SizeDelta: {x: 1188.4551, y: 38.7205}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1154592838
@@ -72897,6 +72907,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674941337}
   m_CullTransparentMesh: 1
+--- !u!1 &1680012964 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 323810721511378709, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+  m_PrefabInstance: {fileID: 2512590638954399270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1680014250
 GameObject:
   m_ObjectHideFlags: 0
@@ -80497,7 +80512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 612.4546, y: 11.957184}
+  m_AnchoredPosition: {x: 612.4546, y: 0}
   m_SizeDelta: {x: 1188.4551, y: 38.7205}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1841029825
@@ -94829,6 +94844,18 @@ PrefabInstance:
       propertyPath: Rotation
       value: 
       objectReference: {fileID: 2877188}
+    - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+      propertyPath: MovementX
+      value: 
+      objectReference: {fileID: 527693080}
+    - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+      propertyPath: MovementY
+      value: 
+      objectReference: {fileID: 932512162}
+    - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+      propertyPath: MovementZ
+      value: 
+      objectReference: {fileID: 1680012964}
     - target: {fileID: 615179099244364896, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
       propertyPath: RotationX
       value: 

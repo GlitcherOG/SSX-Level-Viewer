@@ -76,11 +76,13 @@ public class XYZPoint : MonoBehaviour
         {
             HitPoint = hit.point;
         }
+        Parent.GetComponent<XYZMovmentController>().DisableMovement(this.gameObject);
         Active = true;
     }
 
     public void SetUnactive()
     {
+        Parent.GetComponent<XYZMovmentController>().EnableMovementAll();
         dragBox1.enabled = false;
         Active = false;
     }
