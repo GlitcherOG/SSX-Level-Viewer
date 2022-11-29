@@ -193,32 +193,25 @@ public class InstanceObject : MonoBehaviour
         transform.localScale = scale;
         transform.localPosition = InstancePosition;
 
-        if (UpdateXYZ)
+        if (true)
         {
-            LowestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
+            LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
+            HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
             for (int i = 0; i < meshes.Count; i++)
             {
                 var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
                 for (int a = 0; a < MeshGet.vertices.Length; a++)
                 {
-                    LowestXYZ = MathTools.Lowest(LowestXYZ, MeshGet.vertices[a]);
-                }
-            }
-
-
-            HighestXYZ = meshes[0].GetComponent<MeshFilter>().mesh.vertices[0];
-            for (int i = 0; i < meshes.Count; i++)
-            {
-                var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-                for (int a = 0; a < MeshGet.vertices.Length; a++)
-                {
-                    HighestXYZ = MathTools.Highest(HighestXYZ, MeshGet.vertices[a]);
+                    LowestXYZ = MathTools.Lowest(LowestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
+                    HighestXYZ = MathTools.Highest(HighestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
                 }
             }
         }
-
-        LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(LowestXYZ));
-        HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(HighestXYZ));
+        else
+        {
+            LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(LowestXYZ));
+            HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(HighestXYZ));
+        }
 
         transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
         transform.localScale = scale * TrickyMapInterface.Scale;
