@@ -5,9 +5,9 @@ using SSXMultiTool.Utilities;
 
 public class Randomiser : MonoBehaviour
 {
-
-    float MaxXYZ = 0.25f;
-    float MaxRotation = 20f;
+    public int Seed = 0;
+    float MaxXYZ = 0.50f;
+    int MaxRotation = 20;
     public void Randomise()
     {
         TrickyMapInterface trickyMapInterface = TrickyMapInterface.Instance;
@@ -54,13 +54,13 @@ public class Randomiser : MonoBehaviour
 
             float Scale = Vector3.Distance(Highest, Lowest);
 
-            TempPatch.RawR3C3 += GenerateRandomXYZ(Scale);
+            TempPatch.RawR3C3 += GenerateRandomXYZ(Scale, i*4);
 
-            TempPatch.RawR3C2 += GenerateRandomXYZ(Scale);
+            TempPatch.RawR3C2 += GenerateRandomXYZ(Scale, i*4+1);
 
-            TempPatch.RawR2C3 += GenerateRandomXYZ(Scale);
+            TempPatch.RawR2C3 += GenerateRandomXYZ(Scale, i * 4 + 2);
 
-            TempPatch.RawR2C2 += GenerateRandomXYZ(Scale);
+            TempPatch.RawR2C2 += GenerateRandomXYZ(Scale, i * 4 + 3);
 
             TempPatch.LoadNURBSpatch();
         }
@@ -70,23 +70,25 @@ public class Randomiser : MonoBehaviour
         {
             var TempInstance = Instances[i].GetComponent<InstanceObject>();
 
-            TempInstance.transform.localEulerAngles += GenerateRandomAngle();
+            TempInstance.transform.localEulerAngles += GenerateRandomAngle(i);
         }
     }
 
-    Vector3 GenerateRandomAngle()
+    Vector3 GenerateRandomAngle(int Index)
     {
-        float tempx = Random.Range(-MaxRotation, MaxRotation);
-        float tempy = Random.Range(-MaxRotation, MaxRotation);
-        float tempz = Random.Range(-MaxRotation, MaxRotation);
+        System.Random r = new System.Random(Seed*100000+10000+Index);
+        float tempx = (float)r.Next(-MaxRotation*100, MaxRotation*100)/100f;
+        float tempy = (float)r.Next(-MaxRotation*100, MaxRotation*100)/ 100f;
+        float tempz = (float)r.Next(-MaxRotation*100, MaxRotation*100)/ 100f;
         return new Vector3(tempx, tempy, tempz);
     }
 
-    Vector3 GenerateRandomXYZ(float Scale)
+    Vector3 GenerateRandomXYZ(float Scale, int Index)
     {
-        float tempx = Random.Range(-MaxXYZ, MaxXYZ);
-        float tempy = Random.Range(-MaxXYZ, MaxXYZ);
-        float tempz = Random.Range(-MaxXYZ, MaxXYZ);
+        System.Random r = new System.Random(Seed * 100000 + 00000 + Index);
+        float tempx = ((float)r.Next(-1 * 100, 1 * 100)/100)* MaxXYZ;
+        float tempy = ((float)r.Next(-1 * 100, 1 * 100) / 100) * MaxXYZ;
+        float tempz = ((float)r.Next(-1 * 100, 1 * 100) / 100) * MaxXYZ;
         return new Vector3(tempx, tempy, tempz)*Scale;
     }
 }

@@ -48,7 +48,6 @@
 
 ## Todo in Later Update
 - Custom File Opener
-- Skybox Emulation
 - Auto Updater
 - Fix UI Scaling
 - Controller Camera Movement
