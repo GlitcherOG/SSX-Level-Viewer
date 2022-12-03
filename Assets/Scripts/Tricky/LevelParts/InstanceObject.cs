@@ -253,16 +253,19 @@ public class InstanceObject : MonoBehaviour
             {
                 Oldscale = transform.localScale;
                 scale = transform.localScale / TrickyMapInterface.Scale;
+                InstancePanel.instance.UpdateAll(this);
             }
             if (Oldrotation != transform.localEulerAngles)
             {
                 Oldrotation = transform.eulerAngles;
                 rotation = transform.localEulerAngles;
+                InstancePanel.instance.UpdateAll(this);
             }
             if (Oldposition != transform.localPosition)
             {
                 Oldposition = transform.localPosition;
                 InstancePosition = transform.localPosition / TrickyMapInterface.Scale;
+                InstancePanel.instance.UpdateAll(this);
             }
         }
     }

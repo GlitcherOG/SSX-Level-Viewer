@@ -368,6 +368,7 @@ public class PatchObject : MonoBehaviour
                 PatchPoints[i].DisableUpdate = true;
             }
             PatchPoints[0].transform.position = RawControlPoint * TrickyMapInterface.Scale;
+            transform.position = RawControlPoint * TrickyMapInterface.Scale;
             PatchPoints[1].transform.position = RawR1C2 * TrickyMapInterface.Scale;
             PatchPoints[2].transform.position = RawR1C3 * TrickyMapInterface.Scale;
             PatchPoints[3].transform.position = RawR1C4 * TrickyMapInterface.Scale;
@@ -383,7 +384,6 @@ public class PatchObject : MonoBehaviour
             PatchPoints[13].transform.position = RawR4C2 * TrickyMapInterface.Scale;
             PatchPoints[14].transform.position = RawR4C3 * TrickyMapInterface.Scale;
             PatchPoints[15].transform.position = RawR4C4 * TrickyMapInterface.Scale;
-            transform.position = RawControlPoint * TrickyMapInterface.Scale;
             for (int i = 0; i < PatchPoints.Count; i++)
             {
                 PatchPoints[i].ResetOldPosition();
