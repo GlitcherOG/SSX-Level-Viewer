@@ -31,7 +31,12 @@ public class XYZPoint : MonoBehaviour
                 int layerMask = 1 << 6;
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    Parent.transform.position = Parent.transform.position + transform.right * (hit.point.x - HitPoint.x);
+                    Vector3 NewPosition = Parent.transform.position + transform.right * (hit.point.x - HitPoint.x);
+                    if (XYZMovmentController.Instance.GridAlign!=0)
+                    {
+                        NewPosition.x = RoundToNearest(NewPosition.x, XYZMovmentController.Instance.GridAlign*TrickyMapInterface.Scale);
+                    }
+                    Parent.transform.position = NewPosition;
                 }
                 HitPoint = hit.point;
             }
@@ -42,7 +47,12 @@ public class XYZPoint : MonoBehaviour
                 int layerMask = 1 << 6;
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    Parent.transform.position = Parent.transform.position + transform.up * (hit.point.y - HitPoint.y);
+                    Vector3 NewPosition = Parent.transform.position + transform.up * (hit.point.y - HitPoint.y);
+                    if (XYZMovmentController.Instance.GridAlign != 0)
+                    {
+                        NewPosition.y = RoundToNearest(NewPosition.y, XYZMovmentController.Instance.GridAlign * TrickyMapInterface.Scale);
+                    }
+                    Parent.transform.position = NewPosition;
                 }
                 HitPoint = hit.point;
             }
@@ -53,7 +63,12 @@ public class XYZPoint : MonoBehaviour
                 int layerMask = 1 << 6;
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
                 {
-                    Parent.transform.position = Parent.transform.position + transform.forward * (hit.point.z - HitPoint.z);
+                    Vector3 NewPosition = Parent.transform.position + transform.forward * (hit.point.z - HitPoint.z);
+                    if (XYZMovmentController.Instance.GridAlign != 0)
+                    {
+                        NewPosition.z = RoundToNearest(NewPosition.z, XYZMovmentController.Instance.GridAlign * TrickyMapInterface.Scale);
+                    }
+                    Parent.transform.position = NewPosition;
                 }
                 HitPoint = hit.point;
             }
@@ -63,6 +78,12 @@ public class XYZPoint : MonoBehaviour
                 SetUnactive();
             }
         }
+    }
+
+
+    float RoundToNearest(float Input, float RoundingNumber)
+    {
+        return Mathf.RoundToInt(Input / RoundingNumber) * RoundingNumber;
     }
 
     public void SetActive()

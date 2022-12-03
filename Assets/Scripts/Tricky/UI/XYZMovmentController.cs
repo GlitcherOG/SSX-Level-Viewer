@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class XYZMovmentController : MonoBehaviour
 {
+    public static XYZMovmentController Instance { get; private set; }
     public bool active;
     public GimzoMode gimzoMode;
     bool centremode;
@@ -12,21 +15,26 @@ public class XYZMovmentController : MonoBehaviour
     public GameObject Parent;
     public GameObject OldParent;
 
+    [Space(10)]
     public GameObject Movement;
-
     public GameObject MovementX;
     public GameObject MovementY;
     public GameObject MovementZ;
 
+    [Space(10)]
     public GameObject Rotation;
-
     public GameObject RotationX;
     public GameObject RotationY;
     public GameObject RotationZ;
+    [Space(10)]
+    public TMP_InputField girdAlign;
+    public float GridAlign;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        Instance = this;
+    }
 
-    // Update is called once per frame
     void Update()
     {
         if (active)
@@ -157,6 +165,19 @@ public class XYZMovmentController : MonoBehaviour
         transform.eulerAngles = oldRot;
         Movement.SetActive(false);
         Rotation.SetActive(true);
+    }
+
+    public void SetGridAlign(string Text)
+    {
+        try
+        {
+            girdAlign.GetComponent<Image>().color = Color.white;
+            GridAlign= float.Parse(Text);
+        }
+        catch
+        {
+            girdAlign.GetComponent<Image>().color = Color.red;
+        }
     }
 
     public enum GimzoMode
