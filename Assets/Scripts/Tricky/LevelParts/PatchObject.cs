@@ -52,6 +52,9 @@ public class PatchObject : MonoBehaviour
     public Renderer Renderer;
     public GameObject PointPrefab;
     public List<PatchPoint> PatchPoints;
+    public List<GameObject> LineGenerators;
+
+    bool Selected;
 
     Vector3 oldPosition;
 
@@ -397,6 +400,10 @@ public class PatchObject : MonoBehaviour
         {
             PatchPanel.instance.UpdatePoint(false);
         }
+        if(Selected)
+        {
+            UpdateLineGenerators();
+        }
     }
 
     public void UpdateUVPoints()
@@ -438,6 +445,91 @@ public class PatchObject : MonoBehaviour
         }
     }
 
+    public void GenerateLineRender()
+    {
+        LineGenerators = new List<GameObject>();
+        for (int i = 0; i < 16; i++)
+        {
+            lineSetup();
+        }
+        UpdateLineGenerators();
+    }
+
+    public void UpdateLineGenerators()
+    {
+        var NewLineRender = LineGenerators[0].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawControlPoint * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR1C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR1C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR1C4 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[1].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawR2C1 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR2C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR2C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR2C4 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[2].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawR3C1 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR3C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR3C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR3C4 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[3].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawR4C1 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR4C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR4C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR4C4 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[4].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawControlPoint * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR2C1 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR3C1 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR4C1 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[5].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawR1C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR2C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR3C2 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR4C2 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[6].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawR1C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR2C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR3C3 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR4C3 * TrickyMapInterface.Scale));
+
+        NewLineRender = LineGenerators[7].GetComponent<LineRenderer>();
+        NewLineRender.SetPosition(0, transform.InverseTransformPoint(RawR1C4 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(1, transform.InverseTransformPoint(RawR2C4 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(2, transform.InverseTransformPoint(RawR3C4 * TrickyMapInterface.Scale));
+        NewLineRender.SetPosition(3, transform.InverseTransformPoint(RawR4C4 * TrickyMapInterface.Scale));
+    }
+
+    void lineSetup()
+    {
+        var TempLineGenerator = new GameObject();
+        TempLineGenerator.transform.parent = this.transform;
+        TempLineGenerator.transform.localPosition = new Vector3(0, 0, 0);
+        TempLineGenerator.transform.localEulerAngles = new Vector3(0, 0, 0);
+        TempLineGenerator.transform.localScale = Vector3.one;
+        TempLineGenerator.layer = LayerMask.NameToLayer("Selection");
+
+        var NewLineRender = TempLineGenerator.AddComponent<LineRenderer>();
+        NewLineRender.useWorldSpace = false;
+        NewLineRender.positionCount = 4;
+        LineGenerators.Add(TempLineGenerator);
+    }
+
+    public void DestroyLineRenders()
+    {
+        for (int i = 0; i < LineGenerators.Count; i++)
+        {
+            Destroy(LineGenerators[i]);
+        }
+        LineGenerators.Clear();
+    }
+
     public void HardwareMode()
     {
         Renderer.material.SetFloat("_TextureStrength", 0.5f);
@@ -454,6 +546,9 @@ public class PatchObject : MonoBehaviour
         Renderer.material.SetColor("_OutlineColor", Color.red);
         Renderer.material.SetFloat("_OpacityMaskOutline", 0.5f);
         GenerateCubePoints();
+        GenerateLineRender();
+        Selected = true;
+
     }
 
     public void UnSelectedObject()
@@ -461,7 +556,9 @@ public class PatchObject : MonoBehaviour
         Renderer.material.SetFloat("_OutlineWidth", 0);
         Renderer.material.SetFloat("_OpacityMaskOutline", 0f);
         Renderer.material.SetColor("_OutlineColor", new Color32(255, 255, 255, 0));
-        DestroyCube();
+        DestroyCube(); 
+        DestroyLineRenders();
+        Selected = false;
     }
 
     public void UpdateTexture(int a)
