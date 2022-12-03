@@ -5,7 +5,7 @@ using SSXMultiTool.Utilities;
 
 public class Randomiser : MonoBehaviour
 {
-    public int Seed = 0;
+    public string Seed = "0";
     float MaxXYZ = 0.50f;
     int MaxRotation = 20;
     public void Randomise()
@@ -76,7 +76,7 @@ public class Randomiser : MonoBehaviour
 
     Vector3 GenerateRandomAngle(int Index)
     {
-        System.Random r = new System.Random(Seed*100000+10000+Index);
+        System.Random r = new System.Random(Seed.GetHashCode()+Index);
         float tempx = (float)r.Next(-MaxRotation*100, MaxRotation*100)/100f;
         float tempy = (float)r.Next(-MaxRotation*100, MaxRotation*100)/ 100f;
         float tempz = (float)r.Next(-MaxRotation*100, MaxRotation*100)/ 100f;
@@ -85,7 +85,7 @@ public class Randomiser : MonoBehaviour
 
     Vector3 GenerateRandomXYZ(float Scale, int Index)
     {
-        System.Random r = new System.Random(Seed * 100000 + 00000 + Index);
+        System.Random r = new System.Random(Seed.GetHashCode() + Index);
         float tempx = ((float)r.Next(-1 * 100, 1 * 100)/100)* MaxXYZ;
         float tempy = ((float)r.Next(-1 * 100, 1 * 100) / 100) * MaxXYZ;
         float tempz = ((float)r.Next(-1 * 100, 1 * 100) / 100) * MaxXYZ;

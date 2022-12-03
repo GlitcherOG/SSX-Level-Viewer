@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using SSXMultiTool.JsonFiles.Tricky;
+using SSXMultiTool.FileHandlers.LevelFiles.TrickyPS2;
 using Dummiesman;
 
 public class TrickyMapInterface : MonoBehaviour
@@ -280,7 +281,7 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadMapFiles(string StringPath)
     {
         SSXTrickyConfig trickyConfig = SSXTrickyConfig.Load(StringPath);
-        if (trickyConfig.Version == 3)
+        if (trickyConfig.Version == 4)
         {
             StringPath = Path.GetDirectoryName(StringPath);
             LoadPath = StringPath;
@@ -294,11 +295,39 @@ public class TrickyMapInterface : MonoBehaviour
             LoadInstances(StringPath + "\\Instances.json");
             LoadLighting(StringPath + "\\Lights.json");
             SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
+            LoadAIP(StringPath + "\\Original\\sop.sop");
             NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
         else
         {
             NotifcationBarUI.instance.SendMessage("Incorrect Project Version");
+        }
+    }
+    public GameObject PathParent;
+    public GameObject PathCubePrefab;
+    public AIPSOPHandler handler = new AIPSOPHandler();
+    void LoadAIP(string path)
+    {
+        handler = new AIPSOPHandler();
+        handler.LoadAIPSOP(path);
+
+        for (int i = 0; i < handler.typeAs.Count; i++)
+        {
+            GameObject gameObject = Instantiate(PathCubePrefab, PathParent.transform);
+            gameObject.transform.name = i.ToString();
+            gameObject.transform.parent = PathParent.transform;
+            gameObject.transform.localScale = Vector3.one;
+            gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            gameObject.transform.localPosition = new Vector3(handler.typeAs[i].pathPos.X, handler.typeAs[i].pathPos.Y, handler.typeAs[i].pathPos.Z) * Scale;
+            Vector3 PointLocation = new Vector3(0,0,0) * Scale;
+            gameObject.GetComponent<LineRenderer>().positionCount = handler.typeAs[i].patchPoints.Count + 1;
+            gameObject.GetComponent<LineRenderer>().useWorldSpace = false;
+            gameObject.GetComponent<LineRenderer>().SetPosition(0, PointLocation);
+            for (int a = 0; a < handler.typeAs[i].patchPoints.Count; a++)
+            {
+                PointLocation += new Vector3(handler.typeAs[i].patchPoints[a].X, handler.typeAs[i].patchPoints[a].Y, handler.typeAs[i].patchPoints[a].Z) * Scale;
+                gameObject.GetComponent<LineRenderer>().SetPosition(a+1, PointLocation);
+            }
         }
     }
 
