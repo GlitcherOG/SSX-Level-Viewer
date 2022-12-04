@@ -13,18 +13,18 @@ public class InstancePanel : MonoBehaviour
 
     public TMP_InputField InstanceName;
 
-    public RowCollumHandler Location;
-    public RowCollumHandler Rotation;
-    public RowCollumHandler Scale;
+    public VectorInput Location;
+    public VectorInput Rotation;
+    public VectorInput Scale;
 
-    public RowCollumHandler Unknown1;
-    public RowCollumHandler Unknown2;
-    public RowCollumHandler Unknown3;
-    public RowCollumHandler Unknown4;
-    public RowCollumHandler Unknown5;
-    public RowCollumHandler Unknown6;
-    public RowCollumHandler Unknown7;
-    public RowCollumHandler RGBA;
+    public VectorInput Unknown1;
+    public VectorInput Unknown2;
+    public VectorInput Unknown3;
+    public VectorInput Unknown4;
+    public VectorInput Unknown5;
+    public VectorInput Unknown6;
+    public VectorInput Unknown7;
+    public VectorInput RGBA;
 
     public TMP_InputField ModelID;
     public TMP_InputField PrevInstance;

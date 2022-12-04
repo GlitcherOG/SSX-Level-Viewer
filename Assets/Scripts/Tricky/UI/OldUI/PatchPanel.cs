@@ -27,18 +27,18 @@ public class PatchPanel : MonoBehaviour
 
     public GameObject ScrollView;
     public GameObject RCPrefab;
-    public List<RowCollumHandler> RCPreferences = new List<RowCollumHandler>();
+    public List<VectorInput> RCPreferences = new List<VectorInput>();
 
     public bool Local = false;
 
     private void Awake()
     {
         instance = this;
-        RCPreferences.Add(RCPrefab.GetComponent<RowCollumHandler>());
+        RCPreferences.Add(RCPrefab.GetComponent<VectorInput>());
         for (int i = 0; i < 15; i++)
         {
             GameObject temp = Instantiate(RCPrefab, ScrollView.transform);
-            RCPreferences.Add(temp.GetComponent<RowCollumHandler>());
+            RCPreferences.Add(temp.GetComponent<VectorInput>());
         }
 
         RCPreferences[0].SetName("R1C1 (Object Position)");

@@ -25,10 +25,10 @@ public class SplinePanel : MonoBehaviour
     public List<GameObject> SegmentSelectorList = new List<GameObject>();
 
     public TMP_Text SegmentName;
-    public RowCollumHandler Point1;
-    public RowCollumHandler Point2;
-    public RowCollumHandler Point3;
-    public RowCollumHandler Point4;
+    public VectorInput Point1;
+    public VectorInput Point2;
+    public VectorInput Point3;
+    public VectorInput Point4;
 
     public TMP_InputField Unknown1X;
     public TMP_InputField Unknown1Y;

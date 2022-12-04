@@ -5,7 +5,7 @@ using TMPro;
 using System;
 using UnityEngine.Events;
 
-public class RowCollumHandler : MonoBehaviour
+public class VectorInput : MonoBehaviour
 {
     public TMP_Text PointName;
     public TMP_InputField x;
@@ -80,7 +80,7 @@ public class RowCollumHandler : MonoBehaviour
         }
     }
 
-    public void UpdatedPoints()
+    public void SendPing()
     {
         SendUpdatePing.Invoke();
     }

@@ -1119,10 +1119,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 455523393}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7551,10 +7551,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 1855433032}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20567,6 +20567,7 @@ GameObject:
   - component: {fileID: 455523390}
   - component: {fileID: 455523392}
   - component: {fileID: 455523391}
+  - component: {fileID: 455523393}
   m_Layer: 5
   m_Name: Position
   m_TagString: Untagged
@@ -20693,6 +20694,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455523389}
   m_CullTransparentMesh: 1
+--- !u!114 &455523393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455523389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b73af9e7bb35624693a5c827bf19206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PointName: {fileID: 455523391}
+  x: {fileID: 27543653}
+  y: {fileID: 1921619126}
+  z: {fileID: 1898777765}
+  w: {fileID: 0}
+  SendUpdatePing:
+    m_PersistentCalls:
+      m_Calls: []
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &456849203
 GameObject:
   m_ObjectHideFlags: 0
@@ -33167,10 +33190,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 1855433032}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -47180,6 +47203,7 @@ MonoBehaviour:
   Point3YInput: {fileID: 594215566}
   Point4XInput: {fileID: 31694485}
   Point4YInput: {fileID: 1765806193}
+  disableupdate: 0
 --- !u!1 &1036158921
 GameObject:
   m_ObjectHideFlags: 0
@@ -58907,10 +58931,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 1945522842}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -62939,10 +62963,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 1945522842}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -76281,6 +76305,7 @@ GameObject:
   - component: {fileID: 1628563348}
   - component: {fileID: 1628563347}
   - component: {fileID: 1628563346}
+  - component: {fileID: 1628563349}
   m_Layer: 5
   m_Name: XYZ Toggle
   m_TagString: Untagged
@@ -76351,7 +76376,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1628563347}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1628563349}
+        m_TargetAssemblyTypeName: ToggleObject, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1628563347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76390,6 +76427,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628563344}
   m_CullTransparentMesh: 1
+--- !u!114 &1628563349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628563344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8372f33fd68c33e479986d11017148ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainObject: {fileID: 2025137284}
 --- !u!1 &1629891912
 GameObject:
   m_ObjectHideFlags: 0
@@ -84299,10 +84349,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 1945522842}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -87251,10 +87301,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 1855433032}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -87579,6 +87629,7 @@ GameObject:
   - component: {fileID: 1855433029}
   - component: {fileID: 1855433031}
   - component: {fileID: 1855433030}
+  - component: {fileID: 1855433032}
   m_Layer: 5
   m_Name: Rotation
   m_TagString: Untagged
@@ -87707,6 +87758,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855433028}
   m_CullTransparentMesh: 1
+--- !u!114 &1855433032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855433028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b73af9e7bb35624693a5c827bf19206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PointName: {fileID: 1855433030}
+  x: {fileID: 147728211}
+  y: {fileID: 718022451}
+  z: {fileID: 1850434292}
+  w: {fileID: 0}
+  SendUpdatePing:
+    m_PersistentCalls:
+      m_Calls: []
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1855434715
 GameObject:
   m_ObjectHideFlags: 0
@@ -90051,10 +90124,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 455523393}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -91105,10 +91178,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
-        m_Mode: 0
+      - m_Target: {fileID: 455523393}
+        m_TargetAssemblyTypeName: VectorInput, Assembly-CSharp
+        m_MethodName: SendPing
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -92138,6 +92211,7 @@ GameObject:
   - component: {fileID: 1945522839}
   - component: {fileID: 1945522841}
   - component: {fileID: 1945522840}
+  - component: {fileID: 1945522842}
   m_Layer: 5
   m_Name: Scale
   m_TagString: Untagged
@@ -92266,6 +92340,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945522838}
   m_CullTransparentMesh: 1
+--- !u!114 &1945522842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945522838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b73af9e7bb35624693a5c827bf19206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PointName: {fileID: 1945522840}
+  x: {fileID: 1810258475}
+  y: {fileID: 1295556719}
+  z: {fileID: 1363712085}
+  w: {fileID: 0}
+  SendUpdatePing:
+    m_PersistentCalls:
+      m_Calls: []
+  vector3: {x: 0, y: 0, z: 0}
+  vector4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1949286614
 GameObject:
   m_ObjectHideFlags: 0
@@ -96668,6 +96764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fd593407e958b4a93f2e2297bb272e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GizmoPrefab: {fileID: 8163763751061611869, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
+  GizmoObject: {fileID: 614645437}
 --- !u!1 &2026282371
 GameObject:
   m_ObjectHideFlags: 0
