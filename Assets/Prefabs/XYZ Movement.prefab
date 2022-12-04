@@ -198,9 +198,10 @@ GameObject:
   - component: {fileID: 6467335866202275987}
   - component: {fileID: 2588918554232766798}
   - component: {fileID: 348467000328973618}
-  m_Layer: 0
+  - component: {fileID: 1401669722}
+  m_Layer: 6
   m_Name: Z
-  m_TagString: Untagged
+  m_TagString: XYZRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -282,6 +283,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1401669722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579868851509426335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcc412c77e706e4fbcfeb4f9a963e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  axis: 2
+  Controller: {fileID: 615179099244364896}
+  origin: {x: 0, y: 0, z: 0}
+  point2: {x: 0, y: 0, z: 0}
+  Rotation: 0
 --- !u!1 &1397791656969793401
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,9 +346,10 @@ GameObject:
   - component: {fileID: 4641744152120668774}
   - component: {fileID: 5968110615051017546}
   - component: {fileID: 4968214648708250204}
-  m_Layer: 0
+  - component: {fileID: 1520016615}
+  m_Layer: 6
   m_Name: Y
-  m_TagString: Untagged
+  m_TagString: XYZRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -411,6 +431,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1520016615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705126967235496559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcc412c77e706e4fbcfeb4f9a963e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  axis: 1
+  Controller: {fileID: 615179099244364896}
+  origin: {x: 0, y: 0, z: 0}
+  point2: {x: 0, y: 0, z: 0}
+  Rotation: 0
 --- !u!1 &2213405260750165720
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,9 +706,10 @@ GameObject:
   - component: {fileID: 6492252681462480999}
   - component: {fileID: 8682016698777983764}
   - component: {fileID: 2471176738110503728}
-  m_Layer: 0
+  - component: {fileID: 1110959758}
+  m_Layer: 6
   m_Name: X
-  m_TagString: Untagged
+  m_TagString: XYZRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -752,6 +791,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1110959758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434188025617591739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcc412c77e706e4fbcfeb4f9a963e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  axis: 0
+  Controller: {fileID: 615179099244364896}
+  origin: {x: 0, y: 0, z: 0}
+  point2: {x: 0, y: 0, z: 0}
+  Rotation: 0
 --- !u!1 &6502736951346701919
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1878457050509368812
 Transform:
   m_ObjectHideFlags: 0
@@ -830,5 +887,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67053fcc8044ce245b7ad9da1402bb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0
+  gimzoMode: 0
   Parent: {fileID: 0}
   OldParent: {fileID: 0}
+  Movement: {fileID: 1397791656969793401}
+  MovementX: {fileID: 3838767638339567277}
+  MovementY: {fileID: 2213405260750165720}
+  MovementZ: {fileID: 323810721511378709}
+  Rotation: {fileID: 6502736951346701919}
+  RotationX: {fileID: 5434188025617591739}
+  RotationY: {fileID: 1705126967235496559}
+  RotationZ: {fileID: 579868851509426335}
+  girdAlign: {fileID: 0}
+  GridAlign: 0

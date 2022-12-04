@@ -85,28 +85,6 @@ public class PatchObject : MonoBehaviour
         RawR1C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C2));
         RawControlPoint = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C1));
 
-
-        //float tempx = Random.Range(-1000f, 1000f);
-        //float tempy = Random.Range(-1000f, 1000f);
-        //float tempz = Random.Range(-1000f, 1000f);
-        //Debug.Log(tempy);
-        //RawR3C3 += new Vector3(tempx, tempy, tempz);
-
-        // tempx = Random.Range(-1000f, 1000f);
-        // tempy = Random.Range(-1000f, 1000f);
-        // tempz = Random.Range(-1000f, 1000f);
-        //RawR3C2 += new Vector3(tempx, tempy, tempz);
-
-        // tempx = Random.Range(-1000f, 1000f);
-        // tempy = Random.Range(-1000f, 1000f);
-        // tempz = Random.Range(-1000f, 1000f);
-        //RawR2C3 += new Vector3(tempx, tempy, tempz);
-
-        // tempx = Random.Range(-1000f, 1000f);
-        // tempy = Random.Range(-1000f, 1000f);
-        // tempz = Random.Range(-1000f, 1000f);
-        //RawR2C2 += new Vector3(tempx, tempy, tempz);
-
         PatchStyle = import.PatchStyle;
         Unknown2 = import.Unknown2;
         TextureAssigment = import.TextureAssigment;
@@ -116,30 +94,12 @@ public class PatchObject : MonoBehaviour
         Unknown6 = import.Unknown6;
 
         transform.position = RawControlPoint * TrickyMapInterface.Scale;
+        oldPosition = transform.position;
 
         LoadNURBSpatch();
-        oldPosition = transform.position;
-    }
-
-    public void GenerateCubePoints()
-    {
-        PatchPoints = new List<PatchPoint>();
-        SpawnCube(RawControlPoint, new Color32(202, 202, 202, 255));
-        SpawnCube(RawR1C2, Color.red);
-        SpawnCube(RawR1C3, Color.green);
-        SpawnCube(RawR1C4, Color.blue);
-        SpawnCube(RawR2C1, Color.yellow);
-        SpawnCube(RawR2C2, Color.grey);
-        SpawnCube(RawR2C3, Color.cyan);
-        SpawnCube(RawR2C4, Color.magenta);
-        SpawnCube(RawR3C1, new Color32(0, 255, 85, 255));
-        SpawnCube(RawR3C2, new Color32(216, 0, 255, 255));
-        SpawnCube(RawR3C3, new Color32(185, 0, 255, 255));
-        SpawnCube(RawR3C4, new Color32(0, 99, 119, 255));
-        SpawnCube(RawR4C1, new Color32(0, 119, 49, 255));
-        SpawnCube(RawR4C2, new Color32(119, 16, 0, 255));
-        SpawnCube(RawR4C3, new Color32(211, 216, 45, 255));
-        SpawnCube(RawR4C4, Color.black);
+        GetComponent<Renderer>().material = MainMaterial;
+        UpdateTexture(TextureAssigment);
+        ToggleLightingMode();
     }
 
     public PatchesJsonHandler.PatchJson GeneratePatch()
@@ -148,7 +108,7 @@ public class PatchObject : MonoBehaviour
         patch.PatchName = PatchName;
         patch.LightMapPoint = JsonUtil.Vector4ToArray(LightMapPoint);
 
-        patch.UVPoint1 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint1,1,1));
+        patch.UVPoint1 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint1, 1, 1));
         patch.UVPoint2 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint2, 1, 1));
         patch.UVPoint3 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint3, 1, 1));
         patch.UVPoint4 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint4, 1, 1));
@@ -179,6 +139,44 @@ public class PatchObject : MonoBehaviour
         patch.Unknown6 = Unknown6;
 
         return patch;
+    }
+
+    public void GenerateCubePoints()
+    {
+        PatchPoints = new List<PatchPoint>();
+        //SpawnCube(RawControlPoint, new Color32(202, 202, 202, 255));
+        //SpawnCube(RawR1C2, Color.red);
+        //SpawnCube(RawR1C3, Color.green);
+        //SpawnCube(RawR1C4, Color.blue);
+        //SpawnCube(RawR2C1, Color.yellow);
+        //SpawnCube(RawR2C2, Color.grey);
+        //SpawnCube(RawR2C3, Color.cyan);
+        //SpawnCube(RawR2C4, Color.magenta);
+        //SpawnCube(RawR3C1, new Color32(0, 255, 85, 255));
+        //SpawnCube(RawR3C2, new Color32(216, 0, 255, 255));
+        //SpawnCube(RawR3C3, new Color32(185, 0, 255, 255));
+        //SpawnCube(RawR3C4, new Color32(0, 99, 119, 255));
+        //SpawnCube(RawR4C1, new Color32(0, 119, 49, 255));
+        //SpawnCube(RawR4C2, new Color32(119, 16, 0, 255));
+        //SpawnCube(RawR4C3, new Color32(211, 216, 45, 255));
+        //SpawnCube(RawR4C4, Color.black);
+
+        SpawnCube(RawControlPoint, Color.black);
+        SpawnCube(RawR1C2, Color.black);
+        SpawnCube(RawR1C3, Color.black);
+        SpawnCube(RawR1C4, Color.black);
+        SpawnCube(RawR2C1, Color.black);
+        SpawnCube(RawR2C2, Color.black);
+        SpawnCube(RawR2C3, Color.black);
+        SpawnCube(RawR2C4, Color.black);
+        SpawnCube(RawR3C1, Color.black);
+        SpawnCube(RawR3C2, Color.black);
+        SpawnCube(RawR3C3, Color.black);
+        SpawnCube(RawR3C4, Color.black);
+        SpawnCube(RawR4C1, Color.black);
+        SpawnCube(RawR4C2, Color.black);
+        SpawnCube(RawR4C3, Color.black);
+        SpawnCube(RawR4C4, Color.black);
     }
 
     void SpawnCube(Vector3 Point, Color color)
@@ -335,9 +333,6 @@ public class PatchObject : MonoBehaviour
         GetComponent<MeshCollider>().enabled = false;
         GetComponent<MeshCollider>().sharedMesh = mesh;
         GetComponent<MeshCollider>().enabled = true;
-        GetComponent<Renderer>().material = MainMaterial;
-        UpdateTexture(TextureAssigment);
-        ToggleLightingMode();
     }
 
 
@@ -346,17 +341,9 @@ public class PatchObject : MonoBehaviour
         for (int i = 0; i < NewList.Count; i++)
         {
             var TempPoint = NewList[i];
-            //if (TempPoint.y < 0)
-            //{
-                TempPoint.y = -TempPoint.y;
-            //}
-            //if (TempPoint.x < 0)
-            //{
-            //    TempPoint.x = -TempPoint.x;
-            //}
+            TempPoint.y = -TempPoint.y;
             NewList[i] = TempPoint;
         }
-
 
         return NewList;
     }
@@ -415,33 +402,23 @@ public class PatchObject : MonoBehaviour
     {
         if(!TrickyMapInterface.Instance.NoLightMode)
         {
-            LightMode();
+            Renderer.material.SetFloat("_LightMapStrength", 1);
         }
         else
         {
-            NoLightMode();
+            Renderer.material.SetFloat("_LightMapStrength", 0);
         }
-        UpdateTexture(TextureAssigment);
-    }
-    public void LightMode()
-    {
-        Renderer.material.SetFloat("_LightMapStrength", 1);
-    }
-
-    public void NoLightMode()
-    {
-        Renderer.material.SetFloat("_LightMapStrength", 0);
     }
 
     public void ToggleHardwareMode()
     {
         if (TrickyMapInterface.Instance.HardwareMode)
         {
-            HardwareMode();
+            Renderer.material.SetFloat("_TextureStrength", 0.5f);
         }
         else
         {
-            SoftwareMode();
+            Renderer.material.SetFloat("_TextureStrength", 1f);
         }
     }
 
@@ -530,16 +507,6 @@ public class PatchObject : MonoBehaviour
         LineGenerators.Clear();
     }
 
-    public void HardwareMode()
-    {
-        Renderer.material.SetFloat("_TextureStrength", 0.5f);
-    }
-
-    public void SoftwareMode()
-    {
-        Renderer.material.SetFloat("_TextureStrength", 1f);
-    }
-
     public void SelectedObject()
     {
         Renderer.material.SetFloat("_OutlineWidth", 0);
@@ -566,8 +533,6 @@ public class PatchObject : MonoBehaviour
         try
         {
             Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.textures[TextureAssigment]);
-            //Renderer.material.SetTextureOffset("_Lightmap", new Vector2(LightMapPoint.x, LightMapPoint.y));
-            //Renderer.material.SetTextureScale("_Lightmap", new Vector2(LightMapPoint.z, LightMapPoint.w));
             Renderer.material.SetTexture("_Lightmap", TrickyMapInterface.Instance.GrabLightmapTexture(LightMapPoint, LightmapID));
             TextureAssigment = a;
         }

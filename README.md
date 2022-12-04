@@ -15,7 +15,6 @@
 - Model Library
 - Scale Gimzos
 - Randomiser GUI
-- Xray Mesh
 - Particle Instances
 - Lighting Instances
 
