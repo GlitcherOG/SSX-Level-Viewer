@@ -1036,8 +1036,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 37.485992, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 44.1, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &27543653
 MonoBehaviour:
@@ -1768,7 +1768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 170.6, y: -27}
+  m_AnchoredPosition: {x: 193.39998, y: -27}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &37539091
@@ -7468,8 +7468,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 37.485992, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 44.1, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147728211
 MonoBehaviour:
@@ -15046,8 +15046,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2099694216}
   m_HandleRect: {fileID: 2099694215}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.99999994
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -20594,7 +20594,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -166.29999, y: -22.49995}
+  m_AnchoredPosition: {x: -180.69998, y: -22.49995}
   m_SizeDelta: {x: 51.757004, y: 30.889}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &455523391
@@ -20713,7 +20713,19 @@ MonoBehaviour:
   w: {fileID: 0}
   SendUpdatePing:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2025137288}
+        m_TargetAssemblyTypeName: GizmoManager, Assembly-CSharp
+        m_MethodName: UpdatePosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   vector3: {x: 0, y: 0, z: 0}
   vector4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &456849203
@@ -29915,7 +29927,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 87.399994, y: -27}
+  m_AnchoredPosition: {x: 110.2, y: -27}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &655976303
@@ -33107,8 +33119,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 105.5, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 124.7, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &718022451
 MonoBehaviour:
@@ -47182,28 +47194,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1035825194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a855626c722df01439cf9737a410d8d9, type: 3}
+  m_Script: {fileID: 11500000, guid: c10b8184c4b2b05499f766d012a1c596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   patchObject: {fileID: 0}
   texture: {fileID: 0}
-  rawImage1: {fileID: 1471598697}
-  rawImage2: {fileID: 1500740929}
-  rawImage3: {fileID: 995963343}
-  rawImage4: {fileID: 1938837952}
-  point1: {fileID: 500414720}
-  point2: {fileID: 1699189315}
-  point3: {fileID: 312189213}
-  point4: {fileID: 530478258}
-  Point1XInput: {fileID: 1959856248}
-  Point1YInput: {fileID: 1159253935}
-  Point2XInput: {fileID: 1285560625}
-  Point2YInput: {fileID: 620716320}
-  Point3XInput: {fileID: 1863856017}
-  Point3YInput: {fileID: 594215566}
-  Point4XInput: {fileID: 31694485}
-  Point4YInput: {fileID: 1765806193}
-  disableupdate: 0
+  rawImage1: {fileID: 0}
+  rawImage2: {fileID: 0}
+  rawImage3: {fileID: 0}
+  rawImage4: {fileID: 0}
+  point1: {fileID: 1281425500}
+  point2: {fileID: 1596020913}
+  point3: {fileID: 1569682778}
+  point4: {fileID: 1688855894}
+  Point1XInput: {fileID: 0}
+  Point1YInput: {fileID: 0}
+  Point2XInput: {fileID: 0}
+  Point2YInput: {fileID: 0}
+  Point3XInput: {fileID: 0}
+  Point3YInput: {fileID: 0}
+  Point4XInput: {fileID: 0}
+  Point4YInput: {fileID: 0}
 --- !u!1 &1036158921
 GameObject:
   m_ObjectHideFlags: 0
@@ -58848,8 +58859,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 105.5, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 124.7, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295556719
 MonoBehaviour:
@@ -62880,8 +62891,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 173.6, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 205, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1363712085
 MonoBehaviour:
@@ -74968,8 +74979,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1229360433}
   m_HandleRect: {fileID: 1229360432}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -84266,8 +84277,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 37.485992, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 44.1, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1810258475
 MonoBehaviour:
@@ -87218,8 +87229,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 173.6, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 205, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1850434292
 MonoBehaviour:
@@ -87656,7 +87667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -166.3, y: -54.6}
+  m_AnchoredPosition: {x: -180.7, y: -54.6}
   m_SizeDelta: {x: 51.757004, y: 30.889}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1855433030
@@ -87777,7 +87788,19 @@ MonoBehaviour:
   w: {fileID: 0}
   SendUpdatePing:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2025137288}
+        m_TargetAssemblyTypeName: GizmoManager, Assembly-CSharp
+        m_MethodName: UpdateRotation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   vector3: {x: 0, y: 0, z: 0}
   vector4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1855434715
@@ -88115,9 +88138,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614645438}
-        m_TargetAssemblyTypeName: XYZMovmentController, Assembly-CSharp
-        m_MethodName: SetGridAlign
+      - m_Target: {fileID: 2025137288}
+        m_TargetAssemblyTypeName: GizmoManager, Assembly-CSharp
+        m_MethodName: UpdateGridAlign
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -90041,8 +90064,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 173.6, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 205, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898777765
 MonoBehaviour:
@@ -91095,8 +91118,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 105.5, y: -0.000061035156}
-  m_SizeDelta: {x: 66.05591, y: 30}
+  m_AnchoredPosition: {x: 124.7, y: 0}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1921619126
 MonoBehaviour:
@@ -92238,7 +92261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -166.29999, y: -86.11995}
+  m_AnchoredPosition: {x: -180.69998, y: -86.11995}
   m_SizeDelta: {x: 51.757004, y: 30.889}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945522840
@@ -92359,7 +92382,19 @@ MonoBehaviour:
   w: {fileID: 0}
   SendUpdatePing:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2025137288}
+        m_TargetAssemblyTypeName: GizmoManager, Assembly-CSharp
+        m_MethodName: UpdateScale
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   vector3: {x: 0, y: 0, z: 0}
   vector4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1949286614
@@ -94389,7 +94424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 129.1, y: -27}
+  m_AnchoredPosition: {x: 151.89998, y: -27}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992156456
@@ -96711,8 +96746,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -228.33899, y: -54.787872}
-  m_SizeDelta: {x: 392.5522, y: 106.3997}
+  m_AnchoredPosition: {x: -247.93677, y: -54.787872}
+  m_SizeDelta: {x: 431.7477, y: 106.3997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2025137286
 MonoBehaviour:
@@ -96766,6 +96801,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GizmoPrefab: {fileID: 8163763751061611869, guid: 7b9ec7f6322c3f942848b00d7e4765f3, type: 3}
   GizmoObject: {fileID: 614645437}
+  Position: {fileID: 455523393}
+  Rotation: {fileID: 1855433032}
+  Scale: {fileID: 1945522842}
+  GridAlign: {fileID: 1860051154}
 --- !u!1 &2026282371
 GameObject:
   m_ObjectHideFlags: 0
@@ -99825,7 +99864,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 92.667, y: -67.044}
+  m_AnchoredPosition: {x: 115.466965, y: -67.044}
   m_SizeDelta: {x: 51.757004, y: 30.889}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2086933857
@@ -99875,7 +99914,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.9
+  m_fontSize: 12.7
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -99911,7 +99950,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 3.6685011, y: 0, z: -2.7514558, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

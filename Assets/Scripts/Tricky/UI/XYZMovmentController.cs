@@ -27,7 +27,6 @@ public class XYZMovmentController : MonoBehaviour
     public GameObject RotationY;
     public GameObject RotationZ;
     [Space(10)]
-    public TMP_InputField girdAlign;
     public float GridAlign;
 
     private void Awake()
@@ -165,19 +164,6 @@ public class XYZMovmentController : MonoBehaviour
         transform.eulerAngles = oldRot;
         Movement.SetActive(false);
         Rotation.SetActive(true);
-    }
-
-    public void SetGridAlign(string Text)
-    {
-        try
-        {
-            girdAlign.GetComponent<Image>().color = Color.white;
-            GridAlign= float.Parse(Text);
-        }
-        catch
-        {
-            girdAlign.GetComponent<Image>().color = Color.red;
-        }
     }
 
     public enum GimzoMode

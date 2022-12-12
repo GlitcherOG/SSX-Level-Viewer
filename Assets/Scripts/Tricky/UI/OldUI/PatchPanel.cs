@@ -405,7 +405,7 @@ public class PatchPanel : MonoBehaviour
         if (patchObject != null)
         {
             patchObject.UnSelectedObject();
-            UVWindow.Deactive();
+            //UVWindow.Deactive();
             gameObject.SetActive(false);
         }
     }
