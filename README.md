@@ -6,19 +6,25 @@
 - Texture Library viewing
 - Instance Editing
  
-## Todo add
+## Todo Before Next Update
 - Redesign Panel UI System
-- Add LTG State To Instance Panel
+- Redo Model System To Prefab System
+- Fix Mesh Material Grabbing
 - Fix Skybox Loading
+- Add LTG State To Instance Panel
+- Texture Flipbook Support
+- Adding/Removing New Patches/Instances
+- Hidding Gizmo 
+
+
 - Point Filtering Options
 - Material Library set
-- Model Library
+- Prefab Library
 - Scale Gimzos
 - Randomiser GUI
 - Particle Instances
 - Lighting Instances
 
-- Make Settings Applying a thing
 - Build Project
 - Patch Panel Texture Selector
 - key to focus on object
@@ -26,7 +32,6 @@
 - Auto Save View Modes
 - Hotkey For toggling No Light Mode
 - UV Editing Clicking Points to edit UV and fix colors
-- Texture Flipbook Support
 - Buttons to make spline ends connect
 - About Page
 - Hide Point
@@ -34,23 +39,21 @@
 - Make way to dismiss notifcation/Nofication Sounds
 
 ## Todo Change
-- Fix Instance High/Low XYZ (Patched but its possible that it does need animation data)
 - Redo Dropdown Menus so it auto adds hide menu
 - Tweak Toggle Object Script
 - Scroll wheel to have variable speed
-- Limit Mouse Look so camera doesnt freak out
 - Settings for keybindings
 - Open File for Settings Page
 
 ## Todo BugFixes
-- Fix Mesh Generation Spline
+- Fix Mesh Generation Spline with rounded object
 
 ## Todo in Later Update
 - Custom File Opener
 - Auto Updater
 - Fix UI Scaling
 - Controller Camera Movement
-- Edge Selector
+- Edge Selector Patch
 - Point Combine
 - fix Point Colliders, Fix Selection tool it seems to be very broken the further you get from 0,0,0 (While fixed by changing scale want to see if theres a better way)
 
