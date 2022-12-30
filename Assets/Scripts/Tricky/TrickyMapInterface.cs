@@ -35,7 +35,7 @@ public class TrickyMapInterface : MonoBehaviour
     public PatchesJsonHandler PatchJson;
     public SplineJsonHandler SplineJson;
     public InstanceJsonHandler InstanceJson;
-    public ModelJsonHandler ModelJson;
+    public PrefabJsonHandler PrefabJson;
     public MaterialJsonHandler materialJson;
     public MaterialBlockJsonHandler materialBlock;
     public LightJsonHandler lightJson;
@@ -291,7 +291,7 @@ public class TrickyMapInterface : MonoBehaviour
             LoadSplines(StringPath + "\\Splines.json");
             materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
-            LoadModels(StringPath + "\\ModelHeaders.json");
+            LoadPrefabs(StringPath + "\\ModelHeaders.json");
             LoadInstances(StringPath + "\\Instances.json");
             LoadLighting(StringPath + "\\Lights.json");
             SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
@@ -346,13 +346,13 @@ public class TrickyMapInterface : MonoBehaviour
         }
     }
 
-    void LoadModels(string Path)
+    void LoadPrefabs(string Path)
     {
         modelObjects = new List<ModelObject>();
-        ModelJson = ModelJsonHandler.Load(Path);
-        for (int i = 0; i < ModelJson.ModelJsons.Count; i++)
+        PrefabJson = PrefabJsonHandler.Load(Path);
+        for (int i = 0; i < PrefabJson.PrefabJsons.Count; i++)
         {
-            var TempModelJson = ModelJson.ModelJsons[i];
+            var TempModelJson = PrefabJson.PrefabJsons[i];
             ModelObject mObject = new ModelObject();
             GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + i.ToString() + ".obj", null);
             var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
@@ -362,7 +362,7 @@ public class TrickyMapInterface : MonoBehaviour
             }
             Destroy(gameObject);
 
-            mObject.ModelName = TempModelJson.ModelName;
+            mObject.ModelName = TempModelJson.PrefabName;
             modelObjects.Add(mObject);
         }
     }

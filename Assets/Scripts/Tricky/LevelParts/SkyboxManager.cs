@@ -15,7 +15,7 @@ public class SkyboxManager : MonoBehaviour
     public Material SkyboxMaterial;
     public GameObject Skybox;
     
-    public ModelJsonHandler ModelJson;
+    public PrefabJsonHandler prefabJson;
     public MaterialJsonHandler materialJson;
     public MaterialBlockJsonHandler materialBlock;
     public List<Texture2D> textures;
@@ -71,10 +71,10 @@ public class SkyboxManager : MonoBehaviour
     void LoadModels(string Path)
     {
         modelObjects = new List<ModelObject>();
-        ModelJson = ModelJsonHandler.Load(Path);
-        for (int i = 0; i < ModelJson.ModelJsons.Count; i++)
+        prefabJson = PrefabJsonHandler.Load(Path);
+        for (int i = 0; i < prefabJson.PrefabJsons.Count; i++)
         {
-            var TempModelJson = ModelJson.ModelJsons[i];
+            var TempModelJson = prefabJson.PrefabJsons[i];
             ModelObject mObject = new ModelObject();
             GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + i.ToString() + ".obj", null);
             var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
@@ -84,7 +84,7 @@ public class SkyboxManager : MonoBehaviour
             }
             Destroy(gameObject);
 
-            mObject.ModelName = TempModelJson.ModelName;
+            mObject.ModelName = TempModelJson.PrefabName;
             modelObjects.Add(mObject);
         }
     }
