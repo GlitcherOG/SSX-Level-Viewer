@@ -7,17 +7,16 @@ using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using SSXMultiTool.JsonFiles.Tricky;
 using SSXMultiTool.FileHandlers.LevelFiles.TrickyPS2;
-using Dummiesman;
 
 public class TrickyMapInterface : MonoBehaviour
 {
     public static TrickyMapInterface Instance;
-    public Shader shader;
     public LevelEditorSettings settings;
     public bool NoLightMode;
     public bool HardwareMode;
     public string LoadPath = "";
     public static float Scale = 0.01f; //1f;
+
     [Header("Parent Objects")]
     public GameObject patchesParent;
     public GameObject splineParent;
@@ -39,7 +38,6 @@ public class TrickyMapInterface : MonoBehaviour
     public MaterialJsonHandler materialJson;
     public MaterialBlockJsonHandler materialBlock;
     public LightJsonHandler lightJson;
-
     public Texture2D ErrorTexture;
     public bool TextureChanged;
 
@@ -51,8 +49,6 @@ public class TrickyMapInterface : MonoBehaviour
     public List<InstanceObject> instanceObjects = new List<InstanceObject>();
     public List<ParticleInstanceObject> particleInstancesObjects = new List<ParticleInstanceObject>();
     public List<ModelObject> modelObjects = new List<ModelObject>();
-
-    public Material ModelMaterial;
 
     public string ConfigPath;
     public string Version = "0.0.6";
@@ -188,7 +184,6 @@ public class TrickyMapInterface : MonoBehaviour
     {
         SelectorScript.instance.active = false;
         MaterialLibrayObject.SetActive(true);
-        MaterialLibrayObject.GetComponent<MaterialPanel>().GenerateButtons();
         LevelEditorObject.SetActive(false);
     }
 
@@ -354,7 +349,7 @@ public class TrickyMapInterface : MonoBehaviour
         {
             var TempModelJson = PrefabJson.PrefabJsons[i];
             ModelObject mObject = new ModelObject();
-            GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + i.ToString() + ".obj", null);
+            GameObject gameObject = new GameObject();
             var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
             for (int a = 0; a < Meshes.Length; a++)
             {

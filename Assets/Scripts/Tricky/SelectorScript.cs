@@ -11,9 +11,6 @@ public class SelectorScript : MonoBehaviour
     public bool SelectedObject;
     public GameObject SelectedGameObject;
     public string selectedTag;
-    public GameObject PatchPanelObject;
-    public GameObject SplinePanelObject;
-    public GameObject InstancePanelObject;
     public GameObject XYZMovement;
 
     public GraphicRaycaster m_Raycaster;
@@ -42,42 +39,42 @@ public class SelectorScript : MonoBehaviour
                 List<RaycastResult> results = new List<RaycastResult>();
 
                 //Raycast using the Graphics Raycaster and mouse click position
-                m_Raycaster.Raycast(m_PointerEventData, results);
-                if (results.Count == 0)
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    int layerMask = 1 << 7;
-                    int layerMask2 = 1 << 6;
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-                    {
-                        if (selectedTag == "Patch Point")
-                        {
-                            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
-                        }
-                        RaycastSelection(hit);
-                    }
-                    else
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
-                    {
-                        if (selectedTag == "Patch Point")
-                        {
-                            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
-                        }
-                        RaycastSelection(hit);
-                    }
-                    else
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        Deselect();
-                        RaycastSelection(hit);
-                    }
-                    else
-                    {
-                        Deselect();
-                    }
+                //m_Raycaster.Raycast(m_PointerEventData, results);
+                //if (results.Count == 0)
+                //{
+                //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //    RaycastHit hit;
+                //    int layerMask = 1 << 7;
+                //    int layerMask2 = 1 << 6;
+                //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                //    {
+                //        if (selectedTag == "Patch Point")
+                //        {
+                //            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
+                //        }
+                //        RaycastSelection(hit);
+                //    }
+                //    else
+                //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
+                //    {
+                //        if (selectedTag == "Patch Point")
+                //        {
+                //            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
+                //        }
+                //        RaycastSelection(hit);
+                //    }
+                //    else
+                //    if (Physics.Raycast(ray, out hit))
+                //    {
+                //        Deselect();
+                //        RaycastSelection(hit);
+                //    }
+                //    else
+                //    {
+                //        Deselect();
+                //    }
 
-                }
+                //}
             }
         }
     }
@@ -97,23 +94,23 @@ public class SelectorScript : MonoBehaviour
         {
             if (selectedTag == "Patch")
             {
-                PatchPanelObject.SetActive(true);
+                //PatchPanelObject.SetActive(true);
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
-                PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
+                //PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
             }
             if (selectedTag == "Spline")
             {
                 XYZMovement.SetActive(true);
-                SplinePanelObject.SetActive(true);
-                SplinePanel.instance.LoadSplineAndSegment(SelectedGameObject.GetComponent<SplineSegmentObject>());
+                //SplinePanelObject.SetActive(true);
+                //SplinePanel.instance.LoadSplineAndSegment(SelectedGameObject.GetComponent<SplineSegmentObject>());
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
             }
             if (selectedTag == "Instances")
             {
                 XYZMovement.SetActive(true);
-                InstancePanelObject.SetActive(true);
-                InstancePanel.instance.UpdateAll(SelectedGameObject.GetComponent<InstanceObject>());
+                //InstancePanelObject.SetActive(true);
+                //InstancePanel.instance.UpdateAll(SelectedGameObject.GetComponent<InstanceObject>());
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
 
             }
@@ -138,9 +135,9 @@ public class SelectorScript : MonoBehaviour
         }
         else
         {
-            PatchPanelObject.SetActive(false);
+            //PatchPanelObject.SetActive(false);
             XYZMovement.SetActive(false);
-            SplinePanelObject.SetActive(false);
+            //SplinePanelObject.SetActive(false);
         }
     }
 
@@ -175,9 +172,9 @@ public class SelectorScript : MonoBehaviour
             }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);
-            InstancePanelObject.GetComponent<InstancePanel>().HideSelfAndChild();
-            SplinePanelObject.GetComponent<SplinePanel>().HideSelfAndChild();
-            PatchPanelObject.GetComponent<PatchPanel>().HideSelfAndChild();
+            //InstancePanelObject.GetComponent<InstancePanel>().HideSelfAndChild();
+            //SplinePanelObject.GetComponent<SplinePanel>().HideSelfAndChild();
+            //PatchPanelObject.GetComponent<PatchPanel>().HideSelfAndChild();
             selectedTag = "";
             SelectedObject = false;
             SelectedGameObject = null;

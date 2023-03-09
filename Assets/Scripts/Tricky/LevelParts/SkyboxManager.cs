@@ -1,4 +1,3 @@
-using Dummiesman;
 using SSXMultiTool.JsonFiles.Tricky;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,7 +75,7 @@ public class SkyboxManager : MonoBehaviour
         {
             var TempModelJson = prefabJson.PrefabJsons[i];
             ModelObject mObject = new ModelObject();
-            GameObject gameObject = new OBJLoader().Load(LoadPath + "/Models/" + i.ToString() + ".obj", null);
+            GameObject gameObject = new GameObject();
             var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
             for (int a = 0; a < Meshes.Length; a++)
             {

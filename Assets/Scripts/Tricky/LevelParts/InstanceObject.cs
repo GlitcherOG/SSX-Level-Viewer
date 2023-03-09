@@ -28,9 +28,6 @@ public class InstanceObject : MonoBehaviour
     public int PrevInstance; //Next Connected Model 
     public int NextInstance; //Prev Connected Model
 
-    public Vector3 LowestXYZ;
-    public Vector3 HighestXYZ;
-
     public int UnknownInt26;
     public int UnknownInt27;
     public int UnknownInt28;
@@ -79,8 +76,6 @@ public class InstanceObject : MonoBehaviour
         transform.localEulerAngles = rotation;
         transform.localScale = scale;
 
-        LowestXYZ = transform.InverseTransformPoint(TrickyMapInterface.Instance.instanceParent.transform.TransformPoint(JsonUtil.ArrayToVector3(instance.LowestXYZ)));
-        HighestXYZ = transform.InverseTransformPoint(TrickyMapInterface.Instance.instanceParent.transform.TransformPoint(JsonUtil.ArrayToVector3(instance.HighestXYZ)));
 
         UnknownInt26 = instance.UnknownInt26;
         UnknownInt27 = instance.UnknownInt27;
@@ -197,25 +192,10 @@ public class InstanceObject : MonoBehaviour
         transform.localScale = scale;
         transform.localPosition = InstancePosition;
 
-        LowestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
-        HighestXYZ = TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(meshes[0].GetComponent<MeshFilter>().mesh.vertices[0]));
-        for (int i = 0; i < meshes.Count; i++)
-        {
-            var MeshGet = meshes[i].GetComponent<MeshFilter>().mesh;
-            for (int a = 0; a < MeshGet.vertices.Length; a++)
-            {
-                LowestXYZ = MathTools.Lowest(LowestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
-                HighestXYZ = MathTools.Highest(HighestXYZ, TrickyMapInterface.Instance.instanceParent.transform.InverseTransformPoint(transform.TransformPoint(MeshGet.vertices[a])));
-            }
-        }
-
         transform.localPosition = InstancePosition * TrickyMapInterface.Scale;
         transform.localScale = scale * TrickyMapInterface.Scale;
 
         IsLoaded = true;
-
-        TempInstance.LowestXYZ = JsonUtil.Vector3ToArray(LowestXYZ);
-        TempInstance.HighestXYZ = JsonUtil.Vector3ToArray(HighestXYZ);
 
         TempInstance.UnknownInt26 = UnknownInt26;
         TempInstance.UnknownInt27 = UnknownInt27;
@@ -253,19 +233,16 @@ public class InstanceObject : MonoBehaviour
             {
                 Oldscale = transform.localScale;
                 scale = transform.localScale / TrickyMapInterface.Scale;
-                InstancePanel.instance.UpdateAll(this);
             }
             if (Oldrotation != transform.localEulerAngles)
             {
                 Oldrotation = transform.eulerAngles;
                 rotation = transform.localEulerAngles;
-                InstancePanel.instance.UpdateAll(this);
             }
             if (Oldposition != transform.localPosition)
             {
                 Oldposition = transform.localPosition;
                 InstancePosition = transform.localPosition / TrickyMapInterface.Scale;
-                InstancePanel.instance.UpdateAll(this);
             }
         }
     }

@@ -130,7 +130,6 @@ public class SplineSegmentObject : MonoBehaviour
         Point2 = PatchPoints[1].transform.position / TrickyMapInterface.Scale;
         Point3 = PatchPoints[2].transform.position / TrickyMapInterface.Scale;
         Point4 = PatchPoints[3].transform.position / TrickyMapInterface.Scale;
-        SplinePanel.instance.LoadSegment(false);
         SetDataLineRender(true);
     }
 

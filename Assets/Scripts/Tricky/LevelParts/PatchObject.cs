@@ -383,10 +383,6 @@ public class PatchObject : MonoBehaviour
                 PatchPoints[i].DisableUpdate = false;
             }
         }
-        if (PatchPanel.instance.patchObject == this)
-        {
-            PatchPanel.instance.UpdatePoint(false);
-        }
         if(Selected)
         {
             UpdateLineGenerators();
