@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     private void OnGUI()
     {
         #region TopBar Menu
+        GUI.Box(new Rect(0, 0, Screen.width, 21), "");
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Load Level"))
         {
@@ -46,5 +47,8 @@ public class UIManager : MonoBehaviour
         }
         GUILayout.EndHorizontal();
         #endregion
+
+
+
     }
 }

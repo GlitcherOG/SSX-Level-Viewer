@@ -10,9 +10,8 @@ public class ModelObject
     public static Material GenerateMaterial(int block, int meshID)
     {
         Material material = new Material(Shader.Find("ModelShader"));
-        material.CopyPropertiesFromMaterial(TrickyMapInterface.Instance.ModelMaterial);
         int MaterialID = 0;
-        if(TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count-1>= meshID)
+        if (TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count - 1 >= meshID)
         {
             MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[meshID];
         }

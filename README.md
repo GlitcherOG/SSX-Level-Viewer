@@ -11,7 +11,6 @@
 - Redo Model System To Prefab System
 - Fix Mesh Material Grabbing
 - Fix Skybox Loading
-- Add LTG State To Instance Panel
 - Texture Flipbook Support
 - Adding/Removing New Patches/Instances
 - Hidding Gizmo 

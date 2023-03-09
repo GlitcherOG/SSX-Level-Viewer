@@ -102,7 +102,6 @@ public class TrickyMapInterface : MonoBehaviour
             string BuildPath = saveFileDialog.FileName;
             startInfo.Arguments = "trickylevel build \"" + LoadPath + "\" \"" + BuildPath + " \" run \"" + settings.EmulatorPath + "\" \"" + settings.LaunchPath + "\"";
             Process.Start(startInfo);
-            NotifcationBarUI.instance.ShowNotifcation("Please Wait as MultiTool Attempts To Build", 5);
         }
     }
 
@@ -287,44 +286,18 @@ public class TrickyMapInterface : MonoBehaviour
             materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
             LoadPrefabs(StringPath + "\\ModelHeaders.json");
-            LoadInstances(StringPath + "\\Instances.json");
+            //LoadInstances(StringPath + "\\Instances.json");
             LoadLighting(StringPath + "\\Lights.json");
             SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
-            LoadAIP(StringPath + "\\Original\\sop.sop");
-            NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
+            //LoadAIP(StringPath + "\\Original\\sop.sop");
+            //NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
         else
         {
-            NotifcationBarUI.instance.SendMessage("Incorrect Project Version");
+            //NotifcationBarUI.instance.SendMessage("Incorrect Project Version");
         }
     }
-    public GameObject PathParent;
-    public GameObject PathCubePrefab;
-    public AIPSOPHandler handler = new AIPSOPHandler();
-    void LoadAIP(string path)
-    {
-        handler = new AIPSOPHandler();
-        handler.LoadAIPSOP(path);
 
-        for (int i = 0; i < handler.typeAs.Count; i++)
-        {
-            GameObject gameObject = Instantiate(PathCubePrefab, PathParent.transform);
-            gameObject.transform.name = i.ToString();
-            gameObject.transform.parent = PathParent.transform;
-            gameObject.transform.localScale = Vector3.one;
-            gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
-            gameObject.transform.localPosition = new Vector3(handler.typeAs[i].pathPos.X, handler.typeAs[i].pathPos.Y, handler.typeAs[i].pathPos.Z) * Scale;
-            Vector3 PointLocation = new Vector3(0,0,0) * Scale;
-            gameObject.GetComponent<LineRenderer>().positionCount = handler.typeAs[i].patchPoints.Count + 1;
-            gameObject.GetComponent<LineRenderer>().useWorldSpace = false;
-            gameObject.GetComponent<LineRenderer>().SetPosition(0, PointLocation);
-            for (int a = 0; a < handler.typeAs[i].patchPoints.Count; a++)
-            {
-                PointLocation += new Vector3(handler.typeAs[i].patchPoints[a].X, handler.typeAs[i].patchPoints[a].Y, handler.typeAs[i].patchPoints[a].Z) * Scale;
-                gameObject.GetComponent<LineRenderer>().SetPosition(a+1, PointLocation);
-            }
-        }
-    }
 
     void LoadPatches(string PatchPath)
     {
@@ -526,7 +499,6 @@ public class TrickyMapInterface : MonoBehaviour
         SavePatches(StringPath + "\\Patches.json");
         SaveSplines(StringPath + "\\Splines.json");
         SaveInstances(StringPath + "\\Instances.json");
-        NotifcationBarUI.instance.ShowNotifcation("Project Saved" ,5);
     }
 
     public void SavePatches(string PatchPath)
