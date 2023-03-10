@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RapidGUI;
 
 public class UIManager : MonoBehaviour
 {
+    SettingsPage settingsPage = null;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnGUI()
@@ -27,7 +29,7 @@ public class UIManager : MonoBehaviour
         }
         if (GUILayout.Button("Save Level"))
         {
-
+            TrickyMapInterface.Instance.SaveFileMap();
         }
         if (GUILayout.Button("Material Libary"))
         {
@@ -43,12 +45,18 @@ public class UIManager : MonoBehaviour
         }
         if (GUILayout.Button("Settings"))
         {
-
+            if (settingsPage != null)
+            {
+                Destroy(settingsPage);
+                settingsPage = null;
+            }
+            else
+            {
+                settingsPage = gameObject.AddComponent<SettingsPage>();
+            }
         }
         GUILayout.EndHorizontal();
         #endregion
-
-
-
     }
+
 }

@@ -17,6 +17,8 @@ public class SelectorScript : MonoBehaviour
     PointerEventData m_PointerEventData;
     public EventSystem m_EventSystem;
 
+    public PatchPage patchPage = null;
+
     // Start is called before the first frame update
     public void Awake()
     {
@@ -40,41 +42,42 @@ public class SelectorScript : MonoBehaviour
 
                 //Raycast using the Graphics Raycaster and mouse click position
                 //m_Raycaster.Raycast(m_PointerEventData, results);
-                //if (results.Count == 0)
-                //{
-                //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                //    RaycastHit hit;
-                //    int layerMask = 1 << 7;
-                //    int layerMask2 = 1 << 6;
-                //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-                //    {
-                //        if (selectedTag == "Patch Point")
-                //        {
-                //            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
-                //        }
-                //        RaycastSelection(hit);
-                //    }
-                //    else
-                //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
-                //    {
-                //        if (selectedTag == "Patch Point")
-                //        {
-                //            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
-                //        }
-                //        RaycastSelection(hit);
-                //    }
-                //    else
-                //    if (Physics.Raycast(ray, out hit))
-                //    {
-                //        Deselect();
-                //        RaycastSelection(hit);
-                //    }
-                //    else
-                //    {
-                //        Deselect();
-                //    }
+                int a = GUIUtility.hotControl;
+                if (a == 0)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    int layerMask = 1 << 7;
+                    int layerMask2 = 1 << 6;
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                    {
+                        if (selectedTag == "Patch Point")
+                        {
+                            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
+                        }
+                        RaycastSelection(hit);
+                    }
+                    else
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
+                    {
+                        if (selectedTag == "Patch Point")
+                        {
+                            SelectedGameObject.GetComponent<PatchPoint>().UnSelected();
+                        }
+                        RaycastSelection(hit);
+                    }
+                    else
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        Deselect();
+                        RaycastSelection(hit);
+                    }
+                    else
+                    {
+                        Deselect();
+                    }
 
-                //}
+                }
             }
         }
     }
@@ -94,10 +97,10 @@ public class SelectorScript : MonoBehaviour
         {
             if (selectedTag == "Patch")
             {
-                //PatchPanelObject.SetActive(true);
+                patchPage = gameObject.AddComponent<PatchPage>();
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
-                //PatchPanel.instance.UpdateAll(SelectedGameObject.GetComponent<PatchObject>());
+                patchPage.patchObjects.Add(SelectedGameObject.GetComponent<PatchObject>());
             }
             if (selectedTag == "Spline")
             {
@@ -135,7 +138,11 @@ public class SelectorScript : MonoBehaviour
         }
         else
         {
-            //PatchPanelObject.SetActive(false);
+            if(patchPage!=null)
+            {
+                Destroy(patchPage);
+                patchPage = null;
+            }
             XYZMovement.SetActive(false);
             //SplinePanelObject.SetActive(false);
         }
@@ -174,7 +181,13 @@ public class SelectorScript : MonoBehaviour
             XYZMovement.SetActive(false);
             //InstancePanelObject.GetComponent<InstancePanel>().HideSelfAndChild();
             //SplinePanelObject.GetComponent<SplinePanel>().HideSelfAndChild();
-            //PatchPanelObject.GetComponent<PatchPanel>().HideSelfAndChild();
+
+            if (patchPage != null)
+            {
+                Destroy(patchPage);
+                patchPage = null;
+            }
+
             selectedTag = "";
             SelectedObject = false;
             SelectedGameObject = null;

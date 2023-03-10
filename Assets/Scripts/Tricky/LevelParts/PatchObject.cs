@@ -40,12 +40,9 @@ public class PatchObject : MonoBehaviour
 
     [Space(10)]
     public int PatchStyle;
-    public int Unknown2; //Lighting/Material
+    public bool TrickOnlyPatch;
     public int TextureAssigment;
     public int LightmapID;
-    public int Unknown4; 
-    public int Unknown5; 
-    public int Unknown6; 
 
     [Space(10)]
     public Material MainMaterial;
@@ -86,12 +83,9 @@ public class PatchObject : MonoBehaviour
         RawControlPoint = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C1));
 
         PatchStyle = import.PatchStyle;
-        Unknown2 = import.Unknown2;
+        TrickOnlyPatch = import.TrickOnlyPatch;
         TextureAssigment = import.TextureAssigment;
         LightmapID = import.LightmapID;
-        Unknown4 = import.Unknown4;
-        Unknown5 = import.Unknown5;
-        Unknown6 = import.Unknown6;
 
         transform.position = RawControlPoint * TrickyMapInterface.Scale;
         oldPosition = transform.position;
@@ -131,12 +125,9 @@ public class PatchObject : MonoBehaviour
         patch.R4C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C4));
 
         patch.PatchStyle = PatchStyle;
-        patch.Unknown2 = Unknown2;
+        patch.TrickOnlyPatch = TrickOnlyPatch;
         patch.TextureAssigment = TextureAssigment;
         patch.LightmapID = LightmapID;
-        patch.Unknown4 = Unknown4;
-        patch.Unknown5 = Unknown5;
-        patch.Unknown6 = Unknown6;
 
         return patch;
     }
