@@ -30,6 +30,15 @@ public class SelectorScript : MonoBehaviour
     {
         if (active)
         {
+            //Standard Click clear and Add To List
+
+
+            //Shift/Control Click add/remove from list
+
+
+
+
+
             if (Input.GetMouseButtonDown(0) && !FlyAroundCamera.Active)
             {
                 //Set up the new Pointer Event
@@ -101,6 +110,8 @@ public class SelectorScript : MonoBehaviour
                 XYZMovement.SetActive(true);
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
                 patchPage.patchObjects.Add(SelectedGameObject.GetComponent<PatchObject>());
+
+                SelectedGameObject.GetComponent<PatchObject>().SelectedObject();
             }
             if (selectedTag == "Spline")
             {

@@ -124,12 +124,10 @@ public class InstanceObject : MonoBehaviour
             try
             {
                 newGameObject.GetComponent<MeshRenderer>().material = ModelObject.GenerateMaterial(ModelID, i);
-                Mat = TrickyMapInterface.Instance.materialJson.MaterialsJsons[TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[ModelID].ints[0]];
             }
             catch
             {
-                int a = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[ModelID].ints[0];
-                Debug.LogError("Error Loading Material " + ModelID + ", " + i + ", " + a + ", " + TrickyMapInterface.Instance.materialJson.MaterialsJsons[a].TextureID);
+                //Debug.LogError("Error Loading Material " + ModelID + ", " + i + ", " + a + ", " + TrickyMapInterface.Instance.materialJson.MaterialsJsons[a].TextureID);
             }
             newGameObject.transform.parent = transform;
             newGameObject.transform.localPosition = new Vector3(0, 0, 0);

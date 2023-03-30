@@ -11,14 +11,14 @@ public class ModelObject
     {
         Material material = new Material(Shader.Find("ModelShader"));
         int MaterialID = 0;
-        if (TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count - 1 >= meshID)
-        {
-            MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[meshID];
-        }
-        else
-        {
-            MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count - 1];
-        }
+        //if (TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count - 1 >= meshID)
+        //{
+        //    MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[meshID];
+        //}
+        //else
+        //{
+        //    MaterialID = TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints[TrickyMapInterface.Instance.materialBlock.MaterialBlockJsons[block].ints.Count - 1];
+        //}
         int TextureID = TrickyMapInterface.Instance.materialJson.MaterialsJsons[MaterialID].TextureID;
         material.SetTexture("_MainTexture", GetTexture(TextureID));
         return material;

@@ -7,6 +7,7 @@ public class PatchPage : MonoBehaviour
 {
     public List<PatchObject> patchObjects = new List<PatchObject>();
 
+
     private void OnGUI()
     {
         if (patchObjects.Count == 1)
@@ -144,5 +145,10 @@ public class PatchPage : MonoBehaviour
         GUI.DragWindow();
     },
     "Patch Page");
+    }
+
+    public void OnDestroy()
+    {
+        patchObjects[0].DestroyLineRenders();
     }
 }

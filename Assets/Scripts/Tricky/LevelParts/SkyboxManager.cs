@@ -16,7 +16,6 @@ public class SkyboxManager : MonoBehaviour
     
     public PrefabJsonHandler prefabJson;
     public MaterialJsonHandler materialJson;
-    public MaterialBlockJsonHandler materialBlock;
     public List<Texture2D> textures;
     public List<ModelObject> modelObjects = new List<ModelObject>();
     // Start is called before the first frame update
@@ -41,7 +40,6 @@ public class SkyboxManager : MonoBehaviour
         LoadPath = StringPath;
         if (File.Exists(StringPath + "\\MaterialBlocks.json"))
         {
-            materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
             LoadModels(StringPath + "\\ModelHeaders.json");
             LoadTextures(StringPath + "\\Textures");

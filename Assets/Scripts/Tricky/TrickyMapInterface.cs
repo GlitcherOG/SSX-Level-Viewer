@@ -36,7 +36,6 @@ public class TrickyMapInterface : MonoBehaviour
     public InstanceJsonHandler InstanceJson;
     public PrefabJsonHandler PrefabJson;
     public MaterialJsonHandler materialJson;
-    public MaterialBlockJsonHandler materialBlock;
     public LightJsonHandler lightJson;
     public Texture2D ErrorTexture;
     public bool TextureChanged;
@@ -283,7 +282,6 @@ public class TrickyMapInterface : MonoBehaviour
             Loadlightmaps(StringPath + "\\Lightmaps");
             LoadPatches(StringPath + "\\Patches.json");
             LoadSplines(StringPath + "\\Splines.json");
-            materialBlock = MaterialBlockJsonHandler.Load(StringPath + "\\MaterialBlocks.json");
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
             LoadPrefabs(StringPath + "\\ModelHeaders.json");
             //LoadInstances(StringPath + "\\Instances.json");

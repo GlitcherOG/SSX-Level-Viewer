@@ -38,7 +38,6 @@ namespace SSXMultiTool.JsonFiles.Tricky
         public struct PrefabJson
         {
             public string PrefabName;
-            public int MaterialBlockID;
             public int Unknown3;
             public float AnimTime;
             public List<ObjectHeader> PrefabObjects;
@@ -48,8 +47,8 @@ namespace SSXMultiTool.JsonFiles.Tricky
         {
             public int ParentID;
             public int Flags;
-            public int AnimOffset; //Replace With animation ID or something later
 
+            public ObjectAnimation Animation;
             public List<MeshHeader> MeshData;
 
             public float[] Position;
@@ -62,7 +61,34 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public string MeshPath;
             public int MeshID;
             public int MaterialID;
+        }
+        [Serializable]
+        public struct ObjectAnimation
+        {
+            public float U1;
+            public float U2;
+            public float U3;
+            public float U4;
+            public float U5;
+            public float U6;
 
+            public int AnimationAction;
+            public List<AnimationEntry> AnimationEntries;
+        }
+        [Serializable]
+        public struct AnimationEntry
+        {
+            public List<AnimationMath> AnimationMaths;
+        }
+        [Serializable]
+        public struct AnimationMath
+        {
+            public float Value1;
+            public float Value2;
+            public float Value3;
+            public float Value4;
+            public float Value5;
+            public float Value6;
         }
     }
 }
