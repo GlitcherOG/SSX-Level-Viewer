@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using SSXMultiTool.JsonFiles.Tricky;
-using SSXMultiTool.FileHandlers.LevelFiles.TrickyPS2;
 
 public class TrickyMapInterface : MonoBehaviour
 {
@@ -47,7 +46,7 @@ public class TrickyMapInterface : MonoBehaviour
     public List<SplineObject> splineObjects = new List<SplineObject>();
     public List<InstanceObject> instanceObjects = new List<InstanceObject>();
     public List<ParticleInstanceObject> particleInstancesObjects = new List<ParticleInstanceObject>();
-    public List<ModelObject> modelObjects = new List<ModelObject>();
+    public List<PrefabObject> modelObjects = new List<PrefabObject>();
 
     public string ConfigPath;
     public string Version = "0.0.6";
@@ -314,21 +313,14 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadPrefabs(string Path)
     {
-        modelObjects = new List<ModelObject>();
+        modelObjects = new List<PrefabObject>();
         PrefabJson = PrefabJsonHandler.Load(Path);
         for (int i = 0; i < PrefabJson.PrefabJsons.Count; i++)
         {
             var TempModelJson = PrefabJson.PrefabJsons[i];
-            ModelObject mObject = new ModelObject();
-            GameObject gameObject = new GameObject();
-            var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
-            for (int a = 0; a < Meshes.Length; a++)
-            {
-                mObject.meshes.Add(Meshes[a].mesh);
-            }
-            Destroy(gameObject);
+            PrefabObject mObject = new PrefabObject();
 
-            mObject.ModelName = TempModelJson.PrefabName;
+            mObject.PrefabName = TempModelJson.PrefabName;
             modelObjects.Add(mObject);
         }
     }

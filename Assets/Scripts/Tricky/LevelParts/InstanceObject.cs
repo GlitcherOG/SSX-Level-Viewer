@@ -112,29 +112,29 @@ public class InstanceObject : MonoBehaviour
 
         colliders = new List<MeshCollider>();
         meshes = new List<GameObject>();
-        for (int i = 0; i < modelObject.meshes.Count; i++)
-        {
-            GameObject newGameObject = new GameObject();
-            newGameObject.AddComponent<MeshFilter>();
-            newGameObject.GetComponent<MeshFilter>().mesh = modelObject.meshes[i];
-            var tempCollider = gameObject.AddComponent<MeshCollider>();
-            tempCollider.sharedMesh = newGameObject.GetComponent<MeshFilter>().mesh;
-            colliders.Add(tempCollider);
-            newGameObject.AddComponent<MeshRenderer>();
-            try
-            {
-                newGameObject.GetComponent<MeshRenderer>().material = ModelObject.GenerateMaterial(ModelID, i);
-            }
-            catch
-            {
-                //Debug.LogError("Error Loading Material " + ModelID + ", " + i + ", " + a + ", " + TrickyMapInterface.Instance.materialJson.MaterialsJsons[a].TextureID);
-            }
-            newGameObject.transform.parent = transform;
-            newGameObject.transform.localPosition = new Vector3(0, 0, 0);
-            newGameObject.transform.localScale = new Vector3(1, 1, 1);
-            newGameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
-            meshes.Add(newGameObject);
-        }
+        //for (int i = 0; i < modelObject.meshes.Count; i++)
+        //{
+        //    GameObject newGameObject = new GameObject();
+        //    newGameObject.AddComponent<MeshFilter>();
+        //    newGameObject.GetComponent<MeshFilter>().mesh = modelObject.meshes[i];
+        //    var tempCollider = gameObject.AddComponent<MeshCollider>();
+        //    tempCollider.sharedMesh = newGameObject.GetComponent<MeshFilter>().mesh;
+        //    colliders.Add(tempCollider);
+        //    newGameObject.AddComponent<MeshRenderer>();
+        //    try
+        //    {
+        //        newGameObject.GetComponent<MeshRenderer>().material = ModelObject.GenerateMaterial(ModelID, i);
+        //    }
+        //    catch
+        //    {
+        //        //Debug.LogError("Error Loading Material " + ModelID + ", " + i + ", " + a + ", " + TrickyMapInterface.Instance.materialJson.MaterialsJsons[a].TextureID);
+        //    }
+        //    newGameObject.transform.parent = transform;
+        //    newGameObject.transform.localPosition = new Vector3(0, 0, 0);
+        //    newGameObject.transform.localScale = new Vector3(1, 1, 1);
+        //    newGameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        //    meshes.Add(newGameObject);
+        //}
     }
 
     public void UpdateTransform()
