@@ -9,7 +9,7 @@ public class InstanceObject : MonoBehaviour
     public string InstanceName;
 
     bool IsLoaded = false;
-    bool UpdateXYZ = false;
+    public bool UpdateXYZ = false;
 
     public Vector3 rotation;
     public Vector3 scale;
@@ -41,7 +41,9 @@ public class InstanceObject : MonoBehaviour
     public Vector3 Oldrotation;
     public Vector3 Oldscale;
     public Vector3 Oldposition;
-    public List<GameObject> meshes;
+
+    public GameObject Prefab;
+
     public List<MeshCollider> colliders;
 
     public MaterialJsonHandler.MaterialsJson Mat = new MaterialJsonHandler.MaterialsJson(); 
@@ -87,7 +89,7 @@ public class InstanceObject : MonoBehaviour
 
         LTGState = instance.LTGState;
 
-        GenerateMeshes();
+        LoadPrefabs();
 
         transform.localPosition = TempPos * TrickyMapInterface.Scale;
         transform.localEulerAngles = rotation;
@@ -101,40 +103,17 @@ public class InstanceObject : MonoBehaviour
 
     }
 
-    public void GenerateMeshes()
+    public void LoadPrefabs()
     {
-        var modelObject = TrickyMapInterface.Instance.modelObjects[ModelID];
-        for (int i = 0; i < meshes.Count; i++)
+        if(Prefab!=null)
         {
-            Destroy(meshes[i]);
-            Destroy(colliders[i]);
+            Destroy(Prefab);
         }
 
-        colliders = new List<MeshCollider>();
-        meshes = new List<GameObject>();
-        //for (int i = 0; i < modelObject.meshes.Count; i++)
-        //{
-        //    GameObject newGameObject = new GameObject();
-        //    newGameObject.AddComponent<MeshFilter>();
-        //    newGameObject.GetComponent<MeshFilter>().mesh = modelObject.meshes[i];
-        //    var tempCollider = gameObject.AddComponent<MeshCollider>();
-        //    tempCollider.sharedMesh = newGameObject.GetComponent<MeshFilter>().mesh;
-        //    colliders.Add(tempCollider);
-        //    newGameObject.AddComponent<MeshRenderer>();
-        //    try
-        //    {
-        //        newGameObject.GetComponent<MeshRenderer>().material = ModelObject.GenerateMaterial(ModelID, i);
-        //    }
-        //    catch
-        //    {
-        //        //Debug.LogError("Error Loading Material " + ModelID + ", " + i + ", " + a + ", " + TrickyMapInterface.Instance.materialJson.MaterialsJsons[a].TextureID);
-        //    }
-        //    newGameObject.transform.parent = transform;
-        //    newGameObject.transform.localPosition = new Vector3(0, 0, 0);
-        //    newGameObject.transform.localScale = new Vector3(1, 1, 1);
-        //    newGameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
-        //    meshes.Add(newGameObject);
-        //}
+        Prefab = TrickyMapInterface.Instance.modelObjects[ModelID].GeneratePrefab();
+
+        //Generate Collisions
+
     }
 
     public void UpdateTransform()
@@ -144,25 +123,25 @@ public class InstanceObject : MonoBehaviour
         transform.localScale = scale * TrickyMapInterface.Scale;
     }
 
-    public void SelectedObject()
-    {
-        for (int i = 0; i < meshes.Count; i++)
-        {
-            meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 50);
-            meshes[i].GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", Color.red);
-            meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OpacityMaskOutline", 0.5f);
-        }
-    }
+    //public void SelectedObject()
+    //{
+    //    for (int i = 0; i < meshes.Count; i++)
+    //    {
+    //        meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 50);
+    //        meshes[i].GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", Color.red);
+    //        meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OpacityMaskOutline", 0.5f);
+    //    }
+    //}
 
-    public void UnSelectedObject()
-    {
-        for (int i = 0; i < meshes.Count; i++)
-        {
-            meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0);
-            meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OpacityMaskOutline", 0f);
-            meshes[i].GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", new Color32(255,255,255,0));
-        }
-    }
+    //public void UnSelectedObject()
+    //{
+    //    for (int i = 0; i < meshes.Count; i++)
+    //    {
+    //        meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OutlineWidth", 0);
+    //        meshes[i].GetComponent<MeshRenderer>().material.SetFloat("_OpacityMaskOutline", 0f);
+    //        meshes[i].GetComponent<MeshRenderer>().material.SetColor("_OutlineColor", new Color32(255,255,255,0));
+    //    }
+    //}
 
     public InstanceJsonHandler.InstanceJson GenerateInstance()
     {
@@ -214,7 +193,7 @@ public class InstanceObject : MonoBehaviour
         try 
         {
             ModelID = NewMeshID;
-            GenerateMeshes();
+            LoadPrefabs();
             UpdateXYZ = true;
         }
         catch

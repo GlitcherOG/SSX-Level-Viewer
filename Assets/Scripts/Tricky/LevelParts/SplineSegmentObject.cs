@@ -22,7 +22,7 @@ public class SplineSegmentObject : MonoBehaviour
     public GameObject PointPrefab;
     public List<PatchPoint> PatchPoints = new List<PatchPoint>();
 
-    private int curveCount = 0;
+    //private int curveCount = 0;
     private int SEGMENT_COUNT = 50;
 
     public void LoadSplineSegment(SplineJsonHandler.SegmentJson segments)

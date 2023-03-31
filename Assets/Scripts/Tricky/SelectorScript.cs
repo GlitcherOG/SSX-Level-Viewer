@@ -186,7 +186,7 @@ public class SelectorScript : MonoBehaviour
             }
             if(selectedTag== "Instances")
             {
-                SelectedGameObject.GetComponent<InstanceObject>().UnSelectedObject();
+                //SelectedGameObject.GetComponent<InstanceObject>().UnSelectedObject();
             }
             XYZMovement.GetComponent<XYZMovmentController>().RemoveParent();
             XYZMovement.SetActive(false);

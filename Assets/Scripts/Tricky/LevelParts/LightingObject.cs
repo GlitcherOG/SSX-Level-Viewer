@@ -21,7 +21,7 @@ public class LightingObject : MonoBehaviour
     public float UnknownFloat3;
     public int UnknownInt3;
 
-    public Light light;
+    public Light lightObject;
 
     public void LoadLightingObject(LightJsonHandler.LightJson lightJson)
     {
@@ -46,19 +46,19 @@ public class LightingObject : MonoBehaviour
 
         if(Type==0)
         {
-            light.type = LightType.Directional;
+            lightObject.type = LightType.Directional;
         }
         if(Type==1)
         {
-            light.type = LightType.Area; //Spot
+            lightObject.type = LightType.Area; //Spot
         }
         if(Type==2)
         {
-            light.type = LightType.Point;
+            lightObject.type = LightType.Point;
         }
         if(Type==3)
         {
-            light.range = 0;
+            lightObject.range = 0;
             //RenderSettings.ambientLight
         }
     }
