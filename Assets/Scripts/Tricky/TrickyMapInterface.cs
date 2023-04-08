@@ -282,10 +282,10 @@ public class TrickyMapInterface : MonoBehaviour
             LoadPatches(StringPath + "\\Patches.json");
             LoadSplines(StringPath + "\\Splines.json");
             materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
-            LoadPrefabs(StringPath + "\\ModelHeaders.json");
-            //LoadInstances(StringPath + "\\Instances.json");
-            LoadLighting(StringPath + "\\Lights.json");
-            SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
+            LoadPrefabs(StringPath + "\\Prefabs.json");
+            LoadInstances(StringPath + "\\Instances.json");
+            //LoadLighting(StringPath + "\\Lights.json");
+            //SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
             //LoadAIP(StringPath + "\\Original\\sop.sop");
             //NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
@@ -319,8 +319,7 @@ public class TrickyMapInterface : MonoBehaviour
         {
             var TempModelJson = PrefabJson.PrefabJsons[i];
             PrefabObject mObject = new PrefabObject();
-
-            mObject.PrefabName = TempModelJson.PrefabName;
+            mObject.LoadPrefab(TempModelJson);
             modelObjects.Add(mObject);
         }
     }

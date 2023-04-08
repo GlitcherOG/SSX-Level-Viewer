@@ -111,6 +111,10 @@ public class InstanceObject : MonoBehaviour
         }
 
         Prefab = TrickyMapInterface.Instance.modelObjects[ModelID].GeneratePrefab();
+        Prefab.transform.parent = transform;
+        Prefab.transform.localRotation = new Quaternion(0, 0, 0, 0);
+        Prefab.transform.localPosition = new Vector3(0, 0, 0);
+        Prefab.transform.localScale = new Vector3(1, 1, 1);
 
         //Generate Collisions
 

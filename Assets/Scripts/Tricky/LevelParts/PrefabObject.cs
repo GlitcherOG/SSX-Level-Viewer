@@ -1,10 +1,11 @@
 using SSXMultiTool.JsonFiles.Tricky;
 using SSXMultiTool.Utilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static SSXMultiTool.JsonFiles.Tricky.PrefabJsonHandler;
 
+[System.Serializable]
 public class PrefabObject
 {
     public string PrefabName;
@@ -23,12 +24,23 @@ public class PrefabObject
             var TempPrefab = PrefabObjects[i];
             for (int a = 0; a < TempPrefab.MeshData.Count; a++)
             {
-                GameObject ChildMesh = new GameObject();
+                GameObject ChildMesh = new GameObject(i + ", " + a);
+                ChildMesh.transform.parent = MainObject.transform;
+                ChildMesh.transform.localPosition = TempPrefab.Position;
+                ChildMesh.transform.localScale = TempPrefab.Scale;
+                ChildMesh.transform.localRotation = TempPrefab.Rotation;
+                ChildMesh.transform.localEulerAngles += new Vector3(180, 0, 0);
+
+                if(ChildMesh.transform.localScale == new Vector3(0,0,0))
+                {
+                    ChildMesh.transform.localScale = new Vector3(1, 1, 1);
+                }
+
                 var TempMeshFilter = ChildMesh.AddComponent<MeshFilter>();
                 var TempRenderer = ChildMesh.AddComponent<MeshRenderer>();
+
                 TempMeshFilter.mesh = TempPrefab.MeshData[a].mesh;
                 TempRenderer.material = TempPrefab.MeshData[a].material;
-                ChildMesh.transform.parent = MainObject.transform;
             }
         }
 
@@ -51,10 +63,40 @@ public class PrefabObject
             NewPrefabObject.Rotation = JsonUtil.ArrayToQuaternion(prefabJson.PrefabObjects[i].Rotation);
             NewPrefabObject.Scale = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Scale);
 
+            //OBJECT ANIMATION PUT HERE
+
+
             NewPrefabObject.MeshData = new List<MeshHeader>();
+            for (int a = 0; a < prefabJson.PrefabObjects[i].MeshData.Count; a++)
+            {
+                var TempMesh = prefabJson.PrefabObjects[i].MeshData[a];
+                var TempNewMeshData = new MeshHeader();
+                TempNewMeshData.MeshPath = TempMesh.MeshPath;
+                TempNewMeshData.MeshID = TempMesh.MeshID;
+                TempNewMeshData.mesh = ObjImporter.ObjLoad(TrickyMapInterface.Instance.LoadPath + "\\Models\\" + TempMesh.MeshPath);
+                TempNewMeshData.MaterialID = TempMesh.MaterialID;
+                TempNewMeshData.material = GenerateMaterial(TempMesh.MaterialID);
 
+                NewPrefabObject.MeshData.Add(TempNewMeshData);
+            }
 
+            PrefabObjects.Add(NewPrefabObject);
+        }
+    }
 
+    public void LoadModelsAndMesh()
+    {
+        for (int i = 0; i < PrefabObjects.Count; i++)
+        {
+            var NewPrefabObject = PrefabObjects[i];
+            for (int a = 0; a < NewPrefabObject.MeshData.Count; a++)
+            {
+                var TempMesh = NewPrefabObject.MeshData[a];
+                TempMesh.mesh = ObjImporter.ObjLoad(TrickyMapInterface.Instance.LoadPath + "\\Models\\" + TempMesh.MeshPath);
+                TempMesh.material = GenerateMaterial(TempMesh.MaterialID);
+                NewPrefabObject.MeshData[a] = TempMesh;
+            }
+            PrefabObjects[i] = NewPrefabObject;
         }
     }
 
@@ -64,6 +106,10 @@ public class PrefabObject
         Material material = new Material(Shader.Find("ModelShader"));
         int TextureID = TrickyMapInterface.Instance.materialJson.MaterialsJsons[MaterialID].TextureID;
         material.SetTexture("_MainTexture", GetTexture(TextureID));
+        material.SetFloat("_OutlineWidth", 0);
+        material.SetFloat("_OpacityMaskOutline", 0f);
+        material.SetColor("_OutlineColor", new Color32(255, 255, 255, 0));
+
         return material;
     }
 
