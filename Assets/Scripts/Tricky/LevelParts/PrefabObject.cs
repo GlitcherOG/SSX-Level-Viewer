@@ -29,7 +29,10 @@ public class PrefabObject
                 ChildMesh.transform.localPosition = TempPrefab.Position;
                 ChildMesh.transform.localScale = TempPrefab.Scale;
                 ChildMesh.transform.localRotation = TempPrefab.Rotation;
-                ChildMesh.transform.localEulerAngles += new Vector3(180, 0, 0);
+                if (i >= 1)
+                {
+                    ChildMesh.transform.localEulerAngles += new Vector3(180, 0, 0);
+                }
 
                 if(ChildMesh.transform.localScale == new Vector3(0,0,0))
                 {
