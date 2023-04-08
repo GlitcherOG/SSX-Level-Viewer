@@ -75,6 +75,9 @@ public class PrefabObject
                 TempNewMeshData.MeshID = TempMesh.MeshID;
                 TempNewMeshData.mesh = ObjImporter.ObjLoad(TrickyMapInterface.Instance.LoadPath + "\\Models\\" + TempMesh.MeshPath);
                 TempNewMeshData.MaterialID = TempMesh.MaterialID;
+
+                Debug.Log(TempMesh.MaterialID);
+
                 TempNewMeshData.material = GenerateMaterial(TempMesh.MaterialID);
 
                 NewPrefabObject.MeshData.Add(TempNewMeshData);
@@ -109,7 +112,7 @@ public class PrefabObject
         material.SetFloat("_OutlineWidth", 0);
         material.SetFloat("_OpacityMaskOutline", 0f);
         material.SetColor("_OutlineColor", new Color32(255, 255, 255, 0));
-
+        material.SetFloat("_NoLightMode", 1);
         return material;
     }
 
