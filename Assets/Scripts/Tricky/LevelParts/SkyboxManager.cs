@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static SSXMultiTool.JsonFiles.Tricky.PrefabJsonHandler;
 
 public class SkyboxManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class SkyboxManager : MonoBehaviour
     public Material SkyboxMaterial;
     public GameObject Skybox;
     
-    public PrefabJsonHandler prefabJson;
+    public PrefabJsonHandler PrefabJson;
     public MaterialJsonHandler materialJson;
     public List<Texture2D> textures;
     public List<PrefabObject> modelObjects = new List<PrefabObject>();
@@ -38,50 +39,30 @@ public class SkyboxManager : MonoBehaviour
     {
         StringPath = Path.GetDirectoryName(StringPath);
         LoadPath = StringPath;
-        if (File.Exists(StringPath + "\\MaterialBlocks.json"))
-        {
-            materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
-            LoadModels(StringPath + "\\ModelHeaders.json");
-            LoadTextures(StringPath + "\\Textures");
+        LoadTextures(StringPath + "\\Textures");
+        materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
+        LoadModels(StringPath + "\\Prefabs.json");
 
-            if (modelObjects.Count != 0)
-            {
-                //for (int i = 0; i < modelObjects[0].meshes.Count; i++)
-                //{
-                //    var NewObject = new GameObject();
-                //    NewObject.layer = 8;
-                //    NewObject.transform.parent = Skybox.transform;
-                //    NewObject.transform.localPosition = new Vector3(0, 0, 0);
-                //    NewObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
-                //    var Renderer = NewObject.AddComponent<MeshRenderer>();
-                //    var Filter = NewObject.AddComponent<MeshFilter>();
-                //    Material newSkyboxMat = new Material(SkyboxMaterial);
-                //    newSkyboxMat.SetTexture("_MainTexture", textures[i]);
-                //    Filter.mesh = modelObjects[0].meshes[i];
-                //    Renderer.material = newSkyboxMat;
-                //}
-            }
-            SkyboxCamera.backgroundColor = textures[0].GetPixel(textures[0].width - 1, textures[0].height - 1);
+        if (modelObjects.Count != 0)
+        {
+            Skybox = modelObjects[0].GeneratePrefab(true);
+            Skybox.transform.parent = transform;
+            Skybox.transform.localPosition = Vector3.zero;
+            Skybox.transform.localEulerAngles = Vector3.zero;
+
         }
+        SkyboxCamera.backgroundColor = textures[0].GetPixel(textures[0].width - 1, textures[0].height - 1);
     }
 
     void LoadModels(string Path)
     {
         modelObjects = new List<PrefabObject>();
-        prefabJson = PrefabJsonHandler.Load(Path);
-        for (int i = 0; i < prefabJson.PrefabJsons.Count; i++)
+        PrefabJson = PrefabJsonHandler.Load(Path);
+        for (int i = 0; i < PrefabJson.PrefabJsons.Count; i++)
         {
-            var TempModelJson = prefabJson.PrefabJsons[i];
+            var TempModelJson = PrefabJson.PrefabJsons[i];
             PrefabObject mObject = new PrefabObject();
-            GameObject gameObject = new GameObject();
-            var Meshes = gameObject.GetComponentsInChildren<MeshFilter>();
-            for (int a = 0; a < Meshes.Length; a++)
-            {
-                //mObject.meshes.Add(Meshes[a].mesh);
-            }
-            Destroy(gameObject);
-
-            //mObject.ModelName = TempModelJson.PrefabName;
+            mObject.LoadPrefab(TempModelJson, true);
             modelObjects.Add(mObject);
         }
     }

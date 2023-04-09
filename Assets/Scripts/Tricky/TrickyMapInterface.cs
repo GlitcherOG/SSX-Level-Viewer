@@ -285,7 +285,7 @@ public class TrickyMapInterface : MonoBehaviour
             LoadPrefabs(StringPath + "\\Prefabs.json");
             LoadInstances(StringPath + "\\Instances.json");
             //LoadLighting(StringPath + "\\Lights.json");
-            //SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
+            SkyboxManager.Instance.LoadSkyboxData(StringPath + "\\Skybox\\");
             //LoadAIP(StringPath + "\\Original\\sop.sop");
             //NotifcationBarUI.instance.ShowNotifcation("Project Loaded", 5);
         }
