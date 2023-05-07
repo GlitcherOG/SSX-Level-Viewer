@@ -200,6 +200,12 @@ public class SelectorScript : MonoBehaviour
                 patchPage = null;
             }
 
+            if(instancePage != null)
+            {
+                Destroy(instancePage);
+                instancePage = null;
+            }
+
             selectedTag = "";
             SelectedObject = false;
             SelectedGameObject = null;

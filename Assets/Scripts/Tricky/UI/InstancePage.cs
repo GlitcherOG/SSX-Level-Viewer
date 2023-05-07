@@ -19,10 +19,14 @@ public class InstancePage : MonoBehaviour
 
     public void DoGUI()
     {
-            var TempPatch = instanceObjects[0];
+        var TempPatch = instanceObjects[0];
+        using (new RGUI.BackgroundColorScope(Color.black))
+        {
             rect = RGUI.ResizableWindow(GetHashCode(), rect,
         (id) =>
         {
+            RGUI.BeginBackgroundColor(new Color(1, 1, 1));
+
             TempPatch.InstanceName = RGUI.Field(TempPatch.InstanceName, "Instance Name");
 
             GUILayout.BeginHorizontal();
@@ -43,7 +47,7 @@ public class InstancePage : MonoBehaviour
             TempPatch.scale.z = RGUI.Field(TempPatch.scale.z);
             GUILayout.EndHorizontal();
 
-            HideLighting = GUILayout.Toggle(HideLighting, "Hide Lighting");
+            HideLighting = GUILayout.Toggle(HideLighting, "Hide Lighting Data");
             if (HideLighting)
             {
                 GUILayout.BeginHorizontal();
@@ -119,4 +123,5 @@ public class InstancePage : MonoBehaviour
         },
         "Instance Page");
         }
+    }
 }
