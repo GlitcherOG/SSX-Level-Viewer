@@ -92,8 +92,6 @@ public class PrefabObject
                 }
                 TempNewMeshData.MaterialID = TempMesh.MaterialID;
 
-                Debug.Log(TempMesh.MaterialID);
-
                 TempNewMeshData.material = GenerateMaterial(TempMesh.MaterialID, SkyboxLoad);
 
                 NewPrefabObject.MeshData.Add(TempNewMeshData);

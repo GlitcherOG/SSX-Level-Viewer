@@ -18,6 +18,7 @@ public class SelectorScript : MonoBehaviour
     public EventSystem m_EventSystem;
 
     public PatchPage patchPage = null;
+    public InstancePage instancePage = null;
 
     // Start is called before the first frame update
     public void Awake()
@@ -123,9 +124,9 @@ public class SelectorScript : MonoBehaviour
             if (selectedTag == "Instances")
             {
                 XYZMovement.SetActive(true);
-                //InstancePanelObject.SetActive(true);
-                //InstancePanel.instance.UpdateAll(SelectedGameObject.GetComponent<InstanceObject>());
+                instancePage = gameObject.AddComponent<InstancePage>();
                 XYZMovement.GetComponent<XYZMovmentController>().SetParent(SelectedGameObject);
+                instancePage.instanceObjects.Add(SelectedGameObject.GetComponent<InstanceObject>());
 
             }
             if (selectedTag == "Patch Point")

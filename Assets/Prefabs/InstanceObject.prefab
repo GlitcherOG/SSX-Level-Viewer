@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8575919627083122265}
   - component: {fileID: 8575919627083122260}
+  - component: {fileID: 1606787752964706052}
   m_Layer: 0
   m_Name: InstanceObject
   m_TagString: Instances
@@ -44,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InstanceName: 
+  UpdateXYZ: 0
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 0, y: 0, z: 0}
   InstancePosition: {x: 0, y: 0, z: 0}
@@ -58,8 +60,6 @@ MonoBehaviour:
   ModelID: 0
   PrevInstance: 0
   NextInstance: 0
-  LowestXYZ: {x: 0, y: 0, z: 0}
-  HighestXYZ: {x: 0, y: 0, z: 0}
   UnknownInt26: 0
   UnknownInt27: 0
   UnknownInt28: 0
@@ -67,6 +67,44 @@ MonoBehaviour:
   UnknownInt30: 0
   UnknownInt31: 0
   UnknownInt32: 0
+  LTGState: 0
   Oldrotation: {x: 0, y: 0, z: 0}
   Oldscale: {x: 0, y: 0, z: 0}
   Oldposition: {x: 0, y: 0, z: 0}
+  Prefab: {fileID: 0}
+  colliders: []
+  Mat:
+    MaterialName: 
+    TextureID: 0
+    UnknownInt2: 0
+    UnknownInt3: 0
+    UnknownFloat1: 0
+    UnknownFloat2: 0
+    UnknownFloat3: 0
+    UnknownFloat4: 0
+    UnknownInt8: 0
+    UnknownFloat5: 0
+    UnknownFloat6: 0
+    UnknownFloat7: 0
+    UnknownFloat8: 0
+    UnknownInt13: 0
+    UnknownInt14: 0
+    UnknownInt15: 0
+    UnknownInt16: 0
+    UnknownInt17: 0
+    UnknownInt18: 0
+    TextureFlipbookID: 0
+    UnknownInt20: 0
+--- !u!65 &1606787752964706052
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8575919627083122261}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 1000, z: 1000}
+  m_Center: {x: 0, y: 0, z: 0}
