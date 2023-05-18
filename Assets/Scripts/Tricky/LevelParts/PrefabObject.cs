@@ -3,6 +3,7 @@ using SSXMultiTool.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static SSXMultiTool.JsonFiles.Tricky.PrefabJsonHandler;
 
 [System.Serializable]
@@ -17,10 +18,6 @@ public class PrefabObject
     public GameObject GeneratePrefab(bool SkyboxLoad = false)
     {
         GameObject MainObject = new GameObject(PrefabName);
-        if (!SkyboxLoad)
-        {
-            MainObject.transform.localScale = Scale;
-        }
         for (int i = 0; i < PrefabObjects.Count; i++)
         {
             var TempPrefab = PrefabObjects[i];
@@ -54,13 +51,14 @@ public class PrefabObject
         PrefabName = prefabJson.PrefabName;
         Unknown3 = prefabJson.Unknown3;
         AnimTime = prefabJson.AnimTime;
+        Scale = JsonUtil.ArrayToVector3(prefabJson.Scale);
         PrefabObjects = new List<ObjectHeader>();
         for (int i = 0; i < prefabJson.PrefabObjects.Count; i++)
         {
             var NewPrefabObject = new ObjectHeader();
             NewPrefabObject.ParentID = prefabJson.PrefabObjects[i].ParentID;
             NewPrefabObject.Flags = prefabJson.PrefabObjects[i].Flags;
-
+            NewPrefabObject.IncludeMatrix = prefabJson.PrefabObjects[i].IncludeMatrix;
             if (prefabJson.PrefabObjects[i].IncludeMatrix)
             {
                 NewPrefabObject.Position = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Position);
@@ -73,6 +71,41 @@ public class PrefabObject
             }
 
             //OBJECT ANIMATION PUT HERE
+            NewPrefabObject.IncludeAnimation = prefabJson.PrefabObjects[i].IncludeAnimation;
+            NewPrefabObject.Animation = new ObjectAnimation();
+            if(NewPrefabObject.IncludeAnimation)
+            {
+                NewPrefabObject.Animation.U1 = prefabJson.PrefabObjects[i].Animation.U1;
+                NewPrefabObject.Animation.U2 = prefabJson.PrefabObjects[i].Animation.U2;
+                NewPrefabObject.Animation.U3 = prefabJson.PrefabObjects[i].Animation.U3;
+                NewPrefabObject.Animation.U4 = prefabJson.PrefabObjects[i].Animation.U4;
+                NewPrefabObject.Animation.U5 = prefabJson.PrefabObjects[i].Animation.U5;
+                NewPrefabObject.Animation.U6 = prefabJson.PrefabObjects[i].Animation.U6;
+                NewPrefabObject.Animation.AnimationAction = prefabJson.PrefabObjects[i].Animation.AnimationAction;
+
+                NewPrefabObject.Animation.AnimationEntries = new List<AnimationEntry>();
+
+                for (int a = 0; a < prefabJson.PrefabObjects[i].Animation.AnimationEntries.Count; a++)
+                {
+                    var TempEntry = new AnimationEntry();
+                    TempEntry.AnimationMaths = new List<AnimationMath>();
+                    
+                    for (int b = 0; b < prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths.Count; b++)
+                    {
+                        var TempMaths = new AnimationMath();
+
+                        TempMaths.Value1 = prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths[b].Value1;
+                        TempMaths.Value2 = prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths[b].Value2;
+                        TempMaths.Value3 = prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths[b].Value3;
+                        TempMaths.Value4 = prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths[b].Value4;
+                        TempMaths.Value5 = prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths[b].Value5;
+                        TempMaths.Value6 = prefabJson.PrefabObjects[i].Animation.AnimationEntries[a].AnimationMaths[b].Value6;
+
+                        TempEntry.AnimationMaths.Add(TempMaths);
+                    }
+                    NewPrefabObject.Animation.AnimationEntries.Add(TempEntry);
+                }
+            }
 
             NewPrefabObject.MeshData = new List<MeshHeader>();
             for (int a = 0; a < prefabJson.PrefabObjects[i].MeshData.Count; a++)
@@ -179,6 +212,9 @@ public class PrefabObject
         public Vector3 Position;
         public Quaternion Rotation;
         public Vector3 Scale;
+
+        public bool IncludeAnimation;
+        public bool IncludeMatrix;
     }
     [Serializable]
     public struct MeshHeader
