@@ -60,8 +60,6 @@ public class PatchObject : MonoBehaviour
         PatchName = import.PatchName;
         LightMapPoint = JsonUtil.ArrayToVector4(import.LightMapPoint);
 
-        Debug.Log(import.UVPoints.Length);
-
         UVPoint1 = new Vector2(import.UVPoints[0, 0], import.UVPoints[0, 1]);
         UVPoint2 = new Vector2(import.UVPoints[1, 0], import.UVPoints[1, 1]);
         UVPoint3 = new Vector2(import.UVPoints[2, 0], import.UVPoints[2, 1]);

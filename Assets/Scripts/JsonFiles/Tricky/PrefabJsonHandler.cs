@@ -40,6 +40,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public string PrefabName;
             public int Unknown3;
             public float AnimTime;
+            public float[] Scale;
             public List<ObjectHeader> PrefabObjects;
         }
         [Serializable]
@@ -54,6 +55,9 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public float[] Position;
             public float[] Rotation;
             public float[] Scale;
+
+            public bool IncludeAnimation;
+            public bool IncludeMatrix;
         }
         [Serializable]
         public struct MeshHeader

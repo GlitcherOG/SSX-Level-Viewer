@@ -11,14 +11,16 @@ public class PrefabObject
     public string PrefabName;
     public int Unknown3;
     public float AnimTime;
+    public Vector3 Scale;
     public List<ObjectHeader> PrefabObjects;
-
-
 
     public GameObject GeneratePrefab(bool SkyboxLoad = false)
     {
         GameObject MainObject = new GameObject(PrefabName);
-
+        if (!SkyboxLoad)
+        {
+            MainObject.transform.localScale = Scale;
+        }
         for (int i = 0; i < PrefabObjects.Count; i++)
         {
             var TempPrefab = PrefabObjects[i];
@@ -35,15 +37,6 @@ public class PrefabObject
                 ChildMesh.transform.localPosition = TempPrefab.Position;
                 ChildMesh.transform.localScale = TempPrefab.Scale;
                 ChildMesh.transform.localRotation = TempPrefab.Rotation;
-                if (i <= 1)
-                {
-                    //ChildMesh.transform.localEulerAngles += new Vector3(180, 0, 0);
-                }
-
-                if(ChildMesh.transform.localScale == new Vector3(0,0,0))
-                {
-                    ChildMesh.transform.localScale = new Vector3(1, 1, 1);
-                }
 
                 var TempMeshFilter = ChildMesh.AddComponent<MeshFilter>();
                 var TempRenderer = ChildMesh.AddComponent<MeshRenderer>();
@@ -68,14 +61,18 @@ public class PrefabObject
             NewPrefabObject.ParentID = prefabJson.PrefabObjects[i].ParentID;
             NewPrefabObject.Flags = prefabJson.PrefabObjects[i].Flags;
 
-            //NewPrefabObject.Position = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Position);
-            //NewPrefabObject.Rotation = JsonUtil.ArrayToQuaternion(prefabJson.PrefabObjects[i].Rotation);
-            //NewPrefabObject.Scale = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Scale);
-
-            NewPrefabObject.Scale = Vector3.one;
+            if (prefabJson.PrefabObjects[i].IncludeMatrix)
+            {
+                NewPrefabObject.Position = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Position);
+                NewPrefabObject.Rotation = JsonUtil.ArrayToQuaternion(prefabJson.PrefabObjects[i].Rotation);
+                NewPrefabObject.Scale = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Scale);
+            }
+            else
+            {
+                NewPrefabObject.Scale = Vector3.one;
+            }
 
             //OBJECT ANIMATION PUT HERE
-
 
             NewPrefabObject.MeshData = new List<MeshHeader>();
             for (int a = 0; a < prefabJson.PrefabObjects[i].MeshData.Count; a++)
