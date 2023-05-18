@@ -60,27 +60,29 @@ public class PatchObject : MonoBehaviour
         PatchName = import.PatchName;
         LightMapPoint = JsonUtil.ArrayToVector4(import.LightMapPoint);
 
-        UVPoint1 = JsonUtil.ArrayToVector4(import.UVPoint1);
-        UVPoint2 = JsonUtil.ArrayToVector4(import.UVPoint2);
-        UVPoint3 = JsonUtil.ArrayToVector4(import.UVPoint3);
-        UVPoint4 = JsonUtil.ArrayToVector4(import.UVPoint4);
+        Debug.Log(import.UVPoints.Length);
 
-        RawR4C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C4));
-        RawR4C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C3));
-        RawR4C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C2));
-        RawR4C1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R4C1));
-        RawR3C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C4));
-        RawR3C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C3));
-        RawR3C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C2));
-        RawR3C1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R3C1));
-        RawR2C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C4));
-        RawR2C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C3));
-        RawR2C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C2));
-        RawR2C1 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R2C1));
-        RawR1C4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C4));
-        RawR1C3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C3));
-        RawR1C2 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C2));
-        RawControlPoint = MathTools.FixYandZ(JsonUtil.ArrayToVector3(import.R1C1));
+        UVPoint1 = new Vector2(import.UVPoints[0, 0], import.UVPoints[0, 1]);
+        UVPoint2 = new Vector2(import.UVPoints[1, 0], import.UVPoints[1, 1]);
+        UVPoint3 = new Vector2(import.UVPoints[2, 0], import.UVPoints[2, 1]);
+        UVPoint4 = new Vector2(import.UVPoints[3, 0], import.UVPoints[3, 1]);
+
+        RawR4C4 = MathTools.FixYandZ(new Vector3(import.Points[15,0], import.Points[15, 1], import.Points[15, 2]));
+        RawR4C3 = MathTools.FixYandZ(new Vector3(import.Points[14, 0], import.Points[14, 1], import.Points[14, 2]));
+        RawR4C2 = MathTools.FixYandZ(new Vector3(import.Points[13, 0], import.Points[13, 1], import.Points[13, 2]));
+        RawR4C1 = MathTools.FixYandZ(new Vector3(import.Points[12, 0], import.Points[12, 1], import.Points[12, 2]));
+        RawR3C4 = MathTools.FixYandZ(new Vector3(import.Points[11, 0], import.Points[11, 1], import.Points[11, 2]));
+        RawR3C3 = MathTools.FixYandZ(new Vector3(import.Points[10, 0], import.Points[10, 1], import.Points[10, 2]));
+        RawR3C2 = MathTools.FixYandZ(new Vector3(import.Points[9, 0], import.Points[9, 1], import.Points[9, 2]));
+        RawR3C1 = MathTools.FixYandZ(new Vector3(import.Points[8, 0], import.Points[8, 1], import.Points[8, 2]));
+        RawR2C4 = MathTools.FixYandZ(new Vector3(import.Points[7, 0], import.Points[7, 1], import.Points[7, 2]));
+        RawR2C3 = MathTools.FixYandZ(new Vector3(import.Points[6, 0], import.Points[6, 1], import.Points[6, 2]));
+        RawR2C2 = MathTools.FixYandZ(new Vector3(import.Points[5, 0], import.Points[5, 1], import.Points[5, 2]));
+        RawR2C1 = MathTools.FixYandZ(new Vector3(import.Points[4, 0], import.Points[4, 1], import.Points[4, 2]));
+        RawR1C4 = MathTools.FixYandZ(new Vector3(import.Points[3, 0], import.Points[3, 1], import.Points[3, 2]));
+        RawR1C3 = MathTools.FixYandZ(new Vector3(import.Points[2, 0], import.Points[2, 1], import.Points[2, 2]));
+        RawR1C2 = MathTools.FixYandZ(new Vector3(import.Points[1, 0], import.Points[1, 1], import.Points[1, 2]));
+        RawControlPoint = MathTools.FixYandZ(new Vector3(import.Points[0, 0], import.Points[0, 1], import.Points[0, 2]));
 
         PatchStyle = import.PatchStyle;
         TrickOnlyPatch = import.TrickOnlyPatch;
@@ -102,27 +104,82 @@ public class PatchObject : MonoBehaviour
         patch.PatchName = PatchName;
         patch.LightMapPoint = JsonUtil.Vector4ToArray(LightMapPoint);
 
-        patch.UVPoint1 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint1, 1, 1));
-        patch.UVPoint2 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint2, 1, 1));
-        patch.UVPoint3 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint3, 1, 1));
-        patch.UVPoint4 = JsonUtil.Vector4ToArray(JsonUtil.Vector2ToVector4(UVPoint4, 1, 1));
+        patch.UVPoints = new float[4,2];
 
-        patch.R1C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawControlPoint));
-        patch.R1C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR1C2));
-        patch.R1C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR1C3));
-        patch.R1C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR1C4));
-        patch.R2C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C1));
-        patch.R2C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C2));
-        patch.R2C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C3));
-        patch.R2C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR2C4));
-        patch.R3C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C1));
-        patch.R3C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C2));
-        patch.R3C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C3));
-        patch.R3C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR3C4));
-        patch.R4C1 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C1));
-        patch.R4C2 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C2));
-        patch.R4C3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C3));
-        patch.R4C4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(RawR4C4));
+        patch.UVPoints[0, 0] = UVPoint1.x;
+        patch.UVPoints[0, 1] = UVPoint1.y;
+        patch.UVPoints[1, 0] = UVPoint2.x;
+        patch.UVPoints[1, 1] = UVPoint2.y;
+        patch.UVPoints[2, 0] = UVPoint3.x;
+        patch.UVPoints[2, 1] = UVPoint3.y;
+        patch.UVPoints[3, 0] = UVPoint4.x;
+        patch.UVPoints[3, 1] = UVPoint4.y;
+
+        patch.Points = new float[16, 3];
+
+        patch.Points[0, 0] = RawControlPoint.x;
+        patch.Points[0, 1] = RawControlPoint.z;
+        patch.Points[0, 2] = RawControlPoint.y;
+
+        patch.Points[1, 0] = RawR1C2.x;
+        patch.Points[1, 1] = RawR1C2.z;
+        patch.Points[1, 2] = RawR1C2.y;
+
+        patch.Points[2, 0] = RawR1C3.x;
+        patch.Points[2, 1] = RawR1C3.z;
+        patch.Points[2, 2] = RawR1C3.y;
+
+        patch.Points[3, 0] = RawR1C4.x;
+        patch.Points[3, 1] = RawR1C4.z;
+        patch.Points[3, 2] = RawR1C4.y;
+
+        patch.Points[4, 0] = RawR2C1.x;
+        patch.Points[4, 1] = RawR2C1.z;
+        patch.Points[4, 2] = RawR2C1.y;
+
+        patch.Points[5, 0] = RawR2C2.x;
+        patch.Points[5, 1] = RawR2C2.z;
+        patch.Points[5, 2] = RawR2C2.y;
+
+        patch.Points[6, 0] = RawR2C3.x;
+        patch.Points[6, 1] = RawR2C3.z;
+        patch.Points[6, 2] = RawR2C3.y;
+
+        patch.Points[7, 0] = RawR2C4.x;
+        patch.Points[7, 1] = RawR2C4.z;
+        patch.Points[7, 2] = RawR2C4.y;
+
+        patch.Points[8, 0] = RawR3C1.x;
+        patch.Points[8, 1] = RawR3C1.z;
+        patch.Points[8, 2] = RawR3C1.y;
+
+        patch.Points[9, 0] = RawR3C2.x;
+        patch.Points[9, 1] = RawR3C2.z;
+        patch.Points[9, 2] = RawR3C2.y;
+
+        patch.Points[10, 0] = RawR3C3.x;
+        patch.Points[10, 1] = RawR3C3.z;
+        patch.Points[10, 2] = RawR3C3.y;
+
+        patch.Points[11, 0] = RawR3C4.x;
+        patch.Points[11, 1] = RawR3C4.z;
+        patch.Points[11, 2] = RawR3C4.y;
+
+        patch.Points[12, 0] = RawR4C1.x;
+        patch.Points[12, 1] = RawR4C1.z;
+        patch.Points[12, 2] = RawR4C1.y;
+
+        patch.Points[13, 0] = RawR4C2.x;
+        patch.Points[13, 1] = RawR4C2.z;
+        patch.Points[13, 2] = RawR4C2.y;
+
+        patch.Points[14, 0] = RawR4C3.x;
+        patch.Points[14, 1] = RawR4C3.z;
+        patch.Points[15, 2] = RawR4C3.y;
+
+        patch.Points[15, 0] = RawR4C4.x;
+        patch.Points[15, 1] = RawR4C4.z;
+        patch.Points[15, 2] = RawR4C4.y;
 
         patch.PatchStyle = PatchStyle;
         patch.TrickOnlyPatch = TrickOnlyPatch;

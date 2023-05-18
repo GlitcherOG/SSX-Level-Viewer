@@ -37,7 +37,7 @@ public class PrefabObject
                 ChildMesh.transform.localRotation = TempPrefab.Rotation;
                 if (i <= 1)
                 {
-                    ChildMesh.transform.localEulerAngles += new Vector3(180, 0, 0);
+                    //ChildMesh.transform.localEulerAngles += new Vector3(180, 0, 0);
                 }
 
                 if(ChildMesh.transform.localScale == new Vector3(0,0,0))
@@ -68,9 +68,11 @@ public class PrefabObject
             NewPrefabObject.ParentID = prefabJson.PrefabObjects[i].ParentID;
             NewPrefabObject.Flags = prefabJson.PrefabObjects[i].Flags;
 
-            NewPrefabObject.Position = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Position);
-            NewPrefabObject.Rotation = JsonUtil.ArrayToQuaternion(prefabJson.PrefabObjects[i].Rotation);
-            NewPrefabObject.Scale = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Scale);
+            //NewPrefabObject.Position = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Position);
+            //NewPrefabObject.Rotation = JsonUtil.ArrayToQuaternion(prefabJson.PrefabObjects[i].Rotation);
+            //NewPrefabObject.Scale = JsonUtil.ArrayToVector3(prefabJson.PrefabObjects[i].Scale);
+
+            NewPrefabObject.Scale = Vector3.one;
 
             //OBJECT ANIMATION PUT HERE
 

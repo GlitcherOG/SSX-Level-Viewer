@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+using Newtonsoft.Json;
 using System.IO;
 
 namespace SSXMultiTool.JsonFiles.Tricky
@@ -11,11 +8,11 @@ namespace SSXMultiTool.JsonFiles.Tricky
     [Serializable]
     public class PatchesJsonHandler
     {
-        public List<PatchJson> patches = new List<PatchJson>();
+        public List<PatchJson> Patches = new List<PatchJson>();
 
         public void CreateJson(string path)
         {
-            var serializer = JsonUtility.ToJson(this);
+            var serializer = JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.None);
             File.WriteAllText(path, serializer);
         }
 
@@ -25,7 +22,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
             if (File.Exists(paths))
             {
                 var stream = File.ReadAllText(paths);
-                var container = JsonUtility.FromJson<PatchesJsonHandler>(stream);
+                var container = JsonConvert.DeserializeObject<PatchesJsonHandler>(stream);
                 return container;
             }
             else
@@ -41,28 +38,8 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public string PatchName;
 
             public float[] LightMapPoint;
-
-            public float[] UVPoint1;
-            public float[] UVPoint2;
-            public float[] UVPoint3;
-            public float[] UVPoint4;
-
-            public float[] R4C4;
-            public float[] R4C3;
-            public float[] R4C2;
-            public float[] R4C1;
-            public float[] R3C4;
-            public float[] R3C3;
-            public float[] R3C2;
-            public float[] R3C1;
-            public float[] R2C4;
-            public float[] R2C3;
-            public float[] R2C2;
-            public float[] R2C1;
-            public float[] R1C4;
-            public float[] R1C3;
-            public float[] R1C2;
-            public float[] R1C1;
+            public float[,] UVPoints;
+            public float[,] Points;
 
             public int PatchStyle;
             public bool TrickOnlyPatch;

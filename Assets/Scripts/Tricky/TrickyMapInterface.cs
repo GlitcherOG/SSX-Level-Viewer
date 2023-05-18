@@ -300,10 +300,10 @@ public class TrickyMapInterface : MonoBehaviour
     {
         PatchJson = new PatchesJsonHandler();
         PatchJson = PatchesJsonHandler.Load(PatchPath);
-        for (int i = 0; i < PatchJson.patches.Count; i++)
+        for (int i = 0; i < PatchJson.Patches.Count; i++)
         {
             GameObject gameObject = Instantiate(PatchPrefab, patchesParent.transform);
-            var Patch = PatchJson.patches[i];
+            var Patch = PatchJson.Patches[i];
             var PatchHolder = gameObject.GetComponent<PatchObject>();
             PatchHolder.LoadPatch(Patch);
             gameObject.transform.name = Patch.PatchName + " (" + i + ")";
@@ -493,10 +493,10 @@ public class TrickyMapInterface : MonoBehaviour
     public void SavePatches(string PatchPath)
     {
         PatchJson = new PatchesJsonHandler();
-        PatchJson.patches = new List<PatchesJsonHandler.PatchJson>();
+        PatchJson.Patches = new List<PatchesJsonHandler.PatchJson>();
         for (int i = 0; i < patchObjects.Count; i++)
         {
-            PatchJson.patches.Add(patchObjects[i].GeneratePatch());
+            PatchJson.Patches.Add(patchObjects[i].GeneratePatch());
         }
         PatchJson.CreateJson(PatchPath);
     }
