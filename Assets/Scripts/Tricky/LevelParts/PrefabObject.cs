@@ -12,7 +12,6 @@ public class PrefabObject
     public string PrefabName;
     public int Unknown3;
     public float AnimTime;
-    public Vector3 Scale;
     public List<ObjectHeader> PrefabObjects;
 
     public GameObject GeneratePrefab(bool SkyboxLoad = false)
@@ -51,7 +50,6 @@ public class PrefabObject
         PrefabName = prefabJson.PrefabName;
         Unknown3 = prefabJson.Unknown3;
         AnimTime = prefabJson.AnimTime;
-        Scale = JsonUtil.ArrayToVector3(prefabJson.Scale);
         PrefabObjects = new List<ObjectHeader>();
         for (int i = 0; i < prefabJson.PrefabObjects.Count; i++)
         {

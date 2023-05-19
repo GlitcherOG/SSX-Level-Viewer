@@ -519,7 +519,7 @@ public class TrickyMapInterface : MonoBehaviour
         for (int i = 0; i < instanceObjects.Count; i++)
         {
             InstanceJson.instances.Add(instanceObjects[i].GenerateInstance());
-        }
+        } 
         InstanceJson.CreateJson(InstancePath);
     }
 
