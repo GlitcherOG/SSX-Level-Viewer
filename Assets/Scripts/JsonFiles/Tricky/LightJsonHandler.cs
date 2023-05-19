@@ -12,7 +12,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
     [Serializable]
     public class LightJsonHandler
     {
-        public List<LightJson> LightJsons = new List<LightJson>();
+        public List<LightJson> Lights = new List<LightJson>();
 
         public void CreateJson(string path)
         {
@@ -41,7 +41,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public string LightName;
 
             public int Type;
-            public int spriteRes;
+            public int SpriteRes;
             public float UnknownFloat1;
             public int UnknownInt1;
             public float[] Colour;

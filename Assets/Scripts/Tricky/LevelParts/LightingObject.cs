@@ -27,7 +27,7 @@ public class LightingObject : MonoBehaviour
     {
         LightName = lightJson.LightName;
         Type = lightJson.Type;
-        spriteRes = lightJson.spriteRes;
+        spriteRes = lightJson.SpriteRes;
         UnknownFloat1 = lightJson.UnknownFloat1;
         UnknownInt1 = lightJson.UnknownInt1;
         Colour = JsonUtil.ArrayToVector3(lightJson.Colour);

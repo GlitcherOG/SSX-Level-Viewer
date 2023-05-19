@@ -58,9 +58,9 @@ public class SkyboxManager : MonoBehaviour
     {
         modelObjects = new List<PrefabObject>();
         PrefabJson = PrefabJsonHandler.Load(Path);
-        for (int i = 0; i < PrefabJson.PrefabJsons.Count; i++)
+        for (int i = 0; i < PrefabJson.Prefabs.Count; i++)
         {
-            var TempModelJson = PrefabJson.PrefabJsons[i];
+            var TempModelJson = PrefabJson.Prefabs[i];
             PrefabObject mObject = new PrefabObject();
             mObject.LoadPrefab(TempModelJson, true);
             modelObjects.Add(mObject);

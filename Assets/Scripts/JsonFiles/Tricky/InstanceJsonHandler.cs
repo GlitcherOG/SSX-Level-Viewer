@@ -11,7 +11,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
     [Serializable]
     public class InstanceJsonHandler
     {
-        public List<InstanceJson> instances = new List<InstanceJson>();
+        public List<InstanceJson> Instances = new List<InstanceJson>();
 
         public void CreateJson(string path)
         {
@@ -68,6 +68,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public int UnknownInt32;
 
             public int LTGState;
+            public int SSFState;
         }
     }
 }

@@ -315,9 +315,9 @@ public class TrickyMapInterface : MonoBehaviour
     {
         modelObjects = new List<PrefabObject>();
         PrefabJson = PrefabJsonHandler.Load(Path);
-        for (int i = 0; i < PrefabJson.PrefabJsons.Count; i++)
+        for (int i = 0; i < PrefabJson.Prefabs.Count; i++)
         {
-            var TempModelJson = PrefabJson.PrefabJsons[i];
+            var TempModelJson = PrefabJson.Prefabs[i];
             PrefabObject mObject = new PrefabObject();
             mObject.LoadPrefab(TempModelJson);
             modelObjects.Add(mObject);
@@ -329,11 +329,11 @@ public class TrickyMapInterface : MonoBehaviour
         InstanceJson = new InstanceJsonHandler();
         InstanceJson = InstanceJsonHandler.Load(Path);
         instanceObjects = new List<InstanceObject>();
-        for (int i = 0; i < InstanceJson.instances.Count; i++)
+        for (int i = 0; i < InstanceJson.Instances.Count; i++)
         {
             var TempGameObject = Instantiate(InstancePrefab, instanceParent.transform);
-            TempGameObject.transform.name = InstanceJson.instances[i].InstanceName + " (" + i.ToString() + ")";
-            TempGameObject.GetComponent<InstanceObject>().LoadInstance(InstanceJson.instances[i]);
+            TempGameObject.transform.name = InstanceJson.Instances[i].InstanceName + " (" + i.ToString() + ")";
+            TempGameObject.GetComponent<InstanceObject>().LoadInstance(InstanceJson.Instances[i]);
             instanceObjects.Add(TempGameObject.GetComponent<InstanceObject>());
         }
     }
@@ -353,11 +353,11 @@ public class TrickyMapInterface : MonoBehaviour
         lightJson = new LightJsonHandler();
         lightJson = LightJsonHandler.Load(Path);
         //instanceObjects = new List<InstanceObject>();
-        for (int i = 0; i < lightJson.LightJsons.Count; i++)
+        for (int i = 0; i < lightJson.Lights.Count; i++)
         {
             var TempGameObject = Instantiate(lightPrefab, lightParent.transform);
-            TempGameObject.transform.name = lightJson.LightJsons[i].LightName + " (" + i.ToString() + ")";
-            TempGameObject.GetComponent<LightingObject>().LoadLightingObject(lightJson.LightJsons[i]);
+            TempGameObject.transform.name = lightJson.Lights[i].LightName + " (" + i.ToString() + ")";
+            TempGameObject.GetComponent<LightingObject>().LoadLightingObject(lightJson.Lights[i]);
             //instanceObjects.Add(TempGameObject.GetComponent<InstanceObject>());
         }
     }
@@ -366,9 +366,9 @@ public class TrickyMapInterface : MonoBehaviour
     {
         SplineJson = new SplineJsonHandler();
         SplineJson = SplineJsonHandler.Load(path);
-        for (int i = 0; i < SplineJson.SplineJsons.Count; i++)
+        for (int i = 0; i < SplineJson.Splines.Count; i++)
         {
-            var TempSplineData = SplineJson.SplineJsons[i];
+            var TempSplineData = SplineJson.Splines[i];
             GameObject TempSpline = Instantiate(SplinePrefab, splineParent.transform);
             TempSpline.transform.name = TempSplineData.SplineName + " (" + i.ToString() + ")";
             TempSpline.GetComponent<SplineObject>().LoadSpline(TempSplineData);
@@ -504,10 +504,10 @@ public class TrickyMapInterface : MonoBehaviour
     public void SaveSplines(string SplinePath)
     {
         SplineJson = new SplineJsonHandler();
-        SplineJson.SplineJsons = new List<SplineJsonHandler.SplineJson>();
+        SplineJson.Splines = new List<SplineJsonHandler.SplineJson>();
         for (int i = 0; i < splineObjects.Count; i++)
         {
-            SplineJson.SplineJsons.Add(splineObjects[i].GenerateSpline());
+            SplineJson.Splines.Add(splineObjects[i].GenerateSpline());
         }
         SplineJson.CreateJson(SplinePath);
     }
@@ -515,10 +515,10 @@ public class TrickyMapInterface : MonoBehaviour
     public void SaveInstances(string InstancePath)
     {
         InstanceJson = new InstanceJsonHandler();
-        InstanceJson.instances = new List<InstanceJsonHandler.InstanceJson>();
+        InstanceJson.Instances = new List<InstanceJsonHandler.InstanceJson>();
         for (int i = 0; i < instanceObjects.Count; i++)
         {
-            InstanceJson.instances.Add(instanceObjects[i].GenerateInstance());
+            InstanceJson.Instances.Add(instanceObjects[i].GenerateInstance());
         } 
         InstanceJson.CreateJson(InstancePath);
     }

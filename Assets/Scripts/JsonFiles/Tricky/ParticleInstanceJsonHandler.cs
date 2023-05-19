@@ -11,7 +11,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
     [Serializable]
     public class ParticleInstanceJsonHandler
     {
-        public List<ParticleJson> particleJsons = new List<ParticleJson>();
+        public List<ParticleJson> Particles = new List<ParticleJson>();
 
         public void CreateJson(string path)
         {
@@ -39,10 +39,10 @@ namespace SSXMultiTool.JsonFiles.Tricky
         {
             public string ParticleName;
 
-            public Vector4 MatrixCol1;
-            public Vector4 MatrixCol2;
-            public Vector4 MatrixCol3;
-            public Vector4 ParticleInstancePosition;
+            public float[] Location;
+            public float[] Rotation;
+            public float[] Scale;
+
             public int UnknownInt1;
             public Vector3 LowestXYZ;
             public Vector3 HighestXYZ;

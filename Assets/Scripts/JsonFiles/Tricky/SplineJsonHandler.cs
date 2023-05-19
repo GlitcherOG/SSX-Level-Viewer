@@ -11,7 +11,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
     [Serializable]
     public class SplineJsonHandler
     {
-        public List<SplineJson> SplineJsons = new List<SplineJson>();
+        public List<SplineJson> Splines = new List<SplineJson>();
 
         public void CreateJson(string path)
         {
