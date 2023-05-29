@@ -13,10 +13,10 @@ public class SplineSegmentObject : MonoBehaviour
     public Vector3 Point3;
     public Vector3 Point4;
     [Space(10)]
-    public Vector4 ScalingPoint;
-
-    [Space(10)]
-    public int Unknown32;
+    public float U0;
+    public float U1;
+    public float U2;
+    public float U3;
     
     public LineRenderer lineRenderer;
     public GameObject PointPrefab;
@@ -32,9 +32,11 @@ public class SplineSegmentObject : MonoBehaviour
         Point3 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(segments.Point3));
         Point4 = MathTools.FixYandZ(JsonUtil.ArrayToVector3(segments.Point4));
 
-        ScalingPoint = JsonUtil.ArrayToVector4(segments.Unknown);
+        U0 = segments.U0;
+        U1 = segments.U1;
+        U2 = segments.U2;
+        U3 = segments.U3;
 
-        Unknown32 = segments.Unknown32;
 
         SetDataLineRender(false);
     }
@@ -49,9 +51,10 @@ public class SplineSegmentObject : MonoBehaviour
         segments.Point3 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(Point3));
         segments.Point4 = JsonUtil.Vector3ToArray(MathTools.FixYandZ(Point4));
 
-        segments.Unknown = JsonUtil.Vector4ToArray(ScalingPoint);
-
-        segments.Unknown32 = Unknown32;
+        segments.U0 = U0;
+        segments.U1 = U1;
+        segments.U2 = U2;
+        segments.U3 = U3;
 
         return segments;
     }

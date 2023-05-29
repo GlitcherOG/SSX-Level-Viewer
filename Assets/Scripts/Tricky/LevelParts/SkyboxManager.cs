@@ -40,7 +40,7 @@ public class SkyboxManager : MonoBehaviour
         StringPath = Path.GetDirectoryName(StringPath);
         LoadPath = StringPath;
         LoadTextures(StringPath + "\\Textures");
-        materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
+        materialJson = MaterialJsonHandler.Load(StringPath + "\\Materials.json");
         LoadModels(StringPath + "\\Prefabs.json");
 
         if (modelObjects.Count != 0)
@@ -81,6 +81,7 @@ public class SkyboxManager : MonoBehaviour
                     byte[] bytes = new byte[stream.Length];
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
+                    NewImage.name = Files[i].TrimStart(Folder.ToCharArray());
                     //NewImage.filterMode = FilterMode.Point;
                     //NewImage.wrapMode = TextureWrapMode.MirrorOnce;
                 }

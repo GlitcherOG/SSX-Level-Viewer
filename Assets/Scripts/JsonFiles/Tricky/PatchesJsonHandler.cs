@@ -43,7 +43,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
 
             public int PatchStyle;
             public bool TrickOnlyPatch;
-            public int TextureAssigment;
+            public string TexturePath;
             public int LightmapID;
         }
     }

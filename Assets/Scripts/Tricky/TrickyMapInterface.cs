@@ -273,7 +273,7 @@ public class TrickyMapInterface : MonoBehaviour
     void LoadMapFiles(string StringPath)
     {
         SSXTrickyConfig trickyConfig = SSXTrickyConfig.Load(StringPath);
-        if (trickyConfig.Version == 4)
+        if (trickyConfig.Version == 1)
         {
             StringPath = Path.GetDirectoryName(StringPath);
             LoadPath = StringPath;
@@ -281,7 +281,7 @@ public class TrickyMapInterface : MonoBehaviour
             Loadlightmaps(StringPath + "\\Lightmaps");
             LoadPatches(StringPath + "\\Patches.json");
             LoadSplines(StringPath + "\\Splines.json");
-            materialJson = MaterialJsonHandler.Load(StringPath + "\\Material.json");
+            materialJson = MaterialJsonHandler.Load(StringPath + "\\Materials.json");
             LoadPrefabs(StringPath + "\\Prefabs.json");
             LoadInstances(StringPath + "\\Instances.json");
             //LoadLighting(StringPath + "\\Lights.json");
@@ -378,7 +378,7 @@ public class TrickyMapInterface : MonoBehaviour
 
     void LoadTextures(string Folder)
     {
-        string[] Files = Directory.GetFiles(Folder);
+        string[] Files = Directory.GetFiles(Folder, "*.png", SearchOption.AllDirectories);
         textures = new List<Texture2D>();
         for (int i = 0; i < Files.Length; i++)
         {
@@ -390,6 +390,7 @@ public class TrickyMapInterface : MonoBehaviour
                     byte[] bytes = new byte[stream.Length];
                     stream.Read(bytes, 0, (int)stream.Length);
                     NewImage.LoadImage(bytes);
+                    NewImage.name = Files[i].TrimStart(Folder.ToCharArray());
                     //NewImage.wrapMode = TextureWrapMode.MirrorOnce;
                 }
                 textures.Add(NewImage);
@@ -423,33 +424,6 @@ public class TrickyMapInterface : MonoBehaviour
                 }
                 correctedTexture.Apply();
                 lightmaps.Add(correctedTexture);
-            }
-        }
-    }
-
-    public void ReloadTextures()
-    {
-        if (LoadPath != "")
-        {
-            string[] Files = Directory.GetFiles(LoadPath + "\\Textures");
-            textures = new List<Texture2D>();
-            for (int i = 0; i < Files.Length; i++)
-            {
-                Texture2D NewImage = new Texture2D(1, 1);
-                if (Files[i].ToLower().Contains(".png"))
-                {
-                    using (Stream stream = File.Open(Files[i], FileMode.Open))
-                    {
-                        byte[] bytes = new byte[stream.Length];
-                        stream.Read(bytes, 0, (int)stream.Length);
-                        NewImage.LoadImage(bytes);
-                    }
-                    textures.Add(NewImage);
-                }
-            }
-            for (int i = 0; i < patchObjects.Count; i++)
-            {
-                patchObjects[i].UpdateTexture(patchObjects[i].TextureAssigment);
             }
         }
     }

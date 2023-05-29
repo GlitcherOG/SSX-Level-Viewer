@@ -3,6 +3,7 @@ using SSXMultiTool.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
 using static SSXMultiTool.JsonFiles.Tricky.PrefabJsonHandler;
 
@@ -158,14 +159,17 @@ public class PrefabObject
     public static Material GenerateMaterial(int MaterialID, bool SkyboxLoad = false)
     {
         Material material = new Material(Shader.Find("ModelShader"));
-        int TextureID = 0;
-        if (SkyboxLoad)
+        string TextureID = "";
+        if (MaterialID != -1)
         {
-            TextureID = SkyboxManager.Instance.materialJson.MaterialsJsons[MaterialID].TextureID;
-        }
-        else
-        {
-            TextureID = TrickyMapInterface.Instance.materialJson.MaterialsJsons[MaterialID].TextureID;
+            if (SkyboxLoad)
+            {
+                TextureID = SkyboxManager.Instance.materialJson.Materials[MaterialID].TexturePath;
+            }
+            else
+            {
+                TextureID = TrickyMapInterface.Instance.materialJson.Materials[MaterialID].TexturePath;
+            }
         }
         material.SetTexture("_MainTexture", GetTexture(TextureID, SkyboxLoad));
         material.SetFloat("_OutlineWidth", 0);
@@ -175,24 +179,39 @@ public class PrefabObject
         return material;
     }
 
-    public static Texture2D GetTexture(int TextureID, bool SkyboxLoad)
+    public static Texture2D GetTexture(string TextureID, bool SkyboxLoad)
     {
         Texture2D texture = null;
         try
         {
             if(SkyboxLoad)
             {
-                texture = SkyboxManager.Instance.textures[TextureID];
+                for (int i = 0; i < SkyboxManager.Instance.textures.Count; i++)
+                {
+                    if (SkyboxManager.Instance.textures[i].name.ToLower() == TextureID.ToLower())
+                    {
+                        texture = SkyboxManager.Instance.textures[i];
+                        return texture;
+                    }
+                }
+                texture = TrickyMapInterface.Instance.ErrorTexture;
             }
             else
             {
-                texture = TrickyMapInterface.Instance.textures[TextureID];
+                for (int i = 0; i < TrickyMapInterface.Instance.textures.Count; i++)
+                {
+                    if (TrickyMapInterface.Instance.textures[i].name.ToLower() == TextureID.ToLower())
+                    {
+                        texture = TrickyMapInterface.Instance.textures[i];
+                        return texture;
+                    }
+                }
+                texture = TrickyMapInterface.Instance.ErrorTexture;
             }
 
         }
         catch
         {
-
             texture = TrickyMapInterface.Instance.ErrorTexture;
         }
         return texture;

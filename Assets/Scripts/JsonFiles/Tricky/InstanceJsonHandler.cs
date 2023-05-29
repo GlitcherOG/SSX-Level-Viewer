@@ -56,9 +56,6 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public int PrevInstance;
             public int NextInstance;
 
-            public float[] LowestXYZ;
-            public float[] HighestXYZ;
-
             public int UnknownInt26;
             public int UnknownInt27;
             public int UnknownInt28;
@@ -69,6 +66,29 @@ namespace SSXMultiTool.JsonFiles.Tricky
 
             public int LTGState;
             public int SSFState;
+
+            public int Hash;
+            public bool IncludeSound;
+            public SoundData? Sounds;
+
+            public List<string> Effects;
+        }
+        [Serializable]
+        public struct SoundData
+        {
+            public int CollisonSound;
+            public List<ExternalSound> ExternalSounds;
+        }
+        [Serializable]
+        public struct ExternalSound
+        {
+            public int U0;
+            public int SoundIndex;
+            public float U2;
+            public float U3;
+            public float U4;
+            public float U5; //Radius?
+            public float U6;
         }
     }
 }

@@ -41,7 +41,7 @@ public class PatchObject : MonoBehaviour
     [Space(10)]
     public int PatchStyle;
     public bool TrickOnlyPatch;
-    public int TextureAssigment;
+    public string TextureAssigment;
     public int LightmapID;
 
     [Space(10)]
@@ -84,7 +84,7 @@ public class PatchObject : MonoBehaviour
 
         PatchStyle = import.PatchStyle;
         TrickOnlyPatch = import.TrickOnlyPatch;
-        TextureAssigment = import.TextureAssigment;
+        TextureAssigment = import.TexturePath;
         LightmapID = import.LightmapID;
 
         transform.position = RawControlPoint * TrickyMapInterface.Scale;
@@ -181,7 +181,7 @@ public class PatchObject : MonoBehaviour
 
         patch.PatchStyle = PatchStyle;
         patch.TrickOnlyPatch = TrickOnlyPatch;
-        patch.TextureAssigment = TextureAssigment;
+        patch.TexturePath = TextureAssigment;
         patch.LightmapID = LightmapID;
 
         return patch;
@@ -570,13 +570,31 @@ public class PatchObject : MonoBehaviour
         Selected = false;
     }
 
-    public void UpdateTexture(int a)
+    public void UpdateTexture(string a)
     {
         try
         {
-            Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.textures[TextureAssigment]);
-            Renderer.material.SetTexture("_Lightmap", TrickyMapInterface.Instance.GrabLightmapTexture(LightMapPoint, LightmapID));
-            TextureAssigment = a;
+            bool Found = false;
+            for (int i = 0; i < TrickyMapInterface.Instance.textures.Count; i++)
+            {
+                if (TrickyMapInterface.Instance.textures[i].name.ToLower()==a.ToLower())
+                {
+                    Found = true;
+                    Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.textures[i]);
+                    Renderer.material.SetTexture("_Lightmap", TrickyMapInterface.Instance.GrabLightmapTexture(LightMapPoint, LightmapID));
+                    TextureAssigment = a;
+                    return;
+                }
+            }
+
+            if (!Found)
+            {
+                Renderer.material.SetTexture("_MainTexture", TrickyMapInterface.Instance.ErrorTexture);
+            }
+            else
+            {
+
+            }
         }
         catch
         {

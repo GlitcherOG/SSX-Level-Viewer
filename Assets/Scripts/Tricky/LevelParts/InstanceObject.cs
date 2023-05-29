@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SSXMultiTool.JsonFiles.Tricky;
 using SSXMultiTool.Utilities;
+using UnityEditor;
 
 public class InstanceObject : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class InstanceObject : MonoBehaviour
     public GameObject Prefab;
 
     public List<MeshCollider> colliders;
+
+    public string Effects;
 
     public MaterialJsonHandler.MaterialsJson Mat = new MaterialJsonHandler.MaterialsJson(); 
 
@@ -89,6 +92,14 @@ public class InstanceObject : MonoBehaviour
 
         LTGState = instance.LTGState;
 
+        string NewEffects = "";
+
+        for (int a = 0; a < instance.Effects.Count; a++)
+        {
+            NewEffects += instance.Effects[a] + "\n";
+        }
+        Effects = NewEffects;
+
         LoadPrefabs();
 
         transform.localPosition = TempPos * TrickyMapInterface.Scale;
@@ -118,6 +129,13 @@ public class InstanceObject : MonoBehaviour
 
         //Generate Collisions
 
+    }
+
+    void OnDrawGizmos()
+    {
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.black;
+        Handles.Label(transform.position, Effects, style);
     }
 
     public void UpdateTransform()

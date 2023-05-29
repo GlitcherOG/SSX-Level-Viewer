@@ -11,7 +11,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
     [Serializable]
     public class MaterialJsonHandler
     {
-        public List<MaterialsJson> MaterialsJsons = new List<MaterialsJson>();
+        public List<MaterialsJson> Materials = new List<MaterialsJson>();
 
         public void CreateJson(string path)
         {
@@ -39,7 +39,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
         {
             public string MaterialName;
 
-            public int TextureID;
+            public string TexturePath;
             public int UnknownInt2;
             public int UnknownInt3;
 
@@ -62,7 +62,7 @@ namespace SSXMultiTool.JsonFiles.Tricky
             public int UnknownInt17;
             public int UnknownInt18;
 
-            public int TextureFlipbookID;
+            public List<string> TextureFlipbook;
             public int UnknownInt20;
         }
     }
